@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import Router from "svelte-spa-router";
   import Dashboard from "./pages/Dashboard.svelte";
   import NewTask from "./pages/NewTask.svelte";
@@ -7,12 +6,6 @@
   import Empty from "./components/Empty.svelte";
   import NavigationBar from "./components/NavigationBar.svelte";
   import { tasks, user } from "./stores";
-
-  onMount(() => {
-    user.set({
-      name: "You"
-    });
-  });
 
   const masterRoutes = {
     "/tasks": Dashboard,
