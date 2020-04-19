@@ -2,8 +2,11 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
-import {terser} from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
+import typescript from "@rollup/plugin-typescript";
+import html2 from "rollup-plugin-html2";
+import postcss from "rollup-plugin-postcss";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -17,7 +20,7 @@ const preprocess = sveltePreprocess({
 });
 
 export default {
-    input: 'src/main.js',
+    input: 'src/index.ts',
     output: {
         sourcemap: true,
         format: 'iife',
@@ -36,16 +39,27 @@ export default {
             }
         }),
 
+        postcss({
+            extract: true,
+        }),
+
+        typescript(),
+
         // If you have external dependencies installed from
         // npm, you'll most likely need these plugins. In
         // some cases you'll need additional configuration -
         // consult the documentation for details:
         // https://github.com/rollup/plugins/tree/master/packages/commonjs
+        commonjs({ include: "node_modules/**", extensions: [".js", ".ts"] }),
+
         resolve({
             browser: true,
             dedupe: ['svelte']
         }),
-        commonjs(),
+
+        html2({
+            template: "public/index.html",
+        }),
 
         // In dev mode, call `npm run start` once
         // the bundle has been generated
@@ -57,7 +71,7 @@ export default {
 
         // If we're building for production (npm run build
         // instead of npm run dev), minify
-        production && terser()
+        production && terser({ sourcemap: true })
     ],
     watch: {
         clearScreen: false

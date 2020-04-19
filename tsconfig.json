@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "baseUrl": "./",
+    "types": [
+      "svelte"
+    ]
+  },
+  "include": [
+    "src/**/*",
+    "src/*"
+  ]
+}
