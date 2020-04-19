@@ -8,7 +8,7 @@
     { symbol: "T", id: 4 },
     { symbol: "F", id: 5 },
     { symbol: "S", id: 6 },
-    { symbol: "S", id: 7 }
+    { symbol: "S", id: 0 }
   ];
 
   const toggleDay = day => {

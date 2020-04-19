@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { pop } from "svelte-spa-router";
+  import { replace } from "svelte-spa-router";
 
   export const params = {};
 
   const goBack = e => {
-    pop();
+    replace("/");
   };
 </script>
 

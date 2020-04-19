@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { push, pop, replace } from "svelte-spa-router";
+  import { replace } from "svelte-spa-router";
   import active from "svelte-spa-router/active";
   import Task from "../components/Task.svelte";
   import Footer from "../components/Footer.svelte";
@@ -8,11 +8,11 @@
   export const params = {};
 
   const addNewTask = () => {
-    push(`/tasks/new`);
+    replace(`/tasks/new`);
   };
 
   const goToTask = task => {
-    push(`/tasks/${task.id}`);
+    replace(`/tasks/${task.id}`);
   };
 </script>
 

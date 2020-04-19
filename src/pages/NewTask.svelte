@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { pop } from "svelte-spa-router";
+  import { replace } from "svelte-spa-router";
   import { fly } from "svelte/transition";
   import { tasks } from "../stores";
   import { TaskModel } from "../models/TaskModel";
@@ -21,7 +21,7 @@
     }
 
     tasks.add(new TaskModel(task));
-    pop();
+    replace("/");
   };
 </script>
 
