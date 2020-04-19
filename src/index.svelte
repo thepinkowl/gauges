@@ -1,26 +1,94 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import Router from "svelte-spa-router";
   import Dashboard from "./pages/Dashboard.svelte";
-  import Footer from "./components/Footer.svelte";
+  import NewTask from "./pages/NewTask.svelte";
+  import TaskDetail from "./pages/TaskDetail.svelte";
+  import Empty from "./components/Empty.svelte";
+  import NavigationBar from "./components/NavigationBar.svelte";
   import { tasks, user } from "./stores";
 
   onMount(() => {
     user.set({
-      name: "FirstName"
+      name: "You"
     });
   });
+
+  const masterRoutes = {
+    "/tasks": Dashboard,
+    "/tasks/*": Dashboard,
+    // Catch-all
+    // This is optional, but if present it must be the last
+    "*": Dashboard
+  };
+
+  const detailRoutes = {
+    "/tasks/new": NewTask,
+    "/tasks/:id": TaskDetail,
+    "*": Empty
+  };
+
+  let showSecondaryRouter = false;
+
+  const routeLoaded = e => (showSecondaryRouter = e.detail.name !== "Empty");
 </script>
 
 <style lang="scss">
-  .container {
-    width: 100%;
+  @import "styles/variables";
+  @import "styles/colors";
+
+  main {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+
+    .master {
+      flex: 3;
+      min-width: $small;
+    }
+
+    .detail {
+      flex: 6;
+      border-left: 1px solid $gray;
+    }
+
+    .master,
+    .detail {
+      overflow: scroll;
+    }
+  }
+
+  @media (max-width: $middle) {
+    main {
+      .master {
+        flex: 1;
+      }
+
+      .detail {
+        flex: 0;
+        position: absolute;
+        height: 100%;
+        background-color: white;
+        width: 100%;
+        visibility: visible;
+        opacity: 1;
+        transition: visibility 0.25s, opacity 0.25s linear;
+
+        &.hide {
+          visibility: hidden;
+          opacity: 0;
+        }
+      }
+    }
   }
 </style>
 
-<div class="container">
-
-  <Dashboard />
-
-  <Footer />
-
-</div>
+<main>
+  <div class="master">
+    <Router routes={masterRoutes} />
+  </div>
+  <div class="detail" class:hide={!showSecondaryRouter}>
+    <NavigationBar />
+    <Router routes={detailRoutes} on:routeLoaded={routeLoaded} />
+  </div>
+</main>

@@ -1,21 +1,27 @@
 <script lang="ts">
+  import moment from "moment";
   import Gauge from "./Gauge.svelte";
-
-  type TaskModel = {
-    title: string;
-    progress: number;
-  };
+  import { TaskModel } from "../models/TaskModel";
 
   export let task: TaskModel;
-  export let title: string = "";
-  export let progress: number = 0;
+
+  const dateToTimeAgo = date => {
+    if (!date) return "never";
+
+    return moment(date, "YYYY-MM-DD").fromNow();
+  };
 </script>
 
 <style lang="scss">
   .task {
     position: relative;
     width: 100%;
-    padding: 20px 0;
+    padding: 15px 0;
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+    }
 
     h3 {
       margin: 0;
@@ -31,7 +37,10 @@
 </style>
 
 <div class="task">
-  <h3>{task.title}</h3>
-  <h5>Last done: never</h5>
+  <div class="row">
+    <h3>{task.title}</h3>
+    <div>{task.when}</div>
+  </div>
+  <h5>Last done {dateToTimeAgo(task.last)}</h5>
   <Gauge progress={task.progress} />
 </div>

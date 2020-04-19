@@ -1,29 +1,62 @@
 <script lang="ts">
+  import { push, pop, replace } from "svelte-spa-router";
+  import active from "svelte-spa-router/active";
   import Task from "../components/Task.svelte";
+  import Footer from "../components/Footer.svelte";
   import { tasks, user } from "../stores";
 
+  export const params = {};
+
   const addNewTask = () => {
-    alert("add new task");
+    push(`/tasks/new`);
+  };
+
+  const goToTask = task => {
+    push(`/tasks/${task.id}`);
   };
 </script>
 
 <style lang="scss">
-  main {
-    padding: 6vw 6vw 0;
+  @import "../styles/colors";
 
-    .name {
-      color: rgb(0, 100, 200);
+  $margin: 30px;
+
+  main {
+    padding: $margin 0 0;
+
+    .greeting,
+    .task {
+      padding: 0 $margin;
+    }
+
+    .greeting {
+      margin: 0;
+      padding-bottom: 20px;
+      font-weight: bold;
+
+      .name {
+        color: $blue;
+      }
     }
 
     .task {
       position: relative;
+      padding: 0 $margin;
+
+      &.active {
+        background-color: #f7f7f7;
+
+        &:after {
+          height: 0;
+        }
+      }
 
       &:after {
         content: "";
         position: absolute;
         height: 1px;
-        width: calc(100% + 6vw);
-        background-color: #e0e0e0;
+        width: calc(100% - #{$margin});
+        background-color: $gray;
       }
     }
 
@@ -31,23 +64,32 @@
       display: flex;
       justify-content: center;
       padding: 10px 0;
+      color: $blue;
     }
   }
 </style>
 
 <main>
-  <h2>
-    Hello
-    <span class="name">{$user.name}</span>
-    !
+  <h2 class="greeting">
+    Hey
+    <span>
+      <span class="name">{$user.name}</span>
+      ,
+    </span>
+    you're doing well today!
   </h2>
   {#each $tasks as task (task.id)}
-    <div class="task">
+    <div
+      class="task active"
+      use:active={`/tasks/${task.id}`}
+      on:click={() => goToTask(task)}>
       <Task {task} />
     </div>
   {/each}
 
   <div class="add-new-task" on:click={addNewTask}>
-    <a href="#">Add new task</a>
+    Create a new repeating task
   </div>
+
+  <Footer />
 </main>

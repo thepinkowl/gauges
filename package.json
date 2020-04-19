@@ -1,6 +1,10 @@
 {
   "name": "todo-list",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thepinkowl/todo-list.git"
+  },
   "main": "src/index.ts",
   "scripts": {
     "build": "rollup -c",
@@ -25,13 +29,14 @@
     "rollup-plugin-svelte": "^5.2.1",
     "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-typescript2": "^0.27.0",
-    "svelte": "^3.0.0",
     "svelte-preprocess": "^3.7.1",
     "tslib": "^1.11.1",
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "moment": "^2.24.0",
     "sirv-cli": "^0.4.4",
-    "svelte": "^3.20.1"
+    "svelte": "^3.20.1",
+    "svelte-spa-router": "^2.1.0"
   }
 }
