@@ -7,12 +7,6 @@
   import NavigationBar from "./components/NavigationBar.svelte";
   import { tasks, user } from "./stores";
 
-  onMount(() => {
-    user.set({
-      name: "you"
-    });
-  });
-
   const masterRoutes = {
     "/tasks": Dashboard,
     "/tasks/*": Dashboard,
