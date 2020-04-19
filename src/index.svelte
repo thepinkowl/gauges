@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import Router from "svelte-spa-router";
   import Dashboard from "./pages/Dashboard.svelte";
   import NewTask from "./pages/NewTask.svelte";
