@@ -1,6 +1,9 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { replace } from "svelte-spa-router";
   import Router from "svelte-spa-router";
   import Dashboard from "./pages/Dashboard.svelte";
+  import Welcome from "./pages/Welcome.svelte";
   import NewTask from "./pages/NewTask.svelte";
   import TaskDetail from "./pages/TaskDetail.svelte";
   import Empty from "./components/Empty.svelte";
@@ -8,6 +11,7 @@
   import { tasks, user } from "./stores";
 
   const masterRoutes = {
+    "/welcome": Welcome,
     "/tasks": Dashboard,
     "/tasks/*": Dashboard,
     // Catch-all
@@ -22,6 +26,8 @@
   };
 
   let showSecondaryRouter = false;
+
+  tasks.subscribe(array => array.length === 0 && replace("/welcome"));
 
   const routeLoaded = e => (showSecondaryRouter = e.detail.name !== "Empty");
 </script>
