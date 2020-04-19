@@ -71,11 +71,7 @@
 
 <main>
   <h2 class="greeting">
-    Hey
-    <span>
-      <span class="name">{$user.name}</span>
-      ,
-    </span>
+    Hey <span class="name">{$user.name}</span>,
     you're doing well today!
   </h2>
   {#each $tasks as task (task.id)}

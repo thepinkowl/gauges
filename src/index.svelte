@@ -10,7 +10,7 @@
 
   onMount(() => {
     user.set({
-      name: "You"
+      name: "you"
     });
   });
 
