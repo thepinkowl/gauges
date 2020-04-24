@@ -4,7 +4,8 @@
     "baseUrl": "./",
     "types": [
       "svelte"
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*",

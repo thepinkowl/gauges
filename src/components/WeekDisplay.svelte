@@ -4,16 +4,6 @@
   export let value: Array<number> = [];
 
   const days = WeekDays;
-
-  const toggleDay = day => {
-    const isInArray = value.includes(day.id);
-
-    if (isInArray) {
-      value = value.filter(v => v !== day.id);
-    } else {
-      value = [...value, day.id];
-    }
-  };
 </script>
 
 <style lang="scss">
@@ -25,17 +15,18 @@
 
     .day {
       border-radius: 50%;
-      font-weight: 700;
-      width: 30px;
-      height: 30px;
+      font-weight: 400;
+      margin-right: 1px;
+      width: 12px;
+      height: 12px;
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
+      color: $darkestGray;
+      font-size: 0.65em;
 
-      &:active,
       &.selected {
-        background-color: $darkestGray;
+        background-color: $darkerGray;
       }
     }
   }
@@ -43,11 +34,6 @@
 
 <main>
   {#each days as day (day.id)}
-    <div
-      class="day"
-      class:selected={value.includes(day.id)}
-      on:click={() => toggleDay(day)}>
-      {day.symbol}
-    </div>
+    <div class="day" class:selected={value.includes(day.id)}>{day.symbol}</div>
   {/each}
 </main>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import moment from "moment";
   import Gauge from "./Gauge.svelte";
+  import WeekDisplay from "./WeekDisplay.svelte";
   import { TaskModel } from "../models/TaskModel";
 
   export let task: TaskModel;
@@ -32,6 +33,7 @@
       margin: 0;
       padding: 0 0 10px;
       color: #999999;
+      font-weight: normal;
     }
   }
 </style>
@@ -39,7 +41,9 @@
 <div class="task">
   <div class="row">
     <h3>{task.title}</h3>
-    <div>{task.when}</div>
+    <div>
+      <WeekDisplay value={task.when} />
+    </div>
   </div>
   <h5>Last done {dateToTimeAgo(task.last)}</h5>
   <Gauge progress={task.progress} />
