@@ -41,7 +41,7 @@
 
     .task {
       position: relative;
-      padding: 0 $margin;
+      padding: 0;
 
       &.active {
         background-color: #f7f7f7;
@@ -57,6 +57,7 @@
         height: 1px;
         width: calc(100% - #{$margin});
         background-color: $gray;
+        left: $margin;
       }
     }
 

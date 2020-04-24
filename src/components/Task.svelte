@@ -14,10 +14,11 @@
 </script>
 
 <style lang="scss">
+  $margin: 30px;
   .task {
     position: relative;
-    width: 100%;
-    padding: 15px 0;
+    width: calc(100% - #{2 * $margin});
+    padding: 15px 30px;
 
     .row {
       display: flex;
