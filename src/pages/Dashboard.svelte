@@ -12,7 +12,7 @@
   };
 
   const goToTask = task => {
-    replace(`/tasks/${task.id}`);
+    // replace(`/tasks/${task.id}`);
   };
 </script>
 
@@ -42,6 +42,7 @@
     .task {
       position: relative;
       padding: 0;
+      margin-top: 1px;
 
       &.active {
         background-color: #f7f7f7;
