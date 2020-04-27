@@ -1,4 +1,4 @@
-const LAMBDA = 0.57;
+const LAMBDA = 1.0;
 export class TaskModel {
     id: number;
     title: string;
