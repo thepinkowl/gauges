@@ -75,6 +75,7 @@
         visibility: visible;
         opacity: 1;
         transition: visibility 0.25s, opacity 0.25s linear;
+        z-index: 10;
 
         &.hide {
           visibility: hidden;

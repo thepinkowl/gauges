@@ -2,6 +2,7 @@
   import { tweened } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
   import { tap } from "@sveltejs/gestures";
+  import { replace } from "svelte-spa-router";
 
   import moment from "moment";
 
@@ -91,7 +92,7 @@
     tasks.update(task);
   };
   const rightAction = () => {
-    console.log("edit");
+    replace(`/tasks/${task.id}`);
   };
 </script>
 
@@ -176,7 +177,7 @@
         flex-direction: row-reverse;
 
         .icon {
-          margin : 0 0 0 10px;
+          margin: 0 0 0 10px;
         }
       }
     }
