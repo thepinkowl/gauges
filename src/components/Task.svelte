@@ -5,9 +5,11 @@
 
   import moment from "moment";
 
+  import Svg from "./Svg.svelte";
   import Gauge from "./Gauge.svelte";
   import WeekDisplay from "./WeekDisplay.svelte";
   import { TaskModel } from "../models/TaskModel";
+  import { editIcon, doneIcon } from "./icons/index";
 
   export let task: TaskModel;
 
@@ -94,6 +96,12 @@
 <style lang="scss">
   @import "styles/colors";
   $margin: 30px;
+
+  :global(.swipe-content-action) svg {
+    width: 30px;
+    fill: white;
+  }
+
   .task-container {
     display: flex;
     overflow: hidden;
@@ -104,6 +112,7 @@
       background-color: white;
       width: calc(100% - #{2 * $margin});
       padding: 15px 30px;
+      z-index: 2;
 
       .row {
         display: flex;
@@ -131,17 +140,22 @@
       padding: 0 15px;
       width: calc(100% - 30px);
       height: 100%;
-      z-index: -1;
+      z-index: 1;
 
       &.hide {
         display: none;
       }
 
-      .content {
+      .swipe-content-action {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
+
+        .icon {
+          width: 30px;
+          margin-right: 10px;
+        }
       }
     }
 
@@ -155,6 +169,14 @@
       background-color: $blue;
       color: white;
       justify-content: flex-end;
+
+      .swipe-content-action {
+        flex-direction: row-reverse;
+
+        .icon {
+          margin : 0 0 0 10px;
+        }
+      }
     }
   }
 </style>
@@ -181,8 +203,10 @@
     on:click|preventDefault={activateLeft}
     class="left"
     class:hide={$x < 0}>
-    <div class="content">
-      <span>icon</span>
+    <div class="swipe-content-action">
+      <div class="icon">
+        <Svg globalClass="white" icon={doneIcon} />
+      </div>
       Done
     </div>
 
@@ -193,8 +217,10 @@
     on:click|preventDefault={activateRight}
     class="right"
     class:hide={$x > 0}>
-    <div class="content">
-      <span>icon</span>
+    <div class="swipe-content-action">
+      <div class="icon">
+        <Svg globalClass="white" icon={editIcon} />
+      </div>
       Edit
     </div>
   </div>

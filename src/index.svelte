@@ -6,6 +6,7 @@
   import Welcome from "./pages/Welcome.svelte";
   import NewTask from "./pages/NewTask.svelte";
   import TaskDetail from "./pages/TaskDetail.svelte";
+  import Licenses from "./pages/Licenses.svelte";
   import Empty from "./components/Empty.svelte";
   import NavigationBar from "./components/NavigationBar.svelte";
   import { tasks, user } from "./stores";
@@ -14,6 +15,7 @@
     "/welcome": Welcome,
     "/tasks": Dashboard,
     "/tasks/*": Dashboard,
+    "/licenses": Licenses,
     // Catch-all
     // This is optional, but if present it must be the last
     "*": Dashboard
