@@ -1,3 +1,4 @@
+const LAMBDA = 0.57;
 export class TaskModel {
     id: number;
     title: string;
@@ -11,8 +12,19 @@ export class TaskModel {
         this.when = raw.when;
     }
 
+    fulfilment = (x, r) => {
+        return 100 - (100 / (1 + Math.exp(LAMBDA * (r - x))))
+    }
+
     get progress() {
-        return Math.round(Math.random() * 100);
+        const now = new Date();
+        const daysAgo = (now.getTime() - this.last.getTime()) / 1000 / 60 / 60 / 24;
+        
+        return this.fulfilment(daysAgo, 1 / this.frequency);
+    }
+
+    get frequency() {
+        return this.when.length / 7;
     }
 
     public static isValid(task: any): boolean {

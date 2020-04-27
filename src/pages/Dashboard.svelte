@@ -14,6 +14,11 @@
   const goToTask = task => {
     // replace(`/tasks/${task.id}`);
   };
+
+  let _tasks = [];
+  tasks.subscribe(value => (_tasks = value));
+  let sortedTasks = [];
+  $: sortedTasks = [..._tasks].sort((a, b) => a.progress - b.progress);
 </script>
 
 <style lang="scss">
@@ -76,7 +81,7 @@
     Hey <span class="name">{$user.name}</span>,
     you're doing well today!
   </h2>
-  {#each $tasks as task (task.id)}
+  {#each sortedTasks as task (task.id)}
     <div
       class="task active"
       use:active={`/tasks/${task.id}`}
