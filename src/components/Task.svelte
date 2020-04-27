@@ -10,6 +10,7 @@
   import WeekDisplay from "./WeekDisplay.svelte";
   import { TaskModel } from "../models/TaskModel";
   import { editIcon, doneIcon } from "./icons/index";
+  import { tasks } from "../stores";
 
   export let task: TaskModel;
 
@@ -86,7 +87,8 @@
   };
 
   const leftAction = () => {
-    console.log("done");
+    task.last = new Date();
+    tasks.update(task);
   };
   const rightAction = () => {
     console.log("edit");

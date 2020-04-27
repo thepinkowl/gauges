@@ -21,6 +21,13 @@ function createTasks() {
                 localStorage.setItem('tasks', JSON.stringify(result));
                 return result;
             });
+        },
+        update: (task: TaskModel) => {
+            update((previous: TaskModel[]) => {
+                const result = [...previous.filter(t => t.id !== task.id), task];
+                localStorage.setItem('tasks', JSON.stringify(result));
+                return result;
+            });
         }
     };
 }
