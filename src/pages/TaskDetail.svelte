@@ -1,7 +1,14 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { fly } from "svelte/transition";
 
+  import { router } from "../stores";
+
   export let params = {};
+
+  onMount(() => {
+    router.title.set("Edit task");
+  });
 </script>
 
 <style lang="scss">

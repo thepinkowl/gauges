@@ -1,11 +1,13 @@
 <script lang="ts">
   import { replace } from "svelte-spa-router";
 
+  import { router } from "../stores";
+
   export const params = {};
 
-  const goBack = e => {
-    replace("/");
-  };
+  const { title, canGoBack } = router;
+
+  const goBack = e => replace("/");
 </script>
 
 <style lang="scss">
@@ -23,6 +25,7 @@
     background-color: white;
     border-bottom: 1px solid $gray;
     padding: 15px $padding;
+    height: 20px;
 
     .back {
       color: $blue;
@@ -45,7 +48,9 @@
 </style>
 
 <div class="navigation-bar">
-  <span class="back" on:click={goBack}>&lt; Back</span>
-  <strong class="title">Title</strong>
+  {#if $canGoBack}
+    <span class="back" on:click={goBack}>&lt; Back</span>
+  {/if}
+  <strong class="title">{$title}</strong>
 
 </div>

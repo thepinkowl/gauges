@@ -1,9 +1,22 @@
 <script lang="ts">
+  import { onMount, onDestroy } from "svelte";
   import { replace } from "svelte-spa-router";
   import { fly } from "svelte/transition";
-  import { tasks } from "../stores";
+
+  import { router, tasks } from "../stores";
   import { TaskModel } from "../models/TaskModel";
   import WeekSelector from "../components/WeekSelector.svelte";
+
+  export const params = {};
+
+  onMount(() => {
+    router.title.set("New task");
+    router.canGoBack.set(false);
+  });
+
+  onDestroy(() => {
+    router.canGoBack.set(true);
+  });
 
   const dateToString = date => {
     return date.toISOString().split("T")[0];

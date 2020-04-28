@@ -3,32 +3,32 @@ import { TaskModel } from '../models/TaskModel';
 
 function createTasks() {
 
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks = tasks.map(t => new TaskModel(t));
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks = tasks.map(t => new TaskModel(t));
 
-    const { subscribe, update } = writable(tasks);
+  const { subscribe, update } = writable(tasks);
 
-    return {
-        subscribe,
-        add: (task: TaskModel) => {
-            update((n: TaskModel[]) => {
-                const ids = n.map(item => item.id);
-                ids.sort((a, b) => b - a);
-                const biggestId = ids[0] || 0;
-                task.id = biggestId + 1;
-                const result = [...n, task]
-                localStorage.setItem('tasks', JSON.stringify(result));
-                return result;
-            });
-        },
-        update: (task: TaskModel) => {
-            update((previous: TaskModel[]) => {
-                const result = [...previous.filter(t => t.id !== task.id), task];
-                localStorage.setItem('tasks', JSON.stringify(result));
-                return result;
-            });
-        }
-    };
+  return {
+    subscribe,
+    add: (task: TaskModel) => {
+      update((n: TaskModel[]) => {
+        const ids = n.map(item => item.id);
+        ids.sort((a, b) => b - a);
+        const biggestId = ids[0] || 0;
+        task.id = biggestId + 1;
+        const result = [...n, task]
+        localStorage.setItem('tasks', JSON.stringify(result));
+        return result;
+      });
+    },
+    update: (task: TaskModel) => {
+      update((previous: TaskModel[]) => {
+        const result = [...previous.filter(t => t.id !== task.id), task];
+        localStorage.setItem('tasks', JSON.stringify(result));
+        return result;
+      });
+    }
+  };
 }
 
 export const tasks = createTasks();
