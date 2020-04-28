@@ -2,16 +2,23 @@
   import { onMount } from "svelte";
   import { replace } from "svelte-spa-router";
   import Router from "svelte-spa-router";
-  import { tasks, user } from "./stores";
-  import { masterRoutes, detailRoutes } from "./routes";
 
+  import { tasks, toaster, user } from "./stores";
+  import { masterRoutes, detailRoutes } from "./routes";
+  import Toast from "./components/Toast.svelte";
   import NavigationBar from "./components/NavigationBar.svelte";
 
   let showSecondaryRouter = false;
 
-  tasks.subscribe(array => array.length === 0 && replace("/welcome"));
+  tasks.subscribe(array => array.length === 0 && replace("/welcome"));  
 
   const routeLoaded = e => (showSecondaryRouter = e.detail.name !== "Empty");
+
+  let _toasts = [];
+  toaster.subscribe(value => (_toasts = [...value]));
+  let toast;
+  $: toast = _toasts.shift();
+  
 </script>
 
 <style lang="scss">
@@ -74,4 +81,7 @@
     <NavigationBar />
     <Router routes={detailRoutes} on:routeLoaded={routeLoaded} />
   </div>
+  {#if toast}
+    <Toast {toast} />
+  {/if}
 </main>
