@@ -1,16 +1,10 @@
 <script lang="ts">
   export let progress = 0;
 
-  const getHslColor = input => {
-    input = Math.min(input, 100);
-    input = Math.max(input, 0);
-
-    // const out = 1.2 * input;
-    const out = (input * input) / (100 ** 2 / 120);
-    // const out = Math.exp(input/20.887764485); // 100/ln(120)
-
-    return `hsl(${out}, 100%, 50%)`;
-  };
+  let green, orange, red;
+  $: green = progress >= 33;
+  $: orange = progress >= 10 && progress < 33;
+  $: red = progress < 10;
 </script>
 
 <style lang="scss">
@@ -20,11 +14,28 @@
     height: 10px;
     width: 100%;
     border-radius: 10px;
-    border: 1px solid $gray;
+    background-color: $lightGray;
+    padding: 2px;
+    margin-left: -2px;
 
     .progress {
       height: 10px;
       border-radius: 10px;
+
+      &.green {
+        background-color: $lightGreen;
+        background: linear-gradient(to right, $darkGreen 20%, $lightGreen 100%);
+      }
+
+      &.orange {
+        background-color: $lightOrange;
+        background: linear-gradient(to right, $darkOrange 20%, $lightOrange 100%);
+      }
+
+      &.red {
+        background-color: $lightRed;
+        background: linear-gradient(to right, $darkRed 20%, $lightRed 100%);
+      }
     }
   }
 </style>
@@ -32,5 +43,8 @@
 <div class="gauge">
   <div
     class="progress"
-    style="width: {progress}%; background-color: {getHslColor(progress)}" />
+    class:red
+    class:orange
+    class:green
+    style="width: {progress}%;" />
 </div>
