@@ -40,8 +40,11 @@
   });
 
   const saveTask = () => {
-    if (!TaskModel.isValid(task)) {
-      return alert("All fields are required");
+    if (!TaskModel.isValid(task) || !last) {
+      return toaster.add({
+        title: "All fields are required",
+        duration: 3000,
+      });
     }
 
     if (dateToString(task.mostRecentExecution) !== last) {
