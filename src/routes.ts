@@ -1,6 +1,5 @@
 import Dashboard from "./pages/Dashboard.svelte";
 import Welcome from "./pages/Welcome.svelte";
-import NewTask from "./pages/NewTask.svelte";
 import TaskDetail from "./pages/TaskDetail.svelte";
 import Licenses from "./pages/Licenses.svelte";
 
@@ -17,7 +16,6 @@ export const masterRoutes = {
 };
 
 export const detailRoutes = {
-    "/tasks/new": NewTask,
     "/tasks/:id": TaskDetail,
     "*": Empty
 };

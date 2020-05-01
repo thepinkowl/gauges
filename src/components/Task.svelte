@@ -88,8 +88,8 @@
   };
 
   const leftAction = () => {
-    task.last = new Date();
-    tasks.update(task);
+    task.executions = [new Date(), ...task.executions];
+    tasks.save(task);
   };
   const rightAction = () => {
     replace(`/tasks/${task.id}`);
@@ -197,7 +197,7 @@
         <WeekDisplay value={task.when} />
       </div>
     </div>
-    <h5>Last done {dateToTimeAgo(task.last)}</h5>
+    <h5>Last done {dateToTimeAgo(task.mostRecentExecution)}</h5>
     <Gauge progress={task.progress} />
   </div>
   <div

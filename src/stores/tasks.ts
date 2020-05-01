@@ -4,30 +4,35 @@ import { TaskModel } from '../models/TaskModel';
 function createTasks() {
 
   let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-  tasks = tasks.map(t => new TaskModel(t));
+  tasks = tasks.map(t => TaskModel.fromRaw(t));
 
   const { subscribe, update } = writable(tasks);
 
   return {
     subscribe,
-    add: (task: TaskModel) => {
+    save: (task: TaskModel) => {
       update((n: TaskModel[]) => {
         const ids = n.map(item => item.id);
-        ids.sort((a, b) => b - a);
-        const biggestId = ids[0] || 0;
-        task.id = biggestId + 1;
-        const result = [...n, task]
+        const doesTaskExist = ids.includes(task.id);
+
+        if (!doesTaskExist) { 
+          ids.sort((a, b) => b - a);
+          const biggestId = ids[0] || 0;
+          task.id = biggestId + 1;  
+        }
+
+        const result = [...n.filter(t => t.id !== task.id), task]
         localStorage.setItem('tasks', JSON.stringify(result));
         return result;
       });
     },
-    update: (task: TaskModel) => {
-      update((previous: TaskModel[]) => {
-        const result = [...previous.filter(t => t.id !== task.id), task];
+    deleteById: (taskId: number) => {
+      update((n: TaskModel[]) => {
+        const result = [...n.filter(t => t.id !== taskId)]
         localStorage.setItem('tasks', JSON.stringify(result));
         return result;
       });
-    }
+    },
   };
 }
 
