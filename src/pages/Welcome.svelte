@@ -42,7 +42,7 @@
 
 <main>
   <div class="container">
-    <img class="success" src="/10355-loading-success.gif" alt="Success" />
+    <img class="success" src="10355-loading-success.gif" alt="Success" />
     <h4>You're all set up!</h4>
     <div class="add-new-task" on:click={addNewTask}>
       Let's create your first repeating task!

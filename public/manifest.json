@@ -1,10 +1,10 @@
 {
-    "name": "Todo list",
-    "short_name": "Todo list",
+    "name": "Gauges",
+    "short_name": "Gauges",
     "theme_color": "#2196f3",
     "background_color": "#2196f3",
     "display": "standalone",
     "orientation": "portrait",
-    "scope": "/",
-    "start_url": "/"
+    "scope": "/gauges",
+    "start_url": "/gauges"
 }
