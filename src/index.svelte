@@ -12,7 +12,7 @@
 
   tasks.subscribe(array => array.length === 0 && replace("/welcome"));  
 
-  const routeLoaded = e => (showSecondaryRouter = e.detail.name !== "Empty");
+  const routeLoaded = e => (showSecondaryRouter = e.detail.name !== "Empty" && e.detail.name !== "*");
 
   let _toasts = [];
   toaster.subscribe(value => (_toasts = [...value]));
