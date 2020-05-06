@@ -1,9 +1,9 @@
 {
-  "name": "todo-list",
+  "name": "gauges",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thepinkowl/todo-list.git"
+    "url": "https://github.com/thepinkowl/gauges.git"
   },
   "main": "src/index.ts",
   "scripts": {
