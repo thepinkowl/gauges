@@ -43,7 +43,7 @@
     if (!TaskModel.isValid(task) || !last) {
       return toaster.add({
         title: "All fields are required",
-        duration: 3000,
+        duration: 3000
       });
     }
 
@@ -62,18 +62,17 @@
   };
 
   const removeTask = () => {
+    const deletedTask = task;
+
     toaster.add({
       title: `${task.title} has been removed`,
       action: {
         title: "Undo",
-        callback: () => {
-          console.log("adding back task");
-        }
+        callback: () => tasks.save(deletedTask)
       }
     });
 
     tasks.deleteById(task.id);
-
     replace("/");
   };
 </script>
@@ -85,6 +84,10 @@
 
   main {
     padding: $margin;
+    height: calc(100% - #{2 * $margin});
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     .title {
       // margin: 0;
@@ -126,32 +129,37 @@
       font-weight: bold;
       display: flex;
       justify-content: center;
-      padding-top: 30px;
+      padding-top: #{$margin / 2};
     }
   }
 </style>
 
 {#if task}
   <main in:fly={{ duration: 300, x: 280 }} out:fly={{ duration: 300, x: 280 }}>
+    <div class="top">
+      <label>Let's give it a name!</label>
+      <input bind:value={task.title} />
 
-    <label>Let's give it a name!</label>
-    <input bind:value={task.title} />
+      <label>When do you usually do this task?</label>
+      <div class="week">
+        <WeekSelector bind:value={task.when} />
+      </div>
 
-    <label>When do you usually do this task?</label>
-    <div class="week">
-      <WeekSelector bind:value={task.when} />
+      <label>When did you last do this?</label>
+      <input type="date" bind:value={last} />
+    </div>
+    <div class="bottom">
+
+      <button on:click|preventDefault={saveTask}>
+        {create ? 'Create' : 'Update'}
+      </button>
+
+      {#if !create}
+        <div class="remove" on:click|preventDefault={removeTask}>
+          Remove this task
+        </div>
+      {/if}
     </div>
 
-    <label>When did you last do this?</label>
-    <input type="date" bind:value={last} />
-    <button on:click|preventDefault={saveTask}>
-      {create ? 'Create' : 'Update'}
-    </button>
-
-    {#if !create}
-      <div class="remove" on:click|preventDefault={removeTask}>
-        Remove this task
-      </div>
-    {/if}
   </main>
 {/if}

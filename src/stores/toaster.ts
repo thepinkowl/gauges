@@ -5,22 +5,20 @@ const DEFAULT_DURATION = 5000; // 5 seconds
 function createToaster() {
   const { subscribe, update } = writable([]);
 
-  return {
+  let out;
+  out = {
     subscribe,
     add: (toast) => {
-      update(n => {
-        return [...n, toast];
-      });
+      update(n => [...n, toast]);
     },
-    pop: (duration) => {
-      setTimeout(() => {
-        update(n => {
-          const [, ...rest] = n;
-          return rest;
-        })
-      }, duration || DEFAULT_DURATION);
+    pop: (toast) => {
+      setTimeout(() => out.dismiss(toast), toast.duration || DEFAULT_DURATION);
     },
+    dismiss: (toast) => update(n => n.filter(elem => elem !== toast))
+
   }
+
+  return out;
 }
 
 export const toaster = createToaster();

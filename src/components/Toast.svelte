@@ -9,11 +9,12 @@
 
   $: if (!toast.shown) {
     toast.shown = new Date();
-    toaster.pop(toast.duration);
+    toaster.pop(toast);
   }
 
   function action() {
-    console.log("action");
+    toast.action.callback();
+    toaster.dismiss(toast);
   }
 </script>
 
@@ -45,7 +46,7 @@
   <div class="title">{toast.title}</div>
 
   {#if toast.action}
-    <div class="action" use:tap on:tap={toast.action.callback}>
+    <div class="action" use:tap on:tap={action}>
       {toast.action.title}
     </div>
   {/if}

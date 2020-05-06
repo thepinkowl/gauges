@@ -10,15 +10,15 @@
 
   let showSecondaryRouter = false;
 
-  tasks.subscribe(array => array.length === 0 && replace("/welcome"));  
+  tasks.subscribe(array => array.length === 0 && replace("/welcome"));
 
-  const routeLoaded = e => (showSecondaryRouter = e.detail.name !== "Empty" && e.detail.name !== "*");
+  const routeLoaded = e =>
+    (showSecondaryRouter = e.detail.name !== "Empty" && e.detail.name !== "*");
 
   let _toasts = [];
   toaster.subscribe(value => (_toasts = [...value]));
   let toast;
   $: toast = _toasts.shift();
-  
 </script>
 
 <style lang="scss">
@@ -49,36 +49,45 @@
 
   @media (max-width: $middle) {
     main {
+      $navbarHeight: 51px;
+
       .master {
         flex: 1;
+      }
+
+      .detail,
+      .navbar {
+        &.hide {
+          visibility: hidden;
+          opacity: 0;
+        }
       }
 
       .detail {
         flex: 0;
         position: absolute;
-        height: 100%;
+        height: calc(100% - #{$navbarHeight});
         background-color: white;
+        padding-top: $navbarHeight;
         width: 100%;
         visibility: visible;
         opacity: 1;
         transition: visibility 0.25s, opacity 0.25s linear;
         z-index: 10;
-
-        &.hide {
-          visibility: hidden;
-          opacity: 0;
-        }
+        border: 0;
       }
     }
   }
 </style>
 
 <main>
+  <div class="navbar" class:hide={!showSecondaryRouter}>
+    <NavigationBar />
+  </div>
   <div class="master">
     <Router routes={masterRoutes} />
   </div>
   <div class="detail" class:hide={!showSecondaryRouter}>
-    <NavigationBar />
     <Router routes={detailRoutes} on:routeLoaded={routeLoaded} />
   </div>
   {#if toast}

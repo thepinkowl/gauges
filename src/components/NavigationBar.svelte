@@ -20,12 +20,14 @@
     display: none;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
+    position: absolute;
     top: 0;
     background-color: white;
     border-bottom: 1px solid $gray;
     padding: 15px $padding;
     height: 20px;
+    width: calc(100% - #{2 * $padding});
+    z-index: 100;
 
     .back {
       color: $blue;
@@ -37,6 +39,11 @@
       display: flex;
       justify-content: center;
       z-index: -1;
+    }
+
+    &.hide {
+      visibility: hidden;
+      opacity: 0;
     }
   }
 
