@@ -1,6 +1,7 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
@@ -17,6 +18,10 @@ const preprocess = sveltePreprocess({
     postcss: {
         plugins: [require('autoprefixer')],
     },
+    typescript: {
+        // skips type checking
+        transpileOnly: true,
+    },
 });
 
 export default {
@@ -28,6 +33,7 @@ export default {
         file: 'public/build/bundle.js'
     },
     plugins: [
+        json(),
         svelte({
             preprocess,
             // enable run-time checks when not in production

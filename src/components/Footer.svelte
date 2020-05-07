@@ -1,12 +1,22 @@
+<script lang="ts">
+  import pkg from "../../package.json";
+  // TODO: Add ThePinkOwl logo
+</script>
+
 <style lang="scss">
   .footer {
-    background-color: #e9e9e9;
     display: flex;
     justify-content: center;
     padding: 10px 0;
+    color: pink;
+    font-size: 10px;
+
+    a {
+      color: pink;
+    }
   }
 </style>
 
 <div class="footer">
-  <a href="https://github.com/thepinkowl">THE PINK OWL</a>
+  Gauges by <a target="_blank" href="https://github.com/thepinkowl">ThePinkOwl</a> - <a target="_blank" href={pkg.license.url}>{pkg.license.type}</a>
 </div>
