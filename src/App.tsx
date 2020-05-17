@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet } from '@ionic/react';
+import { IonApp, IonRouterOutlet, getConfig, iosTransitionAnimation } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
@@ -25,10 +25,11 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+// animation={iosTransitionAnimation} 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <IonRouterOutlet>
+      <IonRouterOutlet mode="ios">
         <Route path="/tasks" component={Dashboard} exact={true} />
         <Route path="/tasks/:id" component={TaskDetail} exact={true} />
         <Route path="/home" component={Home} exact={true} />

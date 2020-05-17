@@ -1,5 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
+import {
+  IonAlert
+} from '@ionic/react';
+import { getUser, saveUser, User } from '../data/user';
 
 const Title = styled.h1`
   width: 73%;
@@ -17,13 +21,49 @@ const Name = styled.span`
 `
 
 interface TitleProps {
-  name: string;
   status: string;
 }
 
-const MoodTitle: React.FC<TitleProps> = ({ name, status }) => {
+const MoodTitle: React.FC<TitleProps> = ({ status }) => {
+  const [askForName, setAskForName] = useState<boolean>(false);
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    setUser(getUser);
+  }, []);
+
   return (
-    <Title>Hey <Name>{name}</Name>, you're doing {status} today!</Title>
+    <div>
+      <Title>Hey <Name onClick={() => setAskForName(true)}>{user?.name || 'you'}</Name>, you're doing {status} today!</Title>
+      <IonAlert isOpen={askForName}
+      onDidDismiss={() => setAskForName(false)}
+      header={'How should I call you?'}
+      inputs={[
+        {
+          name: 'name',
+          type: 'text',
+          id: 'name1',
+          value: user?.name,
+          placeholder: 'Name'
+        }
+        ]} 
+        
+        buttons={[
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary'
+          },
+          {
+            text: 'Ok',
+            handler: (e) => {
+              setUser(e as User);
+              saveUser(e as User)
+            }
+          }
+        ]}
+        />
+    </div>
   );
 };
 

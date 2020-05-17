@@ -28,7 +28,7 @@ const Dashboard: React.FC<IProps> = ({history}) => {
   return (
     <IonPage id="home-page">
       <IonContent fullscreen>
-        <MoodTitle name="Roger" status="well" />
+        <MoodTitle status="well" />
         <IonList>
           {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}
         </IonList>
