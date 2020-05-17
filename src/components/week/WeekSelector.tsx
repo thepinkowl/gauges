@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {
-  useIonViewWillEnter
-} from '@ionic/react';
 import styled from 'styled-components';
 import { WeekDay, WeekDays } from '../../data/weekDays'
 
 const WeekContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
 `;
 
 const Day = styled.div`
@@ -32,19 +30,13 @@ interface WeekSelectorProps {
 }
 
 const WeekSelector: React.FC<WeekSelectorProps> = ({ when, onValueChange }) => {
+  
   const days = WeekDays;
-
-  const [selectedDays, setSelectedDays] = useState<number[]>([]);
+  const [selectedDays, setSelectedDays] = useState<number[]>(when);
 
   useEffect(() => {
     setSelectedDays(when);
-    console.log(when);
-  }, []);
-
-  useIonViewWillEnter(() => {
-    setSelectedDays(when);
-    console.log(when);
-  });
+  }, [when]);
 
   const toggleDay = (day: WeekDay) => {
     const isInArray = selectedDays.includes(day.id);

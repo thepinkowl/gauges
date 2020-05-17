@@ -5,23 +5,30 @@ export interface Task {
   executions: Date[];
 }
 
-const tasks: Task[] = [
+let tasks: Task[] = [
   {
     title: 'Laundry',
     when: [1, 3],
-    executions: [],
+    executions: [
+      new Date("2020-05-14T20:06:02.097+02:00"),
+      new Date("2020-05-13T20:06:02.097+02:00")
+    ],
     id: 0
   },
   {
     title: 'Gardening',
     when: [0, 1, 2],
-    executions: [],
+    executions: [
+      new Date("2020-05-16T20:06:02.097+02:00")
+    ],
     id: 1
   },
   {
     title: 'Hoovering',
     when: [0, 1, 3],
-    executions: [],
+    executions: [
+      new Date("2020-05-17T20:06:02.097+02:00")
+    ],
     id: 2
   },
   // {
@@ -59,3 +66,23 @@ const tasks: Task[] = [
 export const getTasks = () => tasks;
 
 export const getTask = (id: number) => tasks.find(m => m.id === id);
+
+export const deleteTask = (task: Task) => {
+  tasks = [...tasks.filter(t => t.id !== task.id)]
+}
+
+export const saveTask = (task: Task) => {
+  const ids = tasks.map(item => item.id);
+  const doesTaskExist = ids.includes(task.id);
+
+  if (!doesTaskExist) {
+    ids.sort((a, b) => b - a);
+    const biggestId = ids[0] || 0;
+    task.id = biggestId + 1;
+  }
+
+  const result = [...tasks.filter(t => t.id !== task.id), task]
+  // localStorage.setItem('tasks', JSON.stringify(result));
+  tasks = result;
+
+}
