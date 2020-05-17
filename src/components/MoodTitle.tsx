@@ -1,5 +1,19 @@
 import React from 'react';
-import './MoodTitle.scss';
+import styled from 'styled-components';
+
+const Title = styled.h1`
+  width: 75%;
+  max-width: 350px;
+  font-family: var(--tpo-font-family);
+  font-size: var(--tpo-font-big);
+  font-weight: 700;
+  line-height: 26px;
+  margin: var(--tpo-margin);
+`;
+
+const Name = styled.span`
+  color: var(--ion-color-primary);
+`
 
 interface TitleProps {
   name: string;
@@ -8,7 +22,7 @@ interface TitleProps {
 
 const MoodTitle: React.FC<TitleProps> = ({ name, status }) => {
   return (
-    <h1>Hey <span>{name}</span>, you're doing {status} today!</h1>
+    <Title>Hey <Name>{name}</Name>, you're doing {status} today!</Title>
   );
 };
 

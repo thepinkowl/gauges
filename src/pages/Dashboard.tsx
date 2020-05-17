@@ -1,17 +1,9 @@
+import { IonContent, IonList, IonPage, useIonViewWillEnter } from '@ionic/react';
 import React, { useState } from 'react';
-import { Task, getTasks } from '../data/tasks';
-import {
-  IonContent,
-  IonList,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  useIonViewWillEnter,
-  IonHeader
-} from '@ionic/react';
+import styled from 'styled-components';
 import GaugeListItem from '../components/GaugeListItem';
 import MoodTitle from '../components/MoodTitle';
-import './Dashboard.scss';
+import { getTasks, Task } from '../data/tasks';
 
 const Dashboard: React.FC = () => {
 
@@ -29,7 +21,7 @@ const Dashboard: React.FC = () => {
       <IonContent fullscreen>
         <MoodTitle name="Roger" status="well" />
         <IonList>
-          {['test'].map(m => <GaugeListItem key={m} data={m} />)}
+          {tasks.map(t => <GaugeListItem key={t.id} data={t.title} task={t} />)}
         </IonList>
       </IonContent>
     </IonPage>

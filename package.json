@@ -1,5 +1,5 @@
 {
-  "name": "Gauges",
+  "name": "gauges",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -16,16 +16,16 @@
     "@types/react-router": "^5.1.4",
     "@types/react-router-dom": "^5.1.3",
     "ionicons": "^5.0.0",
-    "node-sass": "^4.14.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "styled-components": "^5.1.0",
     "typescript": "3.8.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "export HOST=0.0.0.0 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -46,7 +46,9 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "2.1.0"
+    "@capacitor/cli": "2.1.0",
+    "@types/styled-components": "^5.1.0",
+    "babel-plugin-styled-components": "^1.10.7"
   },
   "description": "An Ionic project"
 }

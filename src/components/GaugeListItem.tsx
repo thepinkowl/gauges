@@ -1,31 +1,48 @@
 import React from 'react';
+import { Task } from '../data/tasks';
 import {
   IonItem,
   IonLabel,
-  IonNote
-  } from '@ionic/react';
+  IonNote,
+  IonIcon,
+  IonItemOption,
+  IonItemSliding,
+  IonItemOptions
+} from '@ionic/react';
+import { happy } from 'ionicons/icons';
+import WeekDisplay from './WeekDisplay';
+import styled from 'styled-components';
 
-interface MessageListItemProps {
+const IonItemCustom = styled(IonItem)`
+  --padding-start: 20px;
+`;
+
+interface GaugeListItemProps {
   data: string;
+  task?: Task;
 }
 
-const GaugeListItem: React.FC<MessageListItemProps> = ({ data }) => {
+const GaugeListItem: React.FC<GaugeListItemProps> = ({ data, task }) => {
   return (
-    <IonItem routerLink={`/message/${data}`} detail={false}>
-      <div slot="start" className="dot dot-unread"></div>
-      <IonLabel className="ion-text-wrap">
-        <h2>
-          {data}
-          <span className="date">
-            <IonNote>{data}</IonNote>
-          </span>
-        </h2>
-        <h3>{data}</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </IonLabel>
-    </IonItem>
+    <IonItemSliding>
+      <IonItemOptions side="start">
+        <IonItemOption onClick={() => console.log('favorite clicked')}>
+          <IonIcon slot="start" icon={happy}></IonIcon>Favorite
+        </IonItemOption>
+        <IonItemOption color="danger" onClick={() => console.log('share clicked')}>Share</IonItemOption>
+      </IonItemOptions>
+
+      <IonItemCustom>
+        <IonLabel>{data}</IonLabel>
+        <IonNote slot="end">
+          <WeekDisplay value={task?.when} />
+        </IonNote>
+      </IonItemCustom>
+
+      <IonItemOptions side="end">
+        <IonItemOption onClick={() => console.log('unread clicked')}>Unread</IonItemOption>
+      </IonItemOptions>
+    </IonItemSliding>
   );
 };
 
