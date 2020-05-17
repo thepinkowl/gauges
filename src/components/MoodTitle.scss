@@ -1,0 +1,15 @@
+@import '../theme/theme.scss';
+
+h1 {
+    width: 75%;
+    max-width: 350px;
+    font-family: "IBM Plex Sans";
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+    margin: $margin;
+
+    &>span {
+        color: $primary;
+    }
+}
