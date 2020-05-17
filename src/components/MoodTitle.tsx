@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Title = styled.h1`
-  width: 75%;
+  width: 73%;
   max-width: 350px;
   font-family: var(--tpo-font-family);
   font-size: var(--tpo-font-big);
   font-weight: 700;
-  line-height: 26px;
+  line-height: 140%;
   margin: var(--tpo-margin);
+  margin-top: 40px;
 `;
 
 const Name = styled.span`

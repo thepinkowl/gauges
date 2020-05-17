@@ -17,6 +17,7 @@ import {
 } from '@ionic/react';
 import { personCircle } from 'ionicons/icons';
 import { RouteComponentProps } from 'react-router';
+import WeekSelector from '../components/week/WeekSelector';
 
 interface TaskDetailProps extends RouteComponentProps<{ id: string; }> { }
 
@@ -44,27 +45,13 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ match }) => {
         {task ? (
           <>
             <IonItem>
-              <IonInput />
+              <IonLabel position="floating">Let's give it a name</IonLabel>
+              <IonInput value={task.title} />
             </IonItem>
             <IonItem>
-              <IonIcon icon={personCircle} color="primary"></IonIcon>
-              <IonLabel className="ion-text-wrap">
-                <h2>
-                  {task.title}
-                  <span className="date">
-                    <IonNote>{task.when}</IonNote>
-                  </span>
-                </h2>
-                <h3>To: <IonNote>Me</IonNote></h3>
-              </IonLabel>
+              <IonLabel>When do you usually do this task?</IonLabel>
+              <WeekSelector when={task.when} onValueChange={(d) => console.log(d)} />
             </IonItem>
-
-            <div className="ion-padding">
-              <h1>{task.id}</h1>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </div>
           </>
         ) : <div>Task not found</div>}
       </IonContent>

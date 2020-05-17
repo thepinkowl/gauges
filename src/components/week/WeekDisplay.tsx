@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { WeekDays } from '../../data/weekDays'
 
 const WeekContainer = styled.div`
   display: flex;
@@ -28,15 +29,7 @@ interface WeekDisplayProps {
 }
 
 const WeekDisplay: React.FC<WeekDisplayProps> = ({ value }) => {
-  const days = [
-    { id: 0, symbol: 'M' },
-    { id: 1, symbol: 'T' },
-    { id: 2, symbol: 'W' },
-    { id: 3, symbol: 'T' },
-    { id: 4, symbol: 'F' },
-    { id: 5, symbol: 'S' },
-    { id: 6, symbol: 'S' },
-  ]
+  const days = WeekDays;
 
   return (
     <WeekContainer>
