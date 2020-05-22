@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, getConfig, iosTransitionAnimation } from '@ionic/react';
+import { IonApp, IonRouterOutlet, getConfig, iosTransitionAnimation, setupConfig, isPlatform } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
@@ -38,5 +38,7 @@ const App: React.FC = () => (
     </IonReactRouter>
   </IonApp>
 );
+
+setupConfig({ swipeBackEnabled: false });
 
 export default App;
