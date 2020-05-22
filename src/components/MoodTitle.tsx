@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   IonAlert
@@ -36,18 +36,18 @@ const MoodTitle: React.FC<TitleProps> = ({ status }) => {
     <div>
       <Title>Hey <Name onClick={() => setAskForName(true)}>{user?.name || 'you'}</Name>, you're doing {status} today!</Title>
       <IonAlert isOpen={askForName}
-      onDidDismiss={() => setAskForName(false)}
-      header={'How should I call you?'}
-      inputs={[
-        {
-          name: 'name',
-          type: 'text',
-          id: 'name1',
-          value: user?.name,
-          placeholder: 'Name'
-        }
-        ]} 
-        
+        onDidDismiss={() => setAskForName(false)}
+        header={'How should I call you?'}
+        inputs={[
+          {
+            name: 'name',
+            type: 'text',
+            id: 'name1',
+            value: user?.name,
+            placeholder: 'Name'
+          }
+        ]}
+
         buttons={[
           {
             text: 'Cancel',
@@ -62,7 +62,7 @@ const MoodTitle: React.FC<TitleProps> = ({ status }) => {
             }
           }
         ]}
-        />
+      />
     </div>
   );
 };
