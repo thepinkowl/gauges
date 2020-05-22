@@ -1,3 +1,5 @@
+import TaskDetail from "../pages/TaskDetail";
+
 export interface Task {
   id: number;
   title: string;
@@ -5,7 +7,7 @@ export interface Task {
   executions: Date[];
 }
 
-let tasks: Task[] = [
+const defaultTasks: Task[] = [
   {
     title: 'Laundry',
     when: [1, 3],
@@ -63,6 +65,18 @@ let tasks: Task[] = [
   // }
 ];
 
+const loadTasks = () => {
+  const fromDB = localStorage.getItem('tasks');
+  if (!fromDB) return [...defaultTasks]
+  const parsed = JSON.parse(fromDB);
+  parsed.forEach((task: Task) => {
+    task.executions = task.executions.map(e => new Date(e))
+  });
+  return parsed;
+}
+
+let tasks: Task[] = loadTasks()
+
 export const getTasks = () => tasks;
 
 export const getTask = (id: number) => tasks.find(m => m.id === id);
@@ -82,7 +96,7 @@ export const saveTask = (task: Task) => {
   }
 
   const result = [...tasks.filter(t => t.id !== task.id), task]
-  // localStorage.setItem('tasks', JSON.stringify(result));
+  localStorage.setItem('tasks', JSON.stringify(result));
   tasks = result;
 
 }
