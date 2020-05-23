@@ -1,7 +1,7 @@
 {
-  "name": "Gauges",
+  "name": "new-gauges",
   "integrations": {
     "capacitor": {}
   },
-  "type": "react"
+  "type": "angular"
 }

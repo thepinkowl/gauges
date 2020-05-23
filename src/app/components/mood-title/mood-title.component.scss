@@ -1,0 +1,16 @@
+:host {
+    h1 {
+        width: 73%;
+        max-width: 350px;
+        font-family: var(--tpo-font-family);
+        font-size: var(--tpo-font-big);
+        font-weight: 700;
+        line-height: 140%;
+        margin: var(--tpo-margin);
+        margin-top: 40px;
+
+        span {
+            color: var(--ion-color-primary);
+        }
+    }
+}

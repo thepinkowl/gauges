@@ -1,0 +1,44 @@
+<ion-item-sliding>
+  <ion-item-options side="start">
+    <ion-item-option expandable color="success">
+      <ion-icon slot="start" name="checkmark-done-outline"></ion-icon>I've just done it
+    </ion-item-option>
+  </ion-item-options>
+
+  <ion-item>
+    <ion-grid>
+      <ion-row id="first-row">
+        <div id="title">{{task.title}}</div>
+        <app-week-display [when]="task.when"></app-week-display>
+      </ion-row>
+      <ion-row id="subtext">
+        Last done two days ago
+      </ion-row>
+      <ion-row>
+       <app-gauge [percentage]="70"></app-gauge>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item-options side="end" (ionSwipe)="edit()">
+    <ion-item-option color="danger">Delete</ion-item-option>
+    <ion-item-option (click)="edit()" expandable>Edit</ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>
+
+<!-- <ion-item-sliding ref={this.doneSliderRef} onClick={this.switchSlider}>
+  <IonItemOptions side="start" onIonSwipe={this.markAsDone}>
+    <IonItemOption expandable color="success" onClick={this.markAsDone}>
+      <IonIcon slot="start" icon={checkmarkDoneOutline}></IonIcon>I've just done it
+    </IonItemOption>
+  </IonItemOptions>
+
+  <IonItemCustom>
+    <GaugeContent task={this.props.task} />
+  </IonItemCustom>
+
+  <IonItemOptions side="end" onIonSwipe={this.editGauge}>
+    <IonItemOption color="danger" onClick={this.deleteGauge}>Delete</IonItemOption>
+    <IonItemOption expandable onClick={this.editGauge}>Edit</IonItemOption>
+  </IonItemOptions>
+</ion-item-sliding> -->

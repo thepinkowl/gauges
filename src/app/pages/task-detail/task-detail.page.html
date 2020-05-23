@@ -1,0 +1,32 @@
+<ion-content [fullscreen]="true">
+  <ion-button (click)="goBack()" fill="clear">Cancel</ion-button>
+  <!-- <AtoZCol>
+      <div>
+        <CancelButton onClick={goBack}>Cancel</CancelButton>
+        <IonItem>
+          <IonLabel position="stacked">Let's give it a name</IonLabel>
+          <IonInput value={title} onIonChange={e => setTitle(e.detail.value!)} />
+        </IonItem>
+        <IonItem>
+          <IonLabel position="stacked">When do you usually do this task?</IonLabel>
+          <WeekSelector when={when} onValueChange={data => setWhen(data)} />
+        </IonItem>
+        <IonItem>
+          <IonLabel position="stacked">When did you last do this?</IonLabel>
+          <IonDatetime displayFormat="DDDD MMM D, YYYY"
+            value={lastExecution?.toISOString()} onIonChange={e => changeLastExecution(e.detail.value!)}>
+          </IonDatetime>
+        </IonItem>
+      </div>
+      <div className="actions">
+        <IonButton size="large" onClick={save} expand="block">{task ? 'Update' : 'Create'}</IonButton>
+        {task && (<span className='remove' onClick={() => remove(task)}>Remove this task</span>)}
+      </div>
+    </AtoZCol>
+    <IonToast
+      isOpen={!isFormValid}
+      onDidDismiss={() => setIsFormValid(true)}
+      message="All fields are required."
+      duration={1000}
+    /> -->
+</ion-content>

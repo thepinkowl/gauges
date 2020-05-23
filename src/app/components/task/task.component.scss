@@ -1,0 +1,22 @@
+:host {
+    ion-item {
+        --padding-start: 20px;
+    }
+
+    ion-grid {
+        #first-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #title {
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+
+        #subtext {
+            font-size: 1em;
+            color: var(--ion-color-medium);
+        }
+    }
+}

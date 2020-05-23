@@ -1,9 +1,9 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "Gauges",
+  "appName": "new-gauges",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "build",
+  "webDir": "www",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
