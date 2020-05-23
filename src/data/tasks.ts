@@ -1,5 +1,3 @@
-import TaskDetail from "../pages/TaskDetail";
-
 export interface Task {
   id: number;
   title: string;
@@ -83,6 +81,7 @@ export const getTask = (id: number) => tasks.find(m => m.id === id);
 
 export const deleteTask = (task: Task) => {
   tasks = [...tasks.filter(t => t.id !== task.id)]
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 export const saveTask = (task: Task) => {

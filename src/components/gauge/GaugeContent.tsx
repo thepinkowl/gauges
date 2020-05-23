@@ -35,7 +35,7 @@ const GaugeContent: React.FC<GaugeContentProps> = ({ task }) => {
         <GaugeSubText>Last done two days ago</GaugeSubText>
       </IonRow>
       <IonRow>
-        <GaugeBar percentage={0} />
+        <GaugeBar percentage={70} />
       </IonRow>
     </IonGrid>
   );
