@@ -8,7 +8,7 @@ export class SortTasksPipe implements PipeTransform {
 
   transform(tasks: Task[]): Task[] {
     if (!tasks) return null;
-    return tasks.sort((a: Task, b: Task) => a.progress > b.progress ? 1 : -1);
+    return tasks.sort((a: Task, b: Task) => a.progress < b.progress ? 1 : -1);
   }
 
 }
