@@ -6,79 +6,100 @@
   "display": "standalone",
   "icons": [
     {
+      "src": "icon/icon.png",
+      "type": "image/png",
+      "sizes": "4267x4267",
+      "purpose": "any"
+    },
+    {
       "src": "icon/Icon-App-20x20@2x.png",
       "sizes": "40x40",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-20x20@3x.png",
       "sizes": "60x60",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-29x29@1x.png",
       "sizes": "29x29",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-29x29@2x.png",
       "sizes": "58x58",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-29x29@3x.png",
       "sizes": "87x87",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-40x40@2x.png",
       "sizes": "80x80",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-40x40@3x.png",
       "sizes": "120x120",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-60x60@2x.png",
       "sizes": "120x120",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-60x60@3x.png",
       "sizes": "180x180",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-76x76@2x.png",
       "sizes": "152x152",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-20x20@1x.png",
       "sizes": "20x20",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-40x40@1x.png",
       "sizes": "40x40",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-76x76@1x.png",
       "sizes": "76x76",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/Icon-App-83.5x83.5@2x.png",
       "sizes": "167x167",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon/iTunesArtwork@2x.png",
       "sizes": "1024x1024",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "background_color": "#000000"
