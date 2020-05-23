@@ -1,15 +1,9 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import Task, { TaskInterface } from '../models/Task';
 import { NotificationsService } from './notifications.service';
-import { Observable, of, BehaviorSubject } from 'rxjs';
 
-export interface Task {
-  id: number;
-  title: string;
-  when: number[];
-  executions: Date[];
-}
-
-const defaultTasks: Task[] = [
+const defaultTasks: TaskInterface[] = [
   {
     title: 'Laundry',
     when: [1, 3],
@@ -45,7 +39,7 @@ export class TasksService {
   private tasks: BehaviorSubject<Task[]> = new BehaviorSubject([]);
 
   constructor(private notifs: NotificationsService) {
-    this.loadTasks().then(tasks => this.tasks.next(tasks));
+    this.loadTasks().then(tasks => this.tasks.next(Task.parseTasks(tasks)));
   }
 
   public getTasks(): Observable<Task[]> {
@@ -103,7 +97,7 @@ export class TasksService {
   private async loadTasksFromDb() {
     const fromDB = localStorage.getItem(this.localStorageKey);
     if (!fromDB) return undefined;
-    const parsed = JSON.parse(fromDB);
+    const parsed = JSON.parse(fromDB) as Task[];
     parsed.forEach((task: Task) => {
       task.executions = task.executions.map(e => new Date(e))
     });

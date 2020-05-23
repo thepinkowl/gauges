@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonItemSliding, NavController } from '@ionic/angular';
-import { Task, TasksService } from 'src/app/services/tasks.service';
-import { NotificationsService } from 'src/app/services/notifications.service';
+import Task from 'src/app/models/Task';
+import { TasksService } from 'src/app/services/tasks.service';
 
 @Component({
   selector: 'app-task',
