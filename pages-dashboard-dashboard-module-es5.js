@@ -113,7 +113,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <!-- <ion-list>\n    <app-message *ngFor=\"let message of getMessages()\" [message]=\"message\"></app-message>\n  </ion-list> -->\n\n  <app-mood-title></app-mood-title>\n  <ion-list>\n    <app-task *ngFor=\"let task of tasks\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>";
+    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list>\n    <app-task *ngFor=\"let task of tasks | async\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>";
     /***/
   },
 
@@ -329,12 +329,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! @ionic/angular */
     "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
+    /* harmony import */
+
+
+    var src_app_services_tasks_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! src/app/services/tasks.service */
+    "./src/app/services/tasks.service.ts");
 
     var TaskComponent = /*#__PURE__*/function () {
-      function TaskComponent(nav) {
+      function TaskComponent(nav, tasksService) {
         _classCallCheck(this, TaskComponent);
 
         this.nav = nav;
+        this.tasksService = tasksService;
       }
 
       _createClass(TaskComponent, [{
@@ -349,6 +356,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "delete",
         value: function _delete() {
+          this.tasksService.deleteTask(this.task);
           this.slider.closeOpened();
         }
       }]);
@@ -359,6 +367,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     TaskComponent.ctorParameters = function () {
       return [{
         type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"]
+      }, {
+        type: src_app_services_tasks_service__WEBPACK_IMPORTED_MODULE_3__["TasksService"]
       }];
     };
 
@@ -682,17 +692,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _classCallCheck(this, DashBoardPage);
 
         this.tasksService = tasksService;
-        this.tasks = [];
       }
 
       _createClass(DashBoardPage, [{
         key: "ionViewWillEnter",
         value: function ionViewWillEnter() {
-          var _this = this;
-
-          this.tasksService.getTasks().then(function (tasks) {
-            return _this.tasks = tasks;
-          });
+          this.tasks = this.tasksService.getTasks();
         }
       }]);
 
@@ -714,6 +719,129 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       /*! ./dashboard.page.scss */
       "./src/app/pages/dashboard/dashboard.page.scss"))["default"]]
     })], DashBoardPage);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/notifications.service.ts":
+  /*!***************************************************!*\
+    !*** ./src/app/services/notifications.service.ts ***!
+    \***************************************************/
+
+  /*! exports provided: NotificationsService */
+
+  /***/
+  function srcAppServicesNotificationsServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "NotificationsService", function () {
+      return NotificationsService;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ionic/angular */
+    "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
+
+    var NotificationsService = /*#__PURE__*/function () {
+      function NotificationsService(toastController) {
+        _classCallCheck(this, NotificationsService);
+
+        this.toastController = toastController;
+      }
+
+      _createClass(NotificationsService, [{
+        key: "showToast",
+        value: function showToast(message) {
+          var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            var toast;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    _context.next = 2;
+                    return this.toastController.create({
+                      message: message,
+                      duration: duration
+                    });
+
+                  case 2:
+                    toast = _context.sent;
+                    toast.present();
+
+                  case 4:
+                  case "end":
+                    return _context.stop();
+                }
+              }
+            }, _callee, this);
+          }));
+        }
+      }, {
+        key: "showUndoDeletedTask",
+        value: function showUndoDeletedTask(tasksService, task) {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            var toast;
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    _context2.next = 2;
+                    return this.toastController.create({
+                      message: "\"".concat(task.title, "\" has been removed."),
+                      buttons: [{
+                        side: 'end',
+                        text: 'Undo',
+                        handler: function handler() {
+                          return !!tasksService.updateTask(task);
+                        }
+                      }]
+                    });
+
+                  case 2:
+                    toast = _context2.sent;
+                    toast.present();
+
+                  case 4:
+                  case "end":
+                    return _context2.stop();
+                }
+              }
+            }, _callee2, this);
+          }));
+        }
+      }]);
+
+      return NotificationsService;
+    }();
+
+    NotificationsService.ctorParameters = function () {
+      return [{
+        type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"]
+      }];
+    };
+
+    NotificationsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+      providedIn: 'root'
+    })], NotificationsService);
     /***/
   },
 
@@ -748,6 +876,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! @angular/core */
     "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _notifications_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ./notifications.service */
+    "./src/app/services/notifications.service.ts");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
 
     var defaultTasks = [{
       title: 'Laundry',
@@ -767,71 +907,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }];
 
     var TasksService = /*#__PURE__*/function () {
-      function TasksService() {
-        var _this2 = this;
+      function TasksService(notifs) {
+        var _this = this;
 
         _classCallCheck(this, TasksService);
 
-        this.tasks = [];
+        this.notifs = notifs;
+        this.tasks = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]([]);
         this.localStorageKey = 'tasks';
         this.loadTasks().then(function (tasks) {
-          return _this2.tasks = tasks;
+          return _this.tasks.next(tasks);
         });
       }
 
       _createClass(TasksService, [{
         key: "getTasks",
         value: function getTasks() {
-          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    return _context.abrupt("return", this.tasks);
-
-                  case 1:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
+          return this.tasks;
         }
       }, {
         key: "getTaskById",
         value: function getTaskById(id) {
-          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    return _context2.abrupt("return", this.tasks.find(function (t) {
-                      return t.id === id;
-                    }));
-
-                  case 1:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, this);
-          }));
-        }
-      }, {
-        key: "deleteTask",
-        value: function deleteTask(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
             return regeneratorRuntime.wrap(function _callee3$(_context3) {
               while (1) {
                 switch (_context3.prev = _context3.next) {
                   case 0:
-                    this.tasks = _toConsumableArray(this.tasks.filter(function (t) {
-                      return t.id !== task.id;
+                    return _context3.abrupt("return", this.tasks.getValue().find(function (t) {
+                      return t.id === id;
                     }));
-                    _context3.next = 3;
-                    return this.persistTasksInDb();
 
-                  case 3:
+                  case 1:
                   case "end":
                     return _context3.stop();
                 }
@@ -840,37 +946,43 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "createOrUpdateTask",
-        value: function createOrUpdateTask(task) {
+        key: "deleteTask",
+        value: function deleteTask(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-            var doesTaskExist;
+            var index, removedTasks, removedTask;
             return regeneratorRuntime.wrap(function _callee4$(_context4) {
               while (1) {
                 switch (_context4.prev = _context4.next) {
                   case 0:
-                    doesTaskExist = !!task.id && !!this.tasks.find(function (t) {
-                      return t.id === task.id;
-                    });
+                    index = this.tasks.getValue().indexOf(task);
 
-                    if (doesTaskExist) {
-                      _context4.next = 5;
+                    if (!(index < 0)) {
+                      _context4.next = 3;
                       break;
                     }
 
-                    _context4.next = 4;
-                    return this.createTask(task);
+                    throw Error('Task does not exist');
 
-                  case 4:
-                    return _context4.abrupt("return", _context4.sent);
+                  case 3:
+                    removedTasks = this.tasks.getValue().splice(index, 1);
 
-                  case 5:
-                    _context4.next = 7;
-                    return this.updateTask(task);
+                    if (!(removedTasks.length === 0)) {
+                      _context4.next = 6;
+                      break;
+                    }
 
-                  case 7:
-                    return _context4.abrupt("return", _context4.sent);
+                    throw Error('Cannot delete task');
 
-                  case 8:
+                  case 6:
+                    removedTask = removedTasks[0]; // this.tasks = [...this.tasks.filter(t => t.id !== task.id)];
+
+                    _context4.next = 9;
+                    return this.persistTasksInDb();
+
+                  case 9:
+                    this.notifs.showUndoDeletedTask(this, removedTask);
+
+                  case 10:
                   case "end":
                     return _context4.stop();
                 }
@@ -879,27 +991,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "createTask",
-        value: function createTask(task) {
+        key: "createOrUpdateTask",
+        value: function createOrUpdateTask(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
-            var biggestId;
+            var doesTaskExist;
             return regeneratorRuntime.wrap(function _callee5$(_context5) {
               while (1) {
                 switch (_context5.prev = _context5.next) {
                   case 0:
-                    biggestId = this.tasks.reduce(function (acc, t) {
-                      return t.id > acc ? t.id : acc;
-                    }, 0);
-                    task.id = biggestId + 1; // TODO: should we copy or just push instead?
+                    doesTaskExist = !!task.id && !!this.tasks.getValue().find(function (t) {
+                      return t.id === task.id;
+                    });
 
-                    this.tasks = [].concat(_toConsumableArray(this.tasks), [task]);
-                    _context5.next = 5;
-                    return this.persistTasksInDb();
+                    if (doesTaskExist) {
+                      _context5.next = 5;
+                      break;
+                    }
+
+                    _context5.next = 4;
+                    return this.createTask(task);
+
+                  case 4:
+                    return _context5.abrupt("return", _context5.sent);
 
                   case 5:
-                    return _context5.abrupt("return", task);
+                    _context5.next = 7;
+                    return this.updateTask(task);
 
-                  case 6:
+                  case 7:
+                    return _context5.abrupt("return", _context5.sent);
+
+                  case 8:
                   case "end":
                     return _context5.stop();
                 }
@@ -908,23 +1030,27 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "updateTask",
-        value: function updateTask(task) {
+        key: "createTask",
+        value: function createTask(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
+            var biggestId;
             return regeneratorRuntime.wrap(function _callee6$(_context6) {
               while (1) {
                 switch (_context6.prev = _context6.next) {
                   case 0:
-                    this.tasks = [].concat(_toConsumableArray(this.tasks.filter(function (t) {
-                      return t.id !== task.id;
-                    })), [task]);
-                    _context6.next = 3;
+                    biggestId = this.tasks.getValue().reduce(function (acc, t) {
+                      return t.id > acc ? t.id : acc;
+                    }, 0);
+                    task.id = biggestId + 1; // TODO: should we copy or just push instead?
+
+                    this.tasks.next([].concat(_toConsumableArray(this.tasks.getValue()), [task]));
+                    _context6.next = 5;
                     return this.persistTasksInDb();
 
-                  case 3:
+                  case 5:
                     return _context6.abrupt("return", task);
 
-                  case 4:
+                  case 6:
                   case "end":
                     return _context6.stop();
                 }
@@ -933,30 +1059,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "loadTasks",
-        value: function loadTasks() {
+        key: "updateTask",
+        value: function updateTask(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
             return regeneratorRuntime.wrap(function _callee7$(_context7) {
               while (1) {
                 switch (_context7.prev = _context7.next) {
                   case 0:
-                    _context7.next = 2;
-                    return this.loadTasksFromDb();
+                    this.tasks.next([].concat(_toConsumableArray(this.tasks.getValue().filter(function (t) {
+                      return t.id !== task.id;
+                    })), [task]));
+                    _context7.next = 3;
+                    return this.persistTasksInDb();
 
-                  case 2:
-                    _context7.t0 = _context7.sent;
+                  case 3:
+                    return _context7.abrupt("return", task);
 
-                    if (_context7.t0) {
-                      _context7.next = 5;
-                      break;
-                    }
-
-                    _context7.t0 = [].concat(defaultTasks);
-
-                  case 5:
-                    return _context7.abrupt("return", _context7.t0);
-
-                  case 6:
+                  case 4:
                   case "end":
                     return _context7.stop();
                 }
@@ -965,16 +1084,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "persistTasksInDb",
-        value: function persistTasksInDb() {
+        key: "loadTasks",
+        value: function loadTasks() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
             return regeneratorRuntime.wrap(function _callee8$(_context8) {
               while (1) {
                 switch (_context8.prev = _context8.next) {
                   case 0:
-                    localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks));
+                    _context8.next = 2;
+                    return this.loadTasksFromDb();
 
-                  case 1:
+                  case 2:
+                    _context8.t0 = _context8.sent;
+
+                    if (_context8.t0) {
+                      _context8.next = 5;
+                      break;
+                    }
+
+                    _context8.t0 = [].concat(defaultTasks);
+
+                  case 5:
+                    return _context8.abrupt("return", _context8.t0);
+
+                  case 6:
                   case "end":
                     return _context8.stop();
                 }
@@ -983,22 +1116,40 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "loadTasksFromDb",
-        value: function loadTasksFromDb() {
+        key: "persistTasksInDb",
+        value: function persistTasksInDb() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
-            var fromDB, parsed;
             return regeneratorRuntime.wrap(function _callee9$(_context9) {
               while (1) {
                 switch (_context9.prev = _context9.next) {
                   case 0:
+                    localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks.getValue()));
+
+                  case 1:
+                  case "end":
+                    return _context9.stop();
+                }
+              }
+            }, _callee9, this);
+          }));
+        }
+      }, {
+        key: "loadTasksFromDb",
+        value: function loadTasksFromDb() {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+            var fromDB, parsed;
+            return regeneratorRuntime.wrap(function _callee10$(_context10) {
+              while (1) {
+                switch (_context10.prev = _context10.next) {
+                  case 0:
                     fromDB = localStorage.getItem(this.localStorageKey);
 
                     if (fromDB) {
-                      _context9.next = 3;
+                      _context10.next = 3;
                       break;
                     }
 
-                    return _context9.abrupt("return", undefined);
+                    return _context10.abrupt("return", undefined);
 
                   case 3:
                     parsed = JSON.parse(fromDB);
@@ -1007,20 +1158,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                         return new Date(e);
                       });
                     });
-                    return _context9.abrupt("return", parsed);
+                    return _context10.abrupt("return", parsed);
 
                   case 6:
                   case "end":
-                    return _context9.stop();
+                    return _context10.stop();
                 }
               }
-            }, _callee9, this);
+            }, _callee10, this);
           }));
         }
       }]);
 
       return TasksService;
     }();
+
+    TasksService.ctorParameters = function () {
+      return [{
+        type: _notifications_service__WEBPACK_IMPORTED_MODULE_2__["NotificationsService"]
+      }];
+    };
 
     TasksService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
       providedIn: 'root'

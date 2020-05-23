@@ -61,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <!-- <ion-list>\n    <app-message *ngFor=\"let message of getMessages()\" [message]=\"message\"></app-message>\n  </ion-list> -->\n\n  <app-mood-title></app-mood-title>\n  <ion-list>\n    <app-task *ngFor=\"let task of tasks\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list>\n    <app-task *ngFor=\"let task of tasks | async\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>");
 
 /***/ }),
 
@@ -180,12 +180,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
+/* harmony import */ var src_app_services_tasks_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/tasks.service */ "./src/app/services/tasks.service.ts");
+
 
 
 
 let TaskComponent = class TaskComponent {
-    constructor(nav) {
+    constructor(nav, tasksService) {
         this.nav = nav;
+        this.tasksService = tasksService;
     }
     ngOnInit() { }
     edit() {
@@ -193,11 +196,13 @@ let TaskComponent = class TaskComponent {
         this.slider.closeOpened();
     }
     delete() {
+        this.tasksService.deleteTask(this.task);
         this.slider.closeOpened();
     }
 };
 TaskComponent.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] },
+    { type: src_app_services_tasks_service__WEBPACK_IMPORTED_MODULE_3__["TasksService"] }
 ];
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
@@ -392,10 +397,9 @@ __webpack_require__.r(__webpack_exports__);
 let DashBoardPage = class DashBoardPage {
     constructor(tasksService) {
         this.tasksService = tasksService;
-        this.tasks = [];
     }
     ionViewWillEnter() {
-        this.tasksService.getTasks().then(tasks => this.tasks = tasks);
+        this.tasks = this.tasksService.getTasks();
     }
 };
 DashBoardPage.ctorParameters = () => [
@@ -413,6 +417,64 @@ DashBoardPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
+/***/ "./src/app/services/notifications.service.ts":
+/*!***************************************************!*\
+  !*** ./src/app/services/notifications.service.ts ***!
+  \***************************************************/
+/*! exports provided: NotificationsService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationsService", function() { return NotificationsService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
+
+
+
+let NotificationsService = class NotificationsService {
+    constructor(toastController) {
+        this.toastController = toastController;
+    }
+    showToast(message, duration = 2000) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const toast = yield this.toastController.create({
+                message,
+                duration
+            });
+            toast.present();
+        });
+    }
+    showUndoDeletedTask(tasksService, task) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const toast = yield this.toastController.create({
+                message: `"${task.title}" has been removed.`,
+                buttons: [
+                    {
+                        side: 'end',
+                        text: 'Undo',
+                        handler: () => !!tasksService.updateTask(task)
+                    }
+                ]
+            });
+            toast.present();
+        });
+    }
+};
+NotificationsService.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"] }
+];
+NotificationsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], NotificationsService);
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/tasks.service.ts":
 /*!*******************************************!*\
   !*** ./src/app/services/tasks.service.ts ***!
@@ -425,6 +487,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TasksService", function() { return TasksService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _notifications_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notifications.service */ "./src/app/services/notifications.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+
+
 
 
 const defaultTasks = [
@@ -455,30 +521,37 @@ const defaultTasks = [
     }
 ];
 let TasksService = class TasksService {
-    constructor() {
-        this.tasks = [];
+    constructor(notifs) {
+        this.notifs = notifs;
+        this.tasks = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]([]);
         this.localStorageKey = 'tasks';
-        this.loadTasks().then(tasks => this.tasks = tasks);
+        this.loadTasks().then(tasks => this.tasks.next(tasks));
     }
     getTasks() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return this.tasks;
-        });
+        return this.tasks;
     }
     getTaskById(id) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return this.tasks.find(t => t.id === id);
+            return this.tasks.getValue().find(t => t.id === id);
         });
     }
     deleteTask(task) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            this.tasks = [...this.tasks.filter(t => t.id !== task.id)];
+            const index = this.tasks.getValue().indexOf(task);
+            if (index < 0)
+                throw Error('Task does not exist');
+            const removedTasks = this.tasks.getValue().splice(index, 1);
+            if (removedTasks.length === 0)
+                throw Error('Cannot delete task');
+            const removedTask = removedTasks[0];
+            // this.tasks = [...this.tasks.filter(t => t.id !== task.id)];
             yield this.persistTasksInDb();
+            this.notifs.showUndoDeletedTask(this, removedTask);
         });
     }
     createOrUpdateTask(task) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const doesTaskExist = !!task.id && !!this.tasks.find((t) => t.id === task.id);
+            const doesTaskExist = !!task.id && !!this.tasks.getValue().find((t) => t.id === task.id);
             if (!doesTaskExist) {
                 return yield this.createTask(task);
             }
@@ -487,17 +560,17 @@ let TasksService = class TasksService {
     }
     createTask(task) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const biggestId = this.tasks.reduce((acc, t) => t.id > acc ? t.id : acc, 0);
+            const biggestId = this.tasks.getValue().reduce((acc, t) => t.id > acc ? t.id : acc, 0);
             task.id = biggestId + 1;
             // TODO: should we copy or just push instead?
-            this.tasks = [...this.tasks, task];
+            this.tasks.next([...this.tasks.getValue(), task]);
             yield this.persistTasksInDb();
             return task;
         });
     }
     updateTask(task) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            this.tasks = [...this.tasks.filter(t => t.id !== task.id), task];
+            this.tasks.next([...this.tasks.getValue().filter(t => t.id !== task.id), task]);
             yield this.persistTasksInDb();
             return task;
         });
@@ -509,7 +582,7 @@ let TasksService = class TasksService {
     }
     persistTasksInDb() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks));
+            localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks.getValue()));
         });
     }
     loadTasksFromDb() {
@@ -525,6 +598,9 @@ let TasksService = class TasksService {
         });
     }
 };
+TasksService.ctorParameters = () => [
+    { type: _notifications_service__WEBPACK_IMPORTED_MODULE_2__["NotificationsService"] }
+];
 TasksService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
