@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Task, TasksService } from '../../services/tasks.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,10 +10,10 @@ import { Task, TasksService } from '../../services/tasks.service';
 export class DashBoardPage {
   constructor(private tasksService: TasksService) { }
 
-  public tasks: Task[] = [];
+  public tasks: Observable<Task[]>;
 
   ionViewWillEnter() {
-    this.tasksService.getTasks().then(tasks => this.tasks = tasks);
+    this.tasks = this.tasksService.getTasks();
   }
 
 }
