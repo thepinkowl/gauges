@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { IonItemSliding, NavController } from '@ionic/angular';
 import { Task } from 'src/app/services/tasks.service';
 
 @Component({
@@ -10,6 +10,7 @@ import { Task } from 'src/app/services/tasks.service';
 export class TaskComponent implements OnInit {
 
   @Input() task: Task;
+  @ViewChild(IonItemSliding) slider: IonItemSliding;
 
   constructor(private nav: NavController) { }
 
@@ -17,5 +18,10 @@ export class TaskComponent implements OnInit {
 
   edit() {
     this.nav.navigateForward(`/task/${this.task.id}`);
+    this.slider.closeOpened();
+  }
+
+  delete() {
+    this.slider.closeOpened();
   }
 }

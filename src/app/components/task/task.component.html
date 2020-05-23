@@ -21,7 +21,7 @@
   </ion-item>
 
   <ion-item-options side="end" (ionSwipe)="edit()">
-    <ion-item-option color="danger">Delete</ion-item-option>
+    <ion-item-option (click)="delete()" color="danger">Delete</ion-item-option>
     <ion-item-option (click)="edit()" expandable>Edit</ion-item-option>
   </ion-item-options>
 </ion-item-sliding>
