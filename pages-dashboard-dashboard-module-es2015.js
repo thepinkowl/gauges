@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div\n  class=\"fill\"\n  [ngStyle]=\"{ 'width.%': percentage, 'background-color': getColor() }\"\n></div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div\n  class=\"fill\"\n  [ngStyle]=\"{ 'width.%': progress(), 'background-color': getColor() }\"\n></div>\n");
 
 /***/ }),
 
@@ -105,6 +105,9 @@ let GaugeComponent = class GaugeComponent {
         else {
             return '#FF3333';
         }
+    }
+    progress() {
+        return Math.max(3, this.percentage);
     }
 };
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
@@ -308,10 +311,11 @@ class Task extends TaskInterface {
         return tasks.map((t) => new Task(t));
     }
     computeProgress() {
-        this.progress = this.rangePercentage(Math.floor((Task.today - this.lastDone.getTime()) / Task.WEEK * 100));
+        const lastDoneDuration = (Task.today - this.lastDone.getTime());
+        this.progress = this.rangePercentage(Math.floor((Task.WEEK - lastDoneDuration) / Task.WEEK * 100));
     }
-    rangePercentage(value) {
-        return Math.min(Math.max(value, 0), 100);
+    rangePercentage(value, min = 0, max = 100) {
+        return Math.min(Math.max(value, min), max);
     }
 }
 Task.today = Date.now();
@@ -486,7 +490,7 @@ let SortTasksPipe = class SortTasksPipe {
     transform(tasks) {
         if (!tasks)
             return null;
-        return tasks.sort((a, b) => a.progress > b.progress ? 1 : -1);
+        return tasks.sort((a, b) => a.progress < b.progress ? 1 : -1);
     }
 };
 SortTasksPipe = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([

@@ -47,7 +47,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div\n  class=\"fill\"\n  [ngStyle]=\"{ 'width.%': percentage, 'background-color': getColor() }\"\n></div>\n";
+    __webpack_exports__["default"] = "<div\n  class=\"fill\"\n  [ngStyle]=\"{ 'width.%': progress(), 'background-color': getColor() }\"\n></div>\n";
     /***/
   },
 
@@ -201,6 +201,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           } else {
             return '#FF3333';
           }
+        }
+      }, {
+        key: "progress",
+        value: function progress() {
+          return Math.max(3, this.percentage);
         }
       }]);
 
@@ -554,12 +559,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(Task, [{
         key: "computeProgress",
         value: function computeProgress() {
-          this.progress = this.rangePercentage(Math.floor((Task.today - this.lastDone.getTime()) / Task.WEEK * 100));
+          var lastDoneDuration = Task.today - this.lastDone.getTime();
+          this.progress = this.rangePercentage(Math.floor((Task.WEEK - lastDoneDuration) / Task.WEEK * 100));
         }
       }, {
         key: "rangePercentage",
         value: function rangePercentage(value) {
-          return Math.min(Math.max(value, 0), 100);
+          var min = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+          var max = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 100;
+          return Math.min(Math.max(value, min), max);
         }
       }], [{
         key: "parseTasks",
@@ -876,7 +884,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function transform(tasks) {
           if (!tasks) return null;
           return tasks.sort(function (a, b) {
-            return a.progress > b.progress ? 1 : -1;
+            return a.progress < b.progress ? 1 : -1;
           });
         }
       }]);
