@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { NotificationsService } from './notifications.service';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 
 export interface Task {
   id: number;
@@ -40,27 +42,33 @@ const defaultTasks: Task[] = [
 })
 export class TasksService {
 
-  private tasks: Task[] = [];
+  private tasks: BehaviorSubject<Task[]> = new BehaviorSubject([]);
 
-  constructor() {
-    this.loadTasks().then(tasks => this.tasks = tasks);
+  constructor(private notifs: NotificationsService) {
+    this.loadTasks().then(tasks => this.tasks.next(tasks));
   }
 
-  public async getTasks(): Promise<Task[]> {
+  public getTasks(): Observable<Task[]> {
     return this.tasks;
   }
 
   public async getTaskById(id: number): Promise<Task> {
-    return this.tasks.find(t => t.id === id);
+    return this.tasks.getValue().find(t => t.id === id);
   }
 
   public async deleteTask(task: Task) {
-    this.tasks = [...this.tasks.filter(t => t.id !== task.id)];
+    const index = this.tasks.getValue().indexOf(task);
+    if (index < 0) throw Error('Task does not exist');
+    const removedTasks = this.tasks.getValue().splice(index, 1);
+    if (removedTasks.length === 0) throw Error('Cannot delete task');
+    const removedTask = removedTasks[0];
+    // this.tasks = [...this.tasks.filter(t => t.id !== task.id)];
     await this.persistTasksInDb();
+    this.notifs.showUndoDeletedTask(this, removedTask);
   }
 
   public async createOrUpdateTask(task: Task) {
-    const doesTaskExist = !!task.id && !!this.tasks.find((t: Task) => t.id === task.id);
+    const doesTaskExist = !!task.id && !!this.tasks.getValue().find((t: Task) => t.id === task.id);
     if (!doesTaskExist) {
       return await this.createTask(task);
     }
@@ -68,16 +76,16 @@ export class TasksService {
   }
 
   public async createTask(task: Task) {
-    const biggestId = this.tasks.reduce((acc: number, t: Task) => t.id > acc ? t.id : acc, 0);
+    const biggestId = this.tasks.getValue().reduce((acc: number, t: Task) => t.id > acc ? t.id : acc, 0);
     task.id = biggestId + 1;
     // TODO: should we copy or just push instead?
-    this.tasks = [...this.tasks, task];
+    this.tasks.next([...this.tasks.getValue(), task]);
     await this.persistTasksInDb();
     return task;
   }
 
   public async updateTask(task: Task) {
-    this.tasks = [...this.tasks.filter(t => t.id !== task.id), task];
+    this.tasks.next([...this.tasks.getValue().filter(t => t.id !== task.id), task]);
     await this.persistTasksInDb();
     return task;
   }
@@ -89,7 +97,7 @@ export class TasksService {
   }
 
   private async persistTasksInDb() {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks));
+    localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks.getValue()));
   }
 
   private async loadTasksFromDb() {

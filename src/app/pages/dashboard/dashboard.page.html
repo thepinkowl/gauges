@@ -3,13 +3,9 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> -->
   
-  <!-- <ion-list>
-    <app-message *ngFor="let message of getMessages()" [message]="message"></app-message>
-  </ion-list> -->
-
   <app-mood-title></app-mood-title>
   <ion-list>
-    <app-task *ngFor="let task of tasks" [task]="task">
+    <app-task *ngFor="let task of tasks | async" [task]="task">
     </app-task>
   </ion-list>
 
