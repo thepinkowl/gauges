@@ -8,6 +8,8 @@ import { NavController } from '@ionic/angular';
 })
 export class TaskDetailPage implements OnInit {
 
+  when = [5];
+
   constructor(private nav: NavController) { }
 
   ngOnInit() {

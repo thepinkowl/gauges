@@ -1,0 +1,3 @@
+<div class="day" [ngClass]="{'selected': week.includes(day.day)}" (click)="toggle(day)" *ngFor="let day of days">
+  {{day.symbol}}
+</div>

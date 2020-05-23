@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TaskDetailPageRoutingModule } from './task-detail-routing.module';
 
 import { TaskDetailPage } from './task-detail.page';
+import { WeekSelectorComponent } from 'src/app/components/week-selector/week-selector.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { TaskDetailPage } from './task-detail.page';
     IonicModule,
     TaskDetailPageRoutingModule
   ],
-  declarations: [TaskDetailPage]
+  declarations: [TaskDetailPage, WeekSelectorComponent]
 })
 export class TaskDetailPageModule {}

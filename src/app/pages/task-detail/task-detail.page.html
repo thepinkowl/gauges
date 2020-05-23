@@ -1,5 +1,7 @@
 <ion-content [fullscreen]="true">
   <ion-button (click)="goBack()" fill="clear">Cancel</ion-button>
+  <app-week-selector [(week)]="when" ></app-week-selector>
+  <span *ngFor="let item of when">{{item}}</span>
   <!-- <AtoZCol>
       <div>
         <CancelButton onClick={goBack}>Cancel</CancelButton>
