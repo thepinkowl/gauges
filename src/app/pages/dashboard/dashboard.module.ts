@@ -8,6 +8,7 @@ import { WeekDisplayComponent } from 'src/app/components/week-display/week-displ
 import { DashBoardPageRoutingModule } from './dashboard-routing.module';
 import { DashBoardPage } from './dashboard.page';
 import { MoodTitleComponent } from 'src/app/components/mood-title/mood-title.component';
+import { SortTasksPipe } from './sort-tasks/sort-tasks.pipe';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MoodTitleComponent } from 'src/app/components/mood-title/mood-title.com
     TaskComponent,
     WeekDisplayComponent,
     GaugeComponent,
-    MoodTitleComponent
+    MoodTitleComponent,
+    SortTasksPipe
   ]
 })
 export class DashBoardPageModule { }

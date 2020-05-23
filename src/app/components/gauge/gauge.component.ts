@@ -8,9 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class GaugeComponent implements OnInit {
   @Input() percentage: number;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   getColor() {
     if (this.percentage > 50) {
@@ -20,5 +20,9 @@ export class GaugeComponent implements OnInit {
     } else {
       return '#FF3333';
     }
+  }
+
+  progress() {
+    return Math.max(3, this.percentage);
   }
 }

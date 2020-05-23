@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { Task, TasksService } from './tasks.service';
+import { TasksService } from './tasks.service';
+import Task from '../models/Task';
 
 @Injectable({
   providedIn: 'root'
