@@ -61,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list>\n    <app-task *ngFor=\"let task of tasks | async\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list>\n    <app-task *ngFor=\"let task of tasks | async | sortTasks\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>");
 
 /***/ }),
 
@@ -283,6 +283,40 @@ WeekDisplayComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])(
 
 /***/ }),
 
+/***/ "./src/app/models/Task.ts":
+/*!********************************!*\
+  !*** ./src/app/models/Task.ts ***!
+  \********************************/
+/*! exports provided: TaskInterface, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TaskInterface", function() { return TaskInterface; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Task; });
+class TaskInterface {
+}
+class Task extends TaskInterface {
+    constructor(task) {
+        super();
+        Object.assign(this, task);
+        this.executions.sort((a, b) => (b.getTime() - a.getTime()));
+        this.lastDone = this.executions[0];
+        this.computeProgress();
+    }
+    static parseTasks(tasks) {
+        return tasks.map((t) => new Task(t));
+    }
+    computeProgress() {
+        this.progress = Math.floor((Task.today - this.lastDone.getTime()) / Task.WEEK * 100);
+    }
+}
+Task.today = Date.now();
+Task.WEEK = 7 * 24 * 60 * 60 * 1000;
+
+
+/***/ }),
+
 /***/ "./src/app/pages/dashboard/dashboard-routing.module.ts":
 /*!*************************************************************!*\
   !*** ./src/app/pages/dashboard/dashboard-routing.module.ts ***!
@@ -341,6 +375,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./dashboard-routing.module */ "./src/app/pages/dashboard/dashboard-routing.module.ts");
 /* harmony import */ var _dashboard_page__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./dashboard.page */ "./src/app/pages/dashboard/dashboard.page.ts");
 /* harmony import */ var src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/components/mood-title/mood-title.component */ "./src/app/components/mood-title/mood-title.component.ts");
+/* harmony import */ var _sort_tasks_sort_tasks_pipe__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./sort-tasks/sort-tasks.pipe */ "./src/app/pages/dashboard/sort-tasks/sort-tasks.pipe.ts");
+
 
 
 
@@ -367,7 +403,8 @@ DashBoardPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_6__["TaskComponent"],
             src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_7__["WeekDisplayComponent"],
             src_app_components_gauge_gauge_component__WEBPACK_IMPORTED_MODULE_5__["GaugeComponent"],
-            src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_10__["MoodTitleComponent"]
+            src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_10__["MoodTitleComponent"],
+            _sort_tasks_sort_tasks_pipe__WEBPACK_IMPORTED_MODULE_11__["SortTasksPipe"]
         ]
     })
 ], DashBoardPageModule);
@@ -423,6 +460,37 @@ DashBoardPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./dashboard.page.scss */ "./src/app/pages/dashboard/dashboard.page.scss")).default]
     })
 ], DashBoardPage);
+
+
+
+/***/ }),
+
+/***/ "./src/app/pages/dashboard/sort-tasks/sort-tasks.pipe.ts":
+/*!***************************************************************!*\
+  !*** ./src/app/pages/dashboard/sort-tasks/sort-tasks.pipe.ts ***!
+  \***************************************************************/
+/*! exports provided: SortTasksPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SortTasksPipe", function() { return SortTasksPipe; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+
+
+let SortTasksPipe = class SortTasksPipe {
+    transform(tasks) {
+        if (!tasks)
+            return null;
+        return tasks.sort((a, b) => a.progress > b.progress ? 1 : -1);
+    }
+};
+SortTasksPipe = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Pipe"])({
+        name: 'sortTasks'
+    })
+], SortTasksPipe);
 
 
 
@@ -498,8 +566,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TasksService", function() { return TasksService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _notifications_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notifications.service */ "./src/app/services/notifications.service.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _models_Task__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../models/Task */ "./src/app/models/Task.ts");
+/* harmony import */ var _notifications_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./notifications.service */ "./src/app/services/notifications.service.ts");
+
 
 
 
@@ -534,9 +604,9 @@ const defaultTasks = [
 let TasksService = class TasksService {
     constructor(notifs) {
         this.notifs = notifs;
-        this.tasks = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]([]);
+        this.tasks = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
         this.localStorageKey = 'tasks';
-        this.loadTasks().then(tasks => this.tasks.next(tasks));
+        this.loadTasks().then(tasks => this.tasks.next(_models_Task__WEBPACK_IMPORTED_MODULE_3__["default"].parseTasks(tasks)));
     }
     getTasks() {
         return this.tasks;
@@ -610,7 +680,7 @@ let TasksService = class TasksService {
     }
 };
 TasksService.ctorParameters = () => [
-    { type: _notifications_service__WEBPACK_IMPORTED_MODULE_2__["NotificationsService"] }
+    { type: _notifications_service__WEBPACK_IMPORTED_MODULE_4__["NotificationsService"] }
 ];
 TasksService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

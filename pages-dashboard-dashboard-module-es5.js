@@ -10,6 +10,20 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -113,7 +127,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list>\n    <app-task *ngFor=\"let task of tasks | async\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>";
+    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list>\n    <app-task *ngFor=\"let task of tasks | async | sortTasks\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>";
     /***/
   },
 
@@ -484,6 +498,82 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
+  "./src/app/models/Task.ts":
+  /*!********************************!*\
+    !*** ./src/app/models/Task.ts ***!
+    \********************************/
+
+  /*! exports provided: TaskInterface, default */
+
+  /***/
+  function srcAppModelsTaskTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "TaskInterface", function () {
+      return TaskInterface;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "default", function () {
+      return Task;
+    });
+
+    var TaskInterface = function TaskInterface() {
+      _classCallCheck(this, TaskInterface);
+    };
+
+    var Task = /*#__PURE__*/function (_TaskInterface) {
+      _inherits(Task, _TaskInterface);
+
+      var _super = _createSuper(Task);
+
+      function Task(task) {
+        var _this;
+
+        _classCallCheck(this, Task);
+
+        _this = _super.call(this);
+        Object.assign(_assertThisInitialized(_this), task);
+
+        _this.executions.sort(function (a, b) {
+          return b.getTime() - a.getTime();
+        });
+
+        _this.lastDone = _this.executions[0];
+
+        _this.computeProgress();
+
+        return _this;
+      }
+
+      _createClass(Task, [{
+        key: "computeProgress",
+        value: function computeProgress() {
+          this.progress = Math.floor((Task.today - this.lastDone.getTime()) / Task.WEEK * 100);
+        }
+      }], [{
+        key: "parseTasks",
+        value: function parseTasks(tasks) {
+          return tasks.map(function (t) {
+            return new Task(t);
+          });
+        }
+      }]);
+
+      return Task;
+    }(TaskInterface);
+
+    Task.today = Date.now();
+    Task.WEEK = 7 * 24 * 60 * 60 * 1000;
+    /***/
+  },
+
+  /***/
   "./src/app/pages/dashboard/dashboard-routing.module.ts":
   /*!*************************************************************!*\
     !*** ./src/app/pages/dashboard/dashboard-routing.module.ts ***!
@@ -628,6 +718,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! src/app/components/mood-title/mood-title.component */
     "./src/app/components/mood-title/mood-title.component.ts");
+    /* harmony import */
+
+
+    var _sort_tasks_sort_tasks_pipe__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! ./sort-tasks/sort-tasks.pipe */
+    "./src/app/pages/dashboard/sort-tasks/sort-tasks.pipe.ts");
 
     var DashBoardPageModule = function DashBoardPageModule() {
       _classCallCheck(this, DashBoardPageModule);
@@ -635,7 +731,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     DashBoardPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
       imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"], _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_8__["DashBoardPageRoutingModule"]],
-      declarations: [_dashboard_page__WEBPACK_IMPORTED_MODULE_9__["DashBoardPage"], src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_6__["TaskComponent"], src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_7__["WeekDisplayComponent"], src_app_components_gauge_gauge_component__WEBPACK_IMPORTED_MODULE_5__["GaugeComponent"], src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_10__["MoodTitleComponent"]]
+      declarations: [_dashboard_page__WEBPACK_IMPORTED_MODULE_9__["DashBoardPage"], src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_6__["TaskComponent"], src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_7__["WeekDisplayComponent"], src_app_components_gauge_gauge_component__WEBPACK_IMPORTED_MODULE_5__["GaugeComponent"], src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_10__["MoodTitleComponent"], _sort_tasks_sort_tasks_pipe__WEBPACK_IMPORTED_MODULE_11__["SortTasksPipe"]]
     })], DashBoardPageModule);
     /***/
   },
@@ -730,6 +826,62 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       /*! ./dashboard.page.scss */
       "./src/app/pages/dashboard/dashboard.page.scss"))["default"]]
     })], DashBoardPage);
+    /***/
+  },
+
+  /***/
+  "./src/app/pages/dashboard/sort-tasks/sort-tasks.pipe.ts":
+  /*!***************************************************************!*\
+    !*** ./src/app/pages/dashboard/sort-tasks/sort-tasks.pipe.ts ***!
+    \***************************************************************/
+
+  /*! exports provided: SortTasksPipe */
+
+  /***/
+  function srcAppPagesDashboardSortTasksSortTasksPipeTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "SortTasksPipe", function () {
+      return SortTasksPipe;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+
+    var SortTasksPipe = /*#__PURE__*/function () {
+      function SortTasksPipe() {
+        _classCallCheck(this, SortTasksPipe);
+      }
+
+      _createClass(SortTasksPipe, [{
+        key: "transform",
+        value: function transform(tasks) {
+          if (!tasks) return null;
+          return tasks.sort(function (a, b) {
+            return a.progress > b.progress ? 1 : -1;
+          });
+        }
+      }]);
+
+      return SortTasksPipe;
+    }();
+
+    SortTasksPipe = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Pipe"])({
+      name: 'sortTasks'
+    })], SortTasksPipe);
     /***/
   },
 
@@ -890,15 +1042,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _notifications_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! ./notifications.service */
-    "./src/app/services/notifications.service.ts");
+    var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
     /* harmony import */
 
 
-    var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! rxjs */
-    "./node_modules/rxjs/_esm2015/index.js");
+    var _models_Task__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../models/Task */
+    "./src/app/models/Task.ts");
+    /* harmony import */
+
+
+    var _notifications_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./notifications.service */
+    "./src/app/services/notifications.service.ts");
 
     var defaultTasks = [{
       title: 'Laundry',
@@ -919,15 +1077,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var TasksService = /*#__PURE__*/function () {
       function TasksService(notifs) {
-        var _this = this;
+        var _this2 = this;
 
         _classCallCheck(this, TasksService);
 
         this.notifs = notifs;
-        this.tasks = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]([]);
+        this.tasks = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
         this.localStorageKey = 'tasks';
         this.loadTasks().then(function (tasks) {
-          return _this.tasks.next(tasks);
+          return _this2.tasks.next(_models_Task__WEBPACK_IMPORTED_MODULE_3__["default"].parseTasks(tasks));
         });
       }
 
@@ -1186,7 +1344,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     TasksService.ctorParameters = function () {
       return [{
-        type: _notifications_service__WEBPACK_IMPORTED_MODULE_2__["NotificationsService"]
+        type: _notifications_service__WEBPACK_IMPORTED_MODULE_4__["NotificationsService"]
       }];
     };
 
