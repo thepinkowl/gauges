@@ -25,6 +25,10 @@ export default class Task extends TaskInterface {
     }
 
     private computeProgress() {
-        this.progress = Math.floor((Task.today - this.lastDone.getTime()) / Task.WEEK * 100);
+        this.progress = this.rangePercentage(Math.floor((Task.today - this.lastDone.getTime()) / Task.WEEK * 100));
+    }
+
+    private rangePercentage(value: number) {
+        return Math.min(Math.max(value, 0), 100);
     }
 }
