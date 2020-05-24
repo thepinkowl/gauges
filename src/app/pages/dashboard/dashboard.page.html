@@ -9,6 +9,7 @@
     <app-task @items style="display: block" *ngFor="let task of tasks | async | sortTasks; trackBy: task?.id" [task]="task">
     </app-task>
   </ion-list>
+  <ion-button [routerLink]="['/task', 'new']" id="create-new" fill="clear">Create a new repeating task</ion-button>
 
   <!-- <IonContent fullscreen>
     <MoodTitle status="well" />
