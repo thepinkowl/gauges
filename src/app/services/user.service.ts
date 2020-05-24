@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface User {
   name: string;
@@ -9,15 +10,19 @@ export interface User {
 })
 export class UserService {
 
-  public user: User = { name: "You" };
+  public user: BehaviorSubject<User> = new BehaviorSubject({ name: 'You' });
 
   constructor() { }
 
-  public getUserName() {
-    return this.user.name;
+  public getUser(): Observable<User> {
+    return this.user;
+  }
+
+  public getUserName(): string {
+    return this.user.getValue().name;
   };
 
   public setUserName(name: string) {
-    this.user.name = name;
+    this.user.next({ ...this.user.getValue(), name });
   };
 }
