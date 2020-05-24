@@ -166,7 +166,9 @@ let MoodTitleComponent = class MoodTitleComponent {
     }
     setName() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const alert = yield this.alertController.create({
+            if (!!this.alert)
+                this.alert.dismiss();
+            this.alert = yield this.alertController.create({
                 header: 'How should I call you?',
                 inputs: [
                     {
@@ -191,7 +193,7 @@ let MoodTitleComponent = class MoodTitleComponent {
                     }
                 ]
             });
-            alert.present();
+            this.alert.present();
         });
     }
 };

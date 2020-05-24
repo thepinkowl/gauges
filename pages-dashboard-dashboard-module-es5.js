@@ -308,12 +308,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
             var _this = this;
 
-            var alert;
             return regeneratorRuntime.wrap(function _callee$(_context) {
               while (1) {
                 switch (_context.prev = _context.next) {
                   case 0:
-                    _context.next = 2;
+                    if (!!this.alert) this.alert.dismiss();
+                    _context.next = 3;
                     return this.alertController.create({
                       header: 'How should I call you?',
                       inputs: [{
@@ -337,11 +337,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                       }]
                     });
 
-                  case 2:
-                    alert = _context.sent;
-                    alert.present();
+                  case 3:
+                    this.alert = _context.sent;
+                    this.alert.present();
 
-                  case 4:
+                  case 5:
                   case "end":
                     return _context.stop();
                 }
