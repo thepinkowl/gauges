@@ -29,7 +29,8 @@ export class NotificationsService {
           text: 'Undo',
           handler: () => !!tasksService.updateTask(task)
         }
-      ]
+      ],
+      duration: 3000
     });
     toast.present();
   }
