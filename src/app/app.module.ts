@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot({
-    mode: 'ios'
+
   }), AppRoutingModule, BrowserAnimationsModule],
   providers: [
     StatusBar,
