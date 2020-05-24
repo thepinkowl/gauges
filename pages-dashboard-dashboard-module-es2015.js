@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h1>\n  Hey <span>you</span>, you're doing well today!\n</h1>");
+/* harmony default export */ __webpack_exports__["default"] = ("<h1>\n  Hey <span (click)=\"setName()\">{{(user|async).name}}</span>, you're doing well today!\n</h1>");
 
 /***/ }),
 
@@ -150,12 +150,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MoodTitleComponent", function() { return MoodTitleComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
+/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+
+
 
 
 let MoodTitleComponent = class MoodTitleComponent {
-    constructor() { }
-    ngOnInit() { }
+    constructor(alertController, userService) {
+        this.alertController = alertController;
+        this.userService = userService;
+    }
+    ngOnInit() {
+        this.user = this.userService.getUser();
+    }
+    setName() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const alert = yield this.alertController.create({
+                header: 'How should I call you?',
+                inputs: [
+                    {
+                        name: 'name',
+                        type: 'text',
+                        id: 'name',
+                        value: this.userService.getUserName(),
+                        placeholder: 'Name'
+                    }
+                ],
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        role: 'cancel',
+                        cssClass: 'secondary'
+                    },
+                    {
+                        text: 'Ok',
+                        handler: ({ name }) => {
+                            this.userService.setUserName(name);
+                        }
+                    }
+                ]
+            });
+            alert.present();
+        });
+    }
 };
+MoodTitleComponent.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["AlertController"] },
+    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"] }
+];
 MoodTitleComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-mood-title',
@@ -560,7 +603,8 @@ let NotificationsService = class NotificationsService {
                         text: 'Undo',
                         handler: () => !!tasksService.updateTask(task)
                     }
-                ]
+                ],
+                duration: 3000
             });
             toast.present();
         });
@@ -720,6 +764,48 @@ TasksService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         providedIn: 'root'
     })
 ], TasksService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/user.service.ts":
+/*!******************************************!*\
+  !*** ./src/app/services/user.service.ts ***!
+  \******************************************/
+/*! exports provided: UserService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserService", function() { return UserService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+
+
+
+let UserService = class UserService {
+    constructor() {
+        this.user = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({ name: 'You' });
+    }
+    getUser() {
+        return this.user;
+    }
+    getUserName() {
+        return this.user.getValue().name;
+    }
+    ;
+    setUserName(name) {
+        this.user.next(Object.assign(Object.assign({}, this.user.getValue()), { name }));
+    }
+    ;
+};
+UserService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], UserService);
 
 
 

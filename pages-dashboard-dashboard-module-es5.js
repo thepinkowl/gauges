@@ -67,7 +67,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<h1>\n  Hey <span>you</span>, you're doing well today!\n</h1>";
+    __webpack_exports__["default"] = "<h1>\n  Hey <span (click)=\"setName()\">{{(user|async).name}}</span>, you're doing well today!\n</h1>";
     /***/
   },
 
@@ -276,19 +276,91 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! @angular/core */
     "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ionic/angular */
+    "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
+    /* harmony import */
+
+
+    var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! src/app/services/user.service */
+    "./src/app/services/user.service.ts");
 
     var MoodTitleComponent = /*#__PURE__*/function () {
-      function MoodTitleComponent() {
+      function MoodTitleComponent(alertController, userService) {
         _classCallCheck(this, MoodTitleComponent);
+
+        this.alertController = alertController;
+        this.userService = userService;
       }
 
       _createClass(MoodTitleComponent, [{
         key: "ngOnInit",
-        value: function ngOnInit() {}
+        value: function ngOnInit() {
+          this.user = this.userService.getUser();
+        }
+      }, {
+        key: "setName",
+        value: function setName() {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            var _this = this;
+
+            var alert;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    _context.next = 2;
+                    return this.alertController.create({
+                      header: 'How should I call you?',
+                      inputs: [{
+                        name: 'name',
+                        type: 'text',
+                        id: 'name',
+                        value: this.userService.getUserName(),
+                        placeholder: 'Name'
+                      }],
+                      buttons: [{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        cssClass: 'secondary'
+                      }, {
+                        text: 'Ok',
+                        handler: function handler(_ref) {
+                          var name = _ref.name;
+
+                          _this.userService.setUserName(name);
+                        }
+                      }]
+                    });
+
+                  case 2:
+                    alert = _context.sent;
+                    alert.present();
+
+                  case 4:
+                  case "end":
+                    return _context.stop();
+                }
+              }
+            }, _callee, this);
+          }));
+        }
       }]);
 
       return MoodTitleComponent;
     }();
+
+    MoodTitleComponent.ctorParameters = function () {
+      return [{
+        type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["AlertController"]
+      }, {
+        type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"]
+      }];
+    };
 
     MoodTitleComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
       selector: 'app-mood-title',
@@ -545,16 +617,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       var _super = _createSuper(Task);
 
       function Task(task) {
-        var _this;
+        var _this2;
 
         _classCallCheck(this, Task);
 
-        _this = _super.call(this);
-        Object.assign(_assertThisInitialized(_this), task);
+        _this2 = _super.call(this);
+        Object.assign(_assertThisInitialized(_this2), task);
 
-        _this.computeProgress();
+        _this2.computeProgress();
 
-        return _this;
+        return _this2;
       }
 
       _createClass(Task, [{
@@ -962,33 +1034,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "showToast",
         value: function showToast(message) {
           var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
-          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var toast;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    _context.next = 2;
-                    return this.toastController.create({
-                      message: message,
-                      duration: duration
-                    });
-
-                  case 2:
-                    toast = _context.sent;
-                    toast.present();
-
-                  case 4:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-        }
-      }, {
-        key: "showUndoDeletedTask",
-        value: function showUndoDeletedTask(tasksService, task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
             var toast;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -997,14 +1042,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                   case 0:
                     _context2.next = 2;
                     return this.toastController.create({
-                      message: "\"".concat(task.title, "\" has been removed."),
-                      buttons: [{
-                        side: 'end',
-                        text: 'Undo',
-                        handler: function handler() {
-                          return !!tasksService.updateTask(task);
-                        }
-                      }]
+                      message: message,
+                      duration: duration
                     });
 
                   case 2:
@@ -1017,6 +1056,40 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                 }
               }
             }, _callee2, this);
+          }));
+        }
+      }, {
+        key: "showUndoDeletedTask",
+        value: function showUndoDeletedTask(tasksService, task) {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+            var toast;
+            return regeneratorRuntime.wrap(function _callee3$(_context3) {
+              while (1) {
+                switch (_context3.prev = _context3.next) {
+                  case 0:
+                    _context3.next = 2;
+                    return this.toastController.create({
+                      message: "\"".concat(task.title, "\" has been removed."),
+                      buttons: [{
+                        side: 'end',
+                        text: 'Undo',
+                        handler: function handler() {
+                          return !!tasksService.updateTask(task);
+                        }
+                      }],
+                      duration: 3000
+                    });
+
+                  case 2:
+                    toast = _context3.sent;
+                    toast.present();
+
+                  case 4:
+                  case "end":
+                    return _context3.stop();
+                }
+              }
+            }, _callee3, this);
           }));
         }
       }]);
@@ -1105,7 +1178,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var TasksService = /*#__PURE__*/function () {
       function TasksService(notifs) {
-        var _this2 = this;
+        var _this3 = this;
 
         _classCallCheck(this, TasksService);
 
@@ -1113,7 +1186,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.tasks = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
         this.localStorageKey = 'tasks';
         this.loadTasks().then(function (tasks) {
-          return _this2.tasks.next(_models_Task__WEBPACK_IMPORTED_MODULE_3__["default"].parseTasks(tasks));
+          return _this3.tasks.next(_models_Task__WEBPACK_IMPORTED_MODULE_3__["default"].parseTasks(tasks));
         });
       }
 
@@ -1125,36 +1198,36 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "getTaskById",
         value: function getTaskById(id) {
-          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-            return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+            return regeneratorRuntime.wrap(function _callee4$(_context4) {
               while (1) {
-                switch (_context3.prev = _context3.next) {
+                switch (_context4.prev = _context4.next) {
                   case 0:
-                    return _context3.abrupt("return", this.tasks.getValue().find(function (t) {
+                    return _context4.abrupt("return", this.tasks.getValue().find(function (t) {
                       return t.id === id;
                     }));
 
                   case 1:
                   case "end":
-                    return _context3.stop();
+                    return _context4.stop();
                 }
               }
-            }, _callee3, this);
+            }, _callee4, this);
           }));
         }
       }, {
         key: "deleteTask",
         value: function deleteTask(task) {
-          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
             var index, removedTasks, removedTask;
-            return regeneratorRuntime.wrap(function _callee4$(_context4) {
+            return regeneratorRuntime.wrap(function _callee5$(_context5) {
               while (1) {
-                switch (_context4.prev = _context4.next) {
+                switch (_context5.prev = _context5.next) {
                   case 0:
                     index = this.tasks.getValue().indexOf(task);
 
                     if (!(index < 0)) {
-                      _context4.next = 3;
+                      _context5.next = 3;
                       break;
                     }
 
@@ -1164,7 +1237,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                     removedTasks = this.tasks.getValue().splice(index, 1);
 
                     if (!(removedTasks.length === 0)) {
-                      _context4.next = 6;
+                      _context5.next = 6;
                       break;
                     }
 
@@ -1173,52 +1246,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                   case 6:
                     removedTask = removedTasks[0]; // this.tasks = [...this.tasks.filter(t => t.id !== task.id)];
 
-                    _context4.next = 9;
+                    _context5.next = 9;
                     return this.persistTasksInDb();
 
                   case 9:
                     this.notifs.showUndoDeletedTask(this, removedTask);
 
                   case 10:
-                  case "end":
-                    return _context4.stop();
-                }
-              }
-            }, _callee4, this);
-          }));
-        }
-      }, {
-        key: "createOrUpdateTask",
-        value: function createOrUpdateTask(task) {
-          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
-            var doesTaskExist;
-            return regeneratorRuntime.wrap(function _callee5$(_context5) {
-              while (1) {
-                switch (_context5.prev = _context5.next) {
-                  case 0:
-                    doesTaskExist = !!task.id && !!this.tasks.getValue().find(function (t) {
-                      return t.id === task.id;
-                    });
-
-                    if (doesTaskExist) {
-                      _context5.next = 5;
-                      break;
-                    }
-
-                    _context5.next = 4;
-                    return this.createTask(task);
-
-                  case 4:
-                    return _context5.abrupt("return", _context5.sent);
-
-                  case 5:
-                    _context5.next = 7;
-                    return this.updateTask(task);
-
-                  case 7:
-                    return _context5.abrupt("return", _context5.sent);
-
-                  case 8:
                   case "end":
                     return _context5.stop();
                 }
@@ -1227,27 +1261,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "createTask",
-        value: function createTask(task) {
+        key: "createOrUpdateTask",
+        value: function createOrUpdateTask(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
-            var biggestId;
+            var doesTaskExist;
             return regeneratorRuntime.wrap(function _callee6$(_context6) {
               while (1) {
                 switch (_context6.prev = _context6.next) {
                   case 0:
-                    biggestId = this.tasks.getValue().reduce(function (acc, t) {
-                      return t.id > acc ? t.id : acc;
-                    }, 0);
-                    task.id = biggestId + 1; // TODO: should we copy or just push instead?
+                    doesTaskExist = !!task.id && !!this.tasks.getValue().find(function (t) {
+                      return t.id === task.id;
+                    });
 
-                    this.tasks.next([].concat(_toConsumableArray(this.tasks.getValue()), [task]));
-                    _context6.next = 5;
-                    return this.persistTasksInDb();
+                    if (doesTaskExist) {
+                      _context6.next = 5;
+                      break;
+                    }
+
+                    _context6.next = 4;
+                    return this.createTask(task);
+
+                  case 4:
+                    return _context6.abrupt("return", _context6.sent);
 
                   case 5:
-                    return _context6.abrupt("return", task);
+                    _context6.next = 7;
+                    return this.updateTask(task);
 
-                  case 6:
+                  case 7:
+                    return _context6.abrupt("return", _context6.sent);
+
+                  case 8:
                   case "end":
                     return _context6.stop();
                 }
@@ -1256,23 +1300,27 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "updateTask",
-        value: function updateTask(task) {
+        key: "createTask",
+        value: function createTask(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+            var biggestId;
             return regeneratorRuntime.wrap(function _callee7$(_context7) {
               while (1) {
                 switch (_context7.prev = _context7.next) {
                   case 0:
-                    this.tasks.next([].concat(_toConsumableArray(this.tasks.getValue().filter(function (t) {
-                      return t.id !== task.id;
-                    })), [task]));
-                    _context7.next = 3;
+                    biggestId = this.tasks.getValue().reduce(function (acc, t) {
+                      return t.id > acc ? t.id : acc;
+                    }, 0);
+                    task.id = biggestId + 1; // TODO: should we copy or just push instead?
+
+                    this.tasks.next([].concat(_toConsumableArray(this.tasks.getValue()), [task]));
+                    _context7.next = 5;
                     return this.persistTasksInDb();
 
-                  case 3:
+                  case 5:
                     return _context7.abrupt("return", task);
 
-                  case 4:
+                  case 6:
                   case "end":
                     return _context7.stop();
                 }
@@ -1281,17 +1329,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "markTaskDone",
-        value: function markTaskDone(task) {
+        key: "updateTask",
+        value: function updateTask(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
             return regeneratorRuntime.wrap(function _callee8$(_context8) {
               while (1) {
                 switch (_context8.prev = _context8.next) {
                   case 0:
-                    task.executions.push(new Date());
-                    task.computeProgress();
-                    _context8.next = 4;
-                    return this.updateTask(task);
+                    this.tasks.next([].concat(_toConsumableArray(this.tasks.getValue().filter(function (t) {
+                      return t.id !== task.id;
+                    })), [task]));
+                    _context8.next = 3;
+                    return this.persistTasksInDb();
+
+                  case 3:
+                    return _context8.abrupt("return", task);
 
                   case 4:
                   case "end":
@@ -1302,58 +1354,79 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "loadTasks",
-        value: function loadTasks() {
+        key: "markTaskDone",
+        value: function markTaskDone(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
             return regeneratorRuntime.wrap(function _callee9$(_context9) {
               while (1) {
                 switch (_context9.prev = _context9.next) {
                   case 0:
-                    return _context9.abrupt("return", [].concat(defaultTasks));
+                    task.executions.push(new Date());
+                    task.computeProgress();
+                    _context9.next = 4;
+                    return this.updateTask(task);
 
-                  case 1:
+                  case 4:
                   case "end":
                     return _context9.stop();
                 }
               }
-            }, _callee9);
+            }, _callee9, this);
           }));
         }
       }, {
-        key: "persistTasksInDb",
-        value: function persistTasksInDb() {
+        key: "loadTasks",
+        value: function loadTasks() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
             return regeneratorRuntime.wrap(function _callee10$(_context10) {
               while (1) {
                 switch (_context10.prev = _context10.next) {
                   case 0:
-                    localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks.getValue()));
+                    return _context10.abrupt("return", [].concat(defaultTasks));
 
                   case 1:
                   case "end":
                     return _context10.stop();
                 }
               }
-            }, _callee10, this);
+            }, _callee10);
+          }));
+        }
+      }, {
+        key: "persistTasksInDb",
+        value: function persistTasksInDb() {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
+            return regeneratorRuntime.wrap(function _callee11$(_context11) {
+              while (1) {
+                switch (_context11.prev = _context11.next) {
+                  case 0:
+                    localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks.getValue()));
+
+                  case 1:
+                  case "end":
+                    return _context11.stop();
+                }
+              }
+            }, _callee11, this);
           }));
         }
       }, {
         key: "loadTasksFromDb",
         value: function loadTasksFromDb() {
-          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee12() {
             var fromDB, parsed;
-            return regeneratorRuntime.wrap(function _callee11$(_context11) {
+            return regeneratorRuntime.wrap(function _callee12$(_context12) {
               while (1) {
-                switch (_context11.prev = _context11.next) {
+                switch (_context12.prev = _context12.next) {
                   case 0:
                     fromDB = localStorage.getItem(this.localStorageKey);
 
                     if (fromDB) {
-                      _context11.next = 3;
+                      _context12.next = 3;
                       break;
                     }
 
-                    return _context11.abrupt("return", undefined);
+                    return _context12.abrupt("return", undefined);
 
                   case 3:
                     parsed = JSON.parse(fromDB);
@@ -1362,14 +1435,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                         return new Date(e);
                       });
                     });
-                    return _context11.abrupt("return", parsed);
+                    return _context12.abrupt("return", parsed);
 
                   case 6:
                   case "end":
-                    return _context11.stop();
+                    return _context12.stop();
                 }
               }
-            }, _callee11, this);
+            }, _callee12, this);
           }));
         }
       }]);
@@ -1386,6 +1459,81 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     TasksService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
       providedIn: 'root'
     })], TasksService);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/user.service.ts":
+  /*!******************************************!*\
+    !*** ./src/app/services/user.service.ts ***!
+    \******************************************/
+
+  /*! exports provided: UserService */
+
+  /***/
+  function srcAppServicesUserServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "UserService", function () {
+      return UserService;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+
+    var UserService = /*#__PURE__*/function () {
+      function UserService() {
+        _classCallCheck(this, UserService);
+
+        this.user = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({
+          name: 'You'
+        });
+      }
+
+      _createClass(UserService, [{
+        key: "getUser",
+        value: function getUser() {
+          return this.user;
+        }
+      }, {
+        key: "getUserName",
+        value: function getUserName() {
+          return this.user.getValue().name;
+        }
+      }, {
+        key: "setUserName",
+        value: function setUserName(name) {
+          this.user.next(Object.assign(Object.assign({}, this.user.getValue()), {
+            name: name
+          }));
+        }
+      }]);
+
+      return UserService;
+    }();
+
+    UserService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+      providedIn: 'root'
+    })], UserService);
     /***/
   },
 
