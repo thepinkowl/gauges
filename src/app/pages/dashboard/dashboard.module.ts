@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { GaugeComponent } from 'src/app/components/gauge/gauge.component';
+import { MoodTitleComponent } from 'src/app/components/mood-title/mood-title.component';
 import { TaskComponent } from 'src/app/components/task/task.component';
 import { WeekDisplayComponent } from 'src/app/components/week-display/week-display.component';
 import { DashBoardPageRoutingModule } from './dashboard-routing.module';
 import { DashBoardPage } from './dashboard.page';
-import { MoodTitleComponent } from 'src/app/components/mood-title/mood-title.component';
 import { SortTasksPipe } from './sort-tasks/sort-tasks.pipe';
 
 
@@ -16,7 +16,7 @@ import { SortTasksPipe } from './sort-tasks/sort-tasks.pipe';
     CommonModule,
     FormsModule,
     IonicModule,
-    DashBoardPageRoutingModule
+    DashBoardPageRoutingModule,
   ],
   declarations: [
     DashBoardPage,

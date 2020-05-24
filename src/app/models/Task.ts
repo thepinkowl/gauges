@@ -19,12 +19,12 @@ export default class Task extends TaskInterface {
     constructor(task: TaskInterface) {
         super();
         Object.assign(this, task);
-        this.executions.sort((a: Date, b: Date) => (b.getTime() - a.getTime()));
-        this.lastDone = this.executions[0];
         this.computeProgress();
     }
 
-    private computeProgress() {
+    public computeProgress() {
+        this.executions.sort((a: Date, b: Date) => (b.getTime() - a.getTime()));
+        this.lastDone = this.executions[0];
         const lastDoneDuration = (Task.today - this.lastDone.getTime());
         this.progress = this.rangePercentage(Math.floor( (Task.WEEK - lastDoneDuration) / Task.WEEK * 100));
     }

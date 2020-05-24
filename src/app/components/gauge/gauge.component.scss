@@ -8,5 +8,7 @@
   .fill {
     border-radius: 10px;
     height: 10px;
+    width: 0%;
+    transition: width ease-in-out 1s;
   }
 }

@@ -84,6 +84,12 @@ export class TasksService {
     return task;
   }
 
+  public async markTaskDone(task: Task) {
+    task.executions.push(new Date());
+    task.computeProgress();
+    await this.updateTask(task);
+  }
+
   private localStorageKey = 'tasks';
 
   private async loadTasks() {

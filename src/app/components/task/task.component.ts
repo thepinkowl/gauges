@@ -6,7 +6,7 @@ import { TasksService } from 'src/app/services/tasks.service';
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss'],
+  styleUrls: ['./task.component.scss']
 })
 export class TaskComponent implements OnInit {
 
@@ -25,5 +25,11 @@ export class TaskComponent implements OnInit {
   delete() {
     this.tasksService.deleteTask(this.task);
     this.slider.closeOpened();
+  }
+
+  done() {
+    // TODO: add animation
+    this.slider.closeOpened();
+    this.tasksService.markTaskDone(this.task);
   }
 }

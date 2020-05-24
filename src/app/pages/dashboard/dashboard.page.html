@@ -4,8 +4,9 @@
   </ion-refresher> -->
   
   <app-mood-title></app-mood-title>
-  <ion-list>
-    <app-task *ngFor="let task of tasks | async | sortTasks" [task]="task">
+  <ion-list @list style="display: block">
+    <!-- style="display: block" is required for animations to work -->
+    <app-task @items style="display: block" *ngFor="let task of tasks | async | sortTasks; trackBy: task?.id" [task]="task">
     </app-task>
   </ion-list>
 

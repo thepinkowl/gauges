@@ -7,8 +7,13 @@ import Task from 'src/app/models/Task';
 export class SortTasksPipe implements PipeTransform {
 
   transform(tasks: Task[]): Task[] {
-    if (!tasks) return null;
-    return tasks.sort((a: Task, b: Task) => a.progress < b.progress ? 1 : -1);
+    if (!tasks) return tasks;
+    tasks.sort((a: Task, b: Task) => {
+      const diff = b.progress - a.progress;
+      if (diff === 0) return b.lastDone.getTime() - a.lastDone.getTime();
+      return diff;
+    });
+    return tasks;
   }
 
 }
