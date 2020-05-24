@@ -87,7 +87,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-item-sliding>\n  <ion-item-options side=\"start\">\n    <ion-item-option expandable color=\"success\">\n      <ion-icon slot=\"start\" name=\"checkmark-done-outline\"></ion-icon>I've just done it\n    </ion-item-option>\n  </ion-item-options>\n\n  <ion-item>\n    <ion-grid>\n      <ion-row id=\"first-row\">\n        <div id=\"title\">{{task.title}}</div>\n        <app-week-display [when]=\"task.when\"></app-week-display>\n      </ion-row>\n      <ion-row id=\"subtext\">\n        Last done two days ago\n      </ion-row>\n      <ion-row>\n       <app-gauge [percentage]=\"task.progress\"></app-gauge>\n      </ion-row>\n    </ion-grid>\n  </ion-item>\n\n  <ion-item-options side=\"end\" (ionSwipe)=\"edit()\">\n    <ion-item-option (click)=\"delete()\" color=\"danger\">Delete</ion-item-option>\n    <ion-item-option (click)=\"edit()\" expandable>Edit</ion-item-option>\n  </ion-item-options>\n</ion-item-sliding>\n\n<!-- <ion-item-sliding ref={this.doneSliderRef} onClick={this.switchSlider}>\n  <IonItemOptions side=\"start\" onIonSwipe={this.markAsDone}>\n    <IonItemOption expandable color=\"success\" onClick={this.markAsDone}>\n      <IonIcon slot=\"start\" icon={checkmarkDoneOutline}></IonIcon>I've just done it\n    </IonItemOption>\n  </IonItemOptions>\n\n  <IonItemCustom>\n    <GaugeContent task={this.props.task} />\n  </IonItemCustom>\n\n  <IonItemOptions side=\"end\" onIonSwipe={this.editGauge}>\n    <IonItemOption color=\"danger\" onClick={this.deleteGauge}>Delete</IonItemOption>\n    <IonItemOption expandable onClick={this.editGauge}>Edit</IonItemOption>\n  </IonItemOptions>\n</ion-item-sliding> -->";
+    __webpack_exports__["default"] = "<ion-item-sliding>\n  <ion-item-options side=\"start\" (ionSwipe)=\"done()\">\n    <ion-item-option expandable color=\"success\" (click)=\"done()\">\n      <ion-icon slot=\"start\" name=\"checkmark-done-outline\"></ion-icon>I've just done it\n    </ion-item-option>\n  </ion-item-options>\n\n  <ion-item>\n    <ion-grid>\n      <ion-row id=\"first-row\">\n        <div id=\"title\">{{task.title}}</div>\n        <app-week-display [when]=\"task.when\"></app-week-display>\n      </ion-row>\n      <ion-row id=\"subtext\">\n        Last done two days ago\n      </ion-row>\n      <ion-row>\n       <app-gauge [percentage]=\"task.progress\"></app-gauge>\n      </ion-row>\n    </ion-grid>\n  </ion-item>\n\n  <ion-item-options side=\"end\" (ionSwipe)=\"edit()\">\n    <ion-item-option (click)=\"delete()\" color=\"danger\">Delete</ion-item-option>\n    <ion-item-option (click)=\"edit()\" expandable>Edit</ion-item-option>\n  </ion-item-options>\n</ion-item-sliding>\n\n<!-- <ion-item-sliding ref={this.doneSliderRef} onClick={this.switchSlider}>\n  <IonItemOptions side=\"start\" onIonSwipe={this.markAsDone}>\n    <IonItemOption expandable color=\"success\" onClick={this.markAsDone}>\n      <IonIcon slot=\"start\" icon={checkmarkDoneOutline}></IonIcon>I've just done it\n    </IonItemOption>\n  </IonItemOptions>\n\n  <IonItemCustom>\n    <GaugeContent task={this.props.task} />\n  </IonItemCustom>\n\n  <IonItemOptions side=\"end\" onIonSwipe={this.editGauge}>\n    <IonItemOption color=\"danger\" onClick={this.deleteGauge}>Delete</IonItemOption>\n    <IonItemOption expandable onClick={this.editGauge}>Edit</IonItemOption>\n  </IonItemOptions>\n</ion-item-sliding> -->";
     /***/
   },
 
@@ -127,7 +127,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list>\n    <app-task *ngFor=\"let task of tasks | async | sortTasks\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>";
+    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list @list style=\"display: block\">\n    <!-- style=\"display: block\" is required for animations to work -->\n    <app-task @items style=\"display: block\" *ngFor=\"let task of tasks | async | sortTasks; trackBy: task?.id\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>";
     /***/
   },
 
@@ -147,7 +147,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ":host {\n  height: 10px;\n  width: 100%;\n  border-radius: 10px;\n  padding: 2px;\n  margin-left: -2px;\n}\n:host .fill {\n  border-radius: 10px;\n  height: 10px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3J1bm5lci93b3JrL2dhdWdlcy9nYXVnZXMvc3JjL2FwcC9jb21wb25lbnRzL2dhdWdlL2dhdWdlLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL2dhdWdlL2dhdWdlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsWUFBQTtFQUNBLFdBQUE7RUFDQSxtQkFBQTtFQUNBLFlBQUE7RUFDQSxpQkFBQTtBQ0NGO0FEQ0U7RUFDRSxtQkFBQTtFQUNBLFlBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZ2F1Z2UvZ2F1Z2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XG4gIGhlaWdodDogMTBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gIHBhZGRpbmc6IDJweDtcbiAgbWFyZ2luLWxlZnQ6IC0ycHg7XG5cbiAgLmZpbGwge1xuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gICAgaGVpZ2h0OiAxMHB4O1xuICB9XG59XG4iLCI6aG9zdCB7XG4gIGhlaWdodDogMTBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gIHBhZGRpbmc6IDJweDtcbiAgbWFyZ2luLWxlZnQ6IC0ycHg7XG59XG46aG9zdCAuZmlsbCB7XG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gIGhlaWdodDogMTBweDtcbn0iXX0= */";
+    __webpack_exports__["default"] = ":host {\n  height: 10px;\n  width: 100%;\n  border-radius: 10px;\n  padding: 2px;\n  margin-left: -2px;\n}\n:host .fill {\n  border-radius: 10px;\n  height: 10px;\n  width: 0%;\n  transition: width ease-in-out 1s;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3J1bm5lci93b3JrL2dhdWdlcy9nYXVnZXMvc3JjL2FwcC9jb21wb25lbnRzL2dhdWdlL2dhdWdlLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL2dhdWdlL2dhdWdlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsWUFBQTtFQUNBLFdBQUE7RUFDQSxtQkFBQTtFQUNBLFlBQUE7RUFDQSxpQkFBQTtBQ0NGO0FEQ0U7RUFDRSxtQkFBQTtFQUNBLFlBQUE7RUFDQSxTQUFBO0VBQ0EsZ0NBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZ2F1Z2UvZ2F1Z2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XG4gIGhlaWdodDogMTBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gIHBhZGRpbmc6IDJweDtcbiAgbWFyZ2luLWxlZnQ6IC0ycHg7XG5cbiAgLmZpbGwge1xuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gICAgaGVpZ2h0OiAxMHB4O1xuICAgIHdpZHRoOiAwJTtcbiAgICB0cmFuc2l0aW9uOiB3aWR0aCBlYXNlLWluLW91dCAxcztcbiAgfVxufVxuIiwiOmhvc3Qge1xuICBoZWlnaHQ6IDEwcHg7XG4gIHdpZHRoOiAxMDAlO1xuICBib3JkZXItcmFkaXVzOiAxMHB4O1xuICBwYWRkaW5nOiAycHg7XG4gIG1hcmdpbi1sZWZ0OiAtMnB4O1xufVxuOmhvc3QgLmZpbGwge1xuICBib3JkZXItcmFkaXVzOiAxMHB4O1xuICBoZWlnaHQ6IDEwcHg7XG4gIHdpZHRoOiAwJTtcbiAgdHJhbnNpdGlvbjogd2lkdGggZWFzZS1pbi1vdXQgMXM7XG59Il19 */";
     /***/
   },
 
@@ -389,6 +389,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.tasksService.deleteTask(this.task);
           this.slider.closeOpened();
         }
+      }, {
+        key: "done",
+        value: function done() {
+          // TODO: add animation
+          this.slider.closeOpened();
+          this.tasksService.markTaskDone(this.task);
+        }
       }]);
 
       return TaskComponent;
@@ -545,12 +552,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _this = _super.call(this);
         Object.assign(_assertThisInitialized(_this), task);
 
-        _this.executions.sort(function (a, b) {
-          return b.getTime() - a.getTime();
-        });
-
-        _this.lastDone = _this.executions[0];
-
         _this.computeProgress();
 
         return _this;
@@ -559,6 +560,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(Task, [{
         key: "computeProgress",
         value: function computeProgress() {
+          this.executions.sort(function (a, b) {
+            return b.getTime() - a.getTime();
+          });
+          this.lastDone = this.executions[0];
           var lastDoneDuration = Task.today - this.lastDone.getTime();
           this.progress = this.rangePercentage(Math.floor((Task.WEEK - lastDoneDuration) / Task.WEEK * 100));
         }
@@ -704,33 +709,33 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! src/app/components/mood-title/mood-title.component */
+    "./src/app/components/mood-title/mood-title.component.ts");
+    /* harmony import */
+
+
+    var src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! src/app/components/task/task.component */
     "./src/app/components/task/task.component.ts");
     /* harmony import */
 
 
-    var src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! src/app/components/week-display/week-display.component */
     "./src/app/components/week-display/week-display.component.ts");
     /* harmony import */
 
 
-    var _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ./dashboard-routing.module */
     "./src/app/pages/dashboard/dashboard-routing.module.ts");
     /* harmony import */
 
 
-    var _dashboard_page__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var _dashboard_page__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! ./dashboard.page */
     "./src/app/pages/dashboard/dashboard.page.ts");
-    /* harmony import */
-
-
-    var src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! src/app/components/mood-title/mood-title.component */
-    "./src/app/components/mood-title/mood-title.component.ts");
     /* harmony import */
 
 
@@ -743,8 +748,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     };
 
     DashBoardPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
-      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"], _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_8__["DashBoardPageRoutingModule"]],
-      declarations: [_dashboard_page__WEBPACK_IMPORTED_MODULE_9__["DashBoardPage"], src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_6__["TaskComponent"], src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_7__["WeekDisplayComponent"], src_app_components_gauge_gauge_component__WEBPACK_IMPORTED_MODULE_5__["GaugeComponent"], src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_10__["MoodTitleComponent"], _sort_tasks_sort_tasks_pipe__WEBPACK_IMPORTED_MODULE_11__["SortTasksPipe"]]
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"], _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_9__["DashBoardPageRoutingModule"]],
+      declarations: [_dashboard_page__WEBPACK_IMPORTED_MODULE_10__["DashBoardPage"], src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_7__["TaskComponent"], src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_8__["WeekDisplayComponent"], src_app_components_gauge_gauge_component__WEBPACK_IMPORTED_MODULE_5__["GaugeComponent"], src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_6__["MoodTitleComponent"], _sort_tasks_sort_tasks_pipe__WEBPACK_IMPORTED_MODULE_11__["SortTasksPipe"]]
     })], DashBoardPageModule);
     /***/
   },
@@ -803,7 +808,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _services_tasks_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    var src_theme_animations_test_animation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! src/theme/animations/test.animation */
+    "./src/theme/animations/test.animation.ts");
+    /* harmony import */
+
+
+    var _services_tasks_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! ../../services/tasks.service */
     "./src/app/services/tasks.service.ts");
 
@@ -826,7 +837,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     DashBoardPage.ctorParameters = function () {
       return [{
-        type: _services_tasks_service__WEBPACK_IMPORTED_MODULE_2__["TasksService"]
+        type: _services_tasks_service__WEBPACK_IMPORTED_MODULE_3__["TasksService"]
       }];
     };
 
@@ -835,6 +846,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
       /*! raw-loader!./dashboard.page.html */
       "./node_modules/raw-loader/dist/cjs.js!./src/app/pages/dashboard/dashboard.page.html"))["default"],
+      animations: [src_theme_animations_test_animation__WEBPACK_IMPORTED_MODULE_2__["testAnimation"], src_theme_animations_test_animation__WEBPACK_IMPORTED_MODULE_2__["listAnimation"], src_theme_animations_test_animation__WEBPACK_IMPORTED_MODULE_2__["itemsAnimation"]],
       styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
       /*! ./dashboard.page.scss */
       "./src/app/pages/dashboard/dashboard.page.scss"))["default"]]
@@ -882,10 +894,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(SortTasksPipe, [{
         key: "transform",
         value: function transform(tasks) {
-          if (!tasks) return null;
-          return tasks.sort(function (a, b) {
-            return a.progress < b.progress ? 1 : -1;
+          if (!tasks) return tasks;
+          tasks.sort(function (a, b) {
+            var diff = b.progress - a.progress;
+            if (diff === 0) return b.lastDone.getTime() - a.lastDone.getTime();
+            return diff;
           });
+          return tasks;
         }
       }]);
 
@@ -1266,30 +1281,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "loadTasks",
-        value: function loadTasks() {
+        key: "markTaskDone",
+        value: function markTaskDone(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee8() {
             return regeneratorRuntime.wrap(function _callee8$(_context8) {
               while (1) {
                 switch (_context8.prev = _context8.next) {
                   case 0:
-                    _context8.next = 2;
-                    return this.loadTasksFromDb();
+                    task.executions.push(new Date());
+                    task.computeProgress();
+                    _context8.next = 4;
+                    return this.updateTask(task);
 
-                  case 2:
-                    _context8.t0 = _context8.sent;
-
-                    if (_context8.t0) {
-                      _context8.next = 5;
-                      break;
-                    }
-
-                    _context8.t0 = [].concat(defaultTasks);
-
-                  case 5:
-                    return _context8.abrupt("return", _context8.t0);
-
-                  case 6:
+                  case 4:
                   case "end":
                     return _context8.stop();
                 }
@@ -1298,40 +1302,58 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }));
         }
       }, {
-        key: "persistTasksInDb",
-        value: function persistTasksInDb() {
+        key: "loadTasks",
+        value: function loadTasks() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee9() {
             return regeneratorRuntime.wrap(function _callee9$(_context9) {
               while (1) {
                 switch (_context9.prev = _context9.next) {
                   case 0:
-                    localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks.getValue()));
+                    return _context9.abrupt("return", [].concat(defaultTasks));
 
                   case 1:
                   case "end":
                     return _context9.stop();
                 }
               }
-            }, _callee9, this);
+            }, _callee9);
+          }));
+        }
+      }, {
+        key: "persistTasksInDb",
+        value: function persistTasksInDb() {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+            return regeneratorRuntime.wrap(function _callee10$(_context10) {
+              while (1) {
+                switch (_context10.prev = _context10.next) {
+                  case 0:
+                    localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks.getValue()));
+
+                  case 1:
+                  case "end":
+                    return _context10.stop();
+                }
+              }
+            }, _callee10, this);
           }));
         }
       }, {
         key: "loadTasksFromDb",
         value: function loadTasksFromDb() {
-          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee10() {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee11() {
             var fromDB, parsed;
-            return regeneratorRuntime.wrap(function _callee10$(_context10) {
+            return regeneratorRuntime.wrap(function _callee11$(_context11) {
               while (1) {
-                switch (_context10.prev = _context10.next) {
+                switch (_context11.prev = _context11.next) {
                   case 0:
                     fromDB = localStorage.getItem(this.localStorageKey);
 
                     if (fromDB) {
-                      _context10.next = 3;
+                      _context11.next = 3;
                       break;
                     }
 
-                    return _context10.abrupt("return", undefined);
+                    return _context11.abrupt("return", undefined);
 
                   case 3:
                     parsed = JSON.parse(fromDB);
@@ -1340,14 +1362,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                         return new Date(e);
                       });
                     });
-                    return _context10.abrupt("return", parsed);
+                    return _context11.abrupt("return", parsed);
 
                   case 6:
                   case "end":
-                    return _context10.stop();
+                    return _context11.stop();
                 }
               }
-            }, _callee10, this);
+            }, _callee11, this);
           }));
         }
       }]);
@@ -1364,6 +1386,83 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     TasksService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
       providedIn: 'root'
     })], TasksService);
+    /***/
+  },
+
+  /***/
+  "./src/theme/animations/test.animation.ts":
+  /*!************************************************!*\
+    !*** ./src/theme/animations/test.animation.ts ***!
+    \************************************************/
+
+  /*! exports provided: testAnimation, listAnimation, itemsAnimation */
+
+  /***/
+  function srcThemeAnimationsTestAnimationTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "testAnimation", function () {
+      return testAnimation;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "listAnimation", function () {
+      return listAnimation;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "itemsAnimation", function () {
+      return itemsAnimation;
+    });
+    /* harmony import */
+
+
+    var _angular_animations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/animations */
+    "./node_modules/@angular/animations/__ivy_ngcc__/fesm2015/animations.js");
+
+    var testAnimation = Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trigger"])('testAnimation', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])('* => *', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+      opacity: 1
+    }), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('3s ease-out', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+      opacity: 0
+    }))]), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])(':enter', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+      opacity: 0
+    }), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('500ms ease-out', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+      opacity: 1
+    }))]), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])(':leave', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+      height: '*',
+      opacity: 1
+    }), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('300ms ease-in-out', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+      height: 0,
+      opacity: 0.5
+    }))])]);
+    var listAnimation = Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trigger"])('list', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])(':enter', [// child animation selector + stagger
+    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["query"])("@items", Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["stagger"])(300, Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animateChild"])()), {
+      optional: true
+    })])]);
+    var itemsAnimation = Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trigger"])('items', [// cubic-bezier for a tiny bouncing feel
+    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])(':enter', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+      transform: 'scale(0.5)',
+      opacity: 0
+    }), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('1s cubic-bezier(.8,-0.6,0.2,1.5)', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+      transform: 'scale(1)',
+      opacity: 1
+    }))]), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])(':leave', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+      transform: 'scale(1)',
+      opacity: 1,
+      height: '*'
+    }), Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('1s cubic-bezier(.8,-0.6,0.2,1.5)', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+      transform: 'scale(0.5)',
+      opacity: 0,
+      height: '0px',
+      margin: '0px'
+    }))])]);
     /***/
   },
 

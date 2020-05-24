@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-item-sliding>\n  <ion-item-options side=\"start\">\n    <ion-item-option expandable color=\"success\">\n      <ion-icon slot=\"start\" name=\"checkmark-done-outline\"></ion-icon>I've just done it\n    </ion-item-option>\n  </ion-item-options>\n\n  <ion-item>\n    <ion-grid>\n      <ion-row id=\"first-row\">\n        <div id=\"title\">{{task.title}}</div>\n        <app-week-display [when]=\"task.when\"></app-week-display>\n      </ion-row>\n      <ion-row id=\"subtext\">\n        Last done two days ago\n      </ion-row>\n      <ion-row>\n       <app-gauge [percentage]=\"task.progress\"></app-gauge>\n      </ion-row>\n    </ion-grid>\n  </ion-item>\n\n  <ion-item-options side=\"end\" (ionSwipe)=\"edit()\">\n    <ion-item-option (click)=\"delete()\" color=\"danger\">Delete</ion-item-option>\n    <ion-item-option (click)=\"edit()\" expandable>Edit</ion-item-option>\n  </ion-item-options>\n</ion-item-sliding>\n\n<!-- <ion-item-sliding ref={this.doneSliderRef} onClick={this.switchSlider}>\n  <IonItemOptions side=\"start\" onIonSwipe={this.markAsDone}>\n    <IonItemOption expandable color=\"success\" onClick={this.markAsDone}>\n      <IonIcon slot=\"start\" icon={checkmarkDoneOutline}></IonIcon>I've just done it\n    </IonItemOption>\n  </IonItemOptions>\n\n  <IonItemCustom>\n    <GaugeContent task={this.props.task} />\n  </IonItemCustom>\n\n  <IonItemOptions side=\"end\" onIonSwipe={this.editGauge}>\n    <IonItemOption color=\"danger\" onClick={this.deleteGauge}>Delete</IonItemOption>\n    <IonItemOption expandable onClick={this.editGauge}>Edit</IonItemOption>\n  </IonItemOptions>\n</ion-item-sliding> -->");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-item-sliding>\n  <ion-item-options side=\"start\" (ionSwipe)=\"done()\">\n    <ion-item-option expandable color=\"success\" (click)=\"done()\">\n      <ion-icon slot=\"start\" name=\"checkmark-done-outline\"></ion-icon>I've just done it\n    </ion-item-option>\n  </ion-item-options>\n\n  <ion-item>\n    <ion-grid>\n      <ion-row id=\"first-row\">\n        <div id=\"title\">{{task.title}}</div>\n        <app-week-display [when]=\"task.when\"></app-week-display>\n      </ion-row>\n      <ion-row id=\"subtext\">\n        Last done two days ago\n      </ion-row>\n      <ion-row>\n       <app-gauge [percentage]=\"task.progress\"></app-gauge>\n      </ion-row>\n    </ion-grid>\n  </ion-item>\n\n  <ion-item-options side=\"end\" (ionSwipe)=\"edit()\">\n    <ion-item-option (click)=\"delete()\" color=\"danger\">Delete</ion-item-option>\n    <ion-item-option (click)=\"edit()\" expandable>Edit</ion-item-option>\n  </ion-item-options>\n</ion-item-sliding>\n\n<!-- <ion-item-sliding ref={this.doneSliderRef} onClick={this.switchSlider}>\n  <IonItemOptions side=\"start\" onIonSwipe={this.markAsDone}>\n    <IonItemOption expandable color=\"success\" onClick={this.markAsDone}>\n      <IonIcon slot=\"start\" icon={checkmarkDoneOutline}></IonIcon>I've just done it\n    </IonItemOption>\n  </IonItemOptions>\n\n  <IonItemCustom>\n    <GaugeContent task={this.props.task} />\n  </IonItemCustom>\n\n  <IonItemOptions side=\"end\" onIonSwipe={this.editGauge}>\n    <IonItemOption color=\"danger\" onClick={this.deleteGauge}>Delete</IonItemOption>\n    <IonItemOption expandable onClick={this.editGauge}>Edit</IonItemOption>\n  </IonItemOptions>\n</ion-item-sliding> -->");
 
 /***/ }),
 
@@ -61,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list>\n    <app-task *ngFor=\"let task of tasks | async | sortTasks\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list @list style=\"display: block\">\n    <!-- style=\"display: block\" is required for animations to work -->\n    <app-task @items style=\"display: block\" *ngFor=\"let task of tasks | async | sortTasks; trackBy: task?.id\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>");
 
 /***/ }),
 
@@ -74,7 +74,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (":host {\n  height: 10px;\n  width: 100%;\n  border-radius: 10px;\n  padding: 2px;\n  margin-left: -2px;\n}\n:host .fill {\n  border-radius: 10px;\n  height: 10px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3J1bm5lci93b3JrL2dhdWdlcy9nYXVnZXMvc3JjL2FwcC9jb21wb25lbnRzL2dhdWdlL2dhdWdlLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL2dhdWdlL2dhdWdlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsWUFBQTtFQUNBLFdBQUE7RUFDQSxtQkFBQTtFQUNBLFlBQUE7RUFDQSxpQkFBQTtBQ0NGO0FEQ0U7RUFDRSxtQkFBQTtFQUNBLFlBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZ2F1Z2UvZ2F1Z2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XG4gIGhlaWdodDogMTBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gIHBhZGRpbmc6IDJweDtcbiAgbWFyZ2luLWxlZnQ6IC0ycHg7XG5cbiAgLmZpbGwge1xuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gICAgaGVpZ2h0OiAxMHB4O1xuICB9XG59XG4iLCI6aG9zdCB7XG4gIGhlaWdodDogMTBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gIHBhZGRpbmc6IDJweDtcbiAgbWFyZ2luLWxlZnQ6IC0ycHg7XG59XG46aG9zdCAuZmlsbCB7XG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gIGhlaWdodDogMTBweDtcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (":host {\n  height: 10px;\n  width: 100%;\n  border-radius: 10px;\n  padding: 2px;\n  margin-left: -2px;\n}\n:host .fill {\n  border-radius: 10px;\n  height: 10px;\n  width: 0%;\n  transition: width ease-in-out 1s;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3J1bm5lci93b3JrL2dhdWdlcy9nYXVnZXMvc3JjL2FwcC9jb21wb25lbnRzL2dhdWdlL2dhdWdlLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9jb21wb25lbnRzL2dhdWdlL2dhdWdlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsWUFBQTtFQUNBLFdBQUE7RUFDQSxtQkFBQTtFQUNBLFlBQUE7RUFDQSxpQkFBQTtBQ0NGO0FEQ0U7RUFDRSxtQkFBQTtFQUNBLFlBQUE7RUFDQSxTQUFBO0VBQ0EsZ0NBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZ2F1Z2UvZ2F1Z2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XG4gIGhlaWdodDogMTBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gIHBhZGRpbmc6IDJweDtcbiAgbWFyZ2luLWxlZnQ6IC0ycHg7XG5cbiAgLmZpbGwge1xuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XG4gICAgaGVpZ2h0OiAxMHB4O1xuICAgIHdpZHRoOiAwJTtcbiAgICB0cmFuc2l0aW9uOiB3aWR0aCBlYXNlLWluLW91dCAxcztcbiAgfVxufVxuIiwiOmhvc3Qge1xuICBoZWlnaHQ6IDEwcHg7XG4gIHdpZHRoOiAxMDAlO1xuICBib3JkZXItcmFkaXVzOiAxMHB4O1xuICBwYWRkaW5nOiAycHg7XG4gIG1hcmdpbi1sZWZ0OiAtMnB4O1xufVxuOmhvc3QgLmZpbGwge1xuICBib3JkZXItcmFkaXVzOiAxMHB4O1xuICBoZWlnaHQ6IDEwcHg7XG4gIHdpZHRoOiAwJTtcbiAgdHJhbnNpdGlvbjogd2lkdGggZWFzZS1pbi1vdXQgMXM7XG59Il19 */");
 
 /***/ }),
 
@@ -213,6 +213,11 @@ let TaskComponent = class TaskComponent {
         this.tasksService.deleteTask(this.task);
         this.slider.closeOpened();
     }
+    done() {
+        // TODO: add animation
+        this.slider.closeOpened();
+        this.tasksService.markTaskDone(this.task);
+    }
 };
 TaskComponent.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] },
@@ -303,14 +308,14 @@ class Task extends TaskInterface {
     constructor(task) {
         super();
         Object.assign(this, task);
-        this.executions.sort((a, b) => (b.getTime() - a.getTime()));
-        this.lastDone = this.executions[0];
         this.computeProgress();
     }
     static parseTasks(tasks) {
         return tasks.map((t) => new Task(t));
     }
     computeProgress() {
+        this.executions.sort((a, b) => (b.getTime() - a.getTime()));
+        this.lastDone = this.executions[0];
         const lastDoneDuration = (Task.today - this.lastDone.getTime());
         this.progress = this.rangePercentage(Math.floor((Task.WEEK - lastDoneDuration) / Task.WEEK * 100));
     }
@@ -377,11 +382,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
 /* harmony import */ var src_app_components_gauge_gauge_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/components/gauge/gauge.component */ "./src/app/components/gauge/gauge.component.ts");
-/* harmony import */ var src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/components/task/task.component */ "./src/app/components/task/task.component.ts");
-/* harmony import */ var src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/components/week-display/week-display.component */ "./src/app/components/week-display/week-display.component.ts");
-/* harmony import */ var _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./dashboard-routing.module */ "./src/app/pages/dashboard/dashboard-routing.module.ts");
-/* harmony import */ var _dashboard_page__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./dashboard.page */ "./src/app/pages/dashboard/dashboard.page.ts");
-/* harmony import */ var src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/components/mood-title/mood-title.component */ "./src/app/components/mood-title/mood-title.component.ts");
+/* harmony import */ var src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/components/mood-title/mood-title.component */ "./src/app/components/mood-title/mood-title.component.ts");
+/* harmony import */ var src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/components/task/task.component */ "./src/app/components/task/task.component.ts");
+/* harmony import */ var src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/components/week-display/week-display.component */ "./src/app/components/week-display/week-display.component.ts");
+/* harmony import */ var _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./dashboard-routing.module */ "./src/app/pages/dashboard/dashboard-routing.module.ts");
+/* harmony import */ var _dashboard_page__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./dashboard.page */ "./src/app/pages/dashboard/dashboard.page.ts");
 /* harmony import */ var _sort_tasks_sort_tasks_pipe__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./sort-tasks/sort-tasks.pipe */ "./src/app/pages/dashboard/sort-tasks/sort-tasks.pipe.ts");
 
 
@@ -403,14 +408,14 @@ DashBoardPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"],
-            _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_8__["DashBoardPageRoutingModule"]
+            _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_9__["DashBoardPageRoutingModule"],
         ],
         declarations: [
-            _dashboard_page__WEBPACK_IMPORTED_MODULE_9__["DashBoardPage"],
-            src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_6__["TaskComponent"],
-            src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_7__["WeekDisplayComponent"],
+            _dashboard_page__WEBPACK_IMPORTED_MODULE_10__["DashBoardPage"],
+            src_app_components_task_task_component__WEBPACK_IMPORTED_MODULE_7__["TaskComponent"],
+            src_app_components_week_display_week_display_component__WEBPACK_IMPORTED_MODULE_8__["WeekDisplayComponent"],
             src_app_components_gauge_gauge_component__WEBPACK_IMPORTED_MODULE_5__["GaugeComponent"],
-            src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_10__["MoodTitleComponent"],
+            src_app_components_mood_title_mood_title_component__WEBPACK_IMPORTED_MODULE_6__["MoodTitleComponent"],
             _sort_tasks_sort_tasks_pipe__WEBPACK_IMPORTED_MODULE_11__["SortTasksPipe"]
         ]
     })
@@ -445,7 +450,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashBoardPage", function() { return DashBoardPage; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _services_tasks_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/tasks.service */ "./src/app/services/tasks.service.ts");
+/* harmony import */ var src_theme_animations_test_animation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/theme/animations/test.animation */ "./src/theme/animations/test.animation.ts");
+/* harmony import */ var _services_tasks_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/tasks.service */ "./src/app/services/tasks.service.ts");
+
 
 
 
@@ -458,12 +465,17 @@ let DashBoardPage = class DashBoardPage {
     }
 };
 DashBoardPage.ctorParameters = () => [
-    { type: _services_tasks_service__WEBPACK_IMPORTED_MODULE_2__["TasksService"] }
+    { type: _services_tasks_service__WEBPACK_IMPORTED_MODULE_3__["TasksService"] }
 ];
 DashBoardPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-dashboard',
         template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./dashboard.page.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/pages/dashboard/dashboard.page.html")).default,
+        animations: [
+            src_theme_animations_test_animation__WEBPACK_IMPORTED_MODULE_2__["testAnimation"],
+            src_theme_animations_test_animation__WEBPACK_IMPORTED_MODULE_2__["listAnimation"],
+            src_theme_animations_test_animation__WEBPACK_IMPORTED_MODULE_2__["itemsAnimation"]
+        ],
         styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./dashboard.page.scss */ "./src/app/pages/dashboard/dashboard.page.scss")).default]
     })
 ], DashBoardPage);
@@ -489,8 +501,14 @@ __webpack_require__.r(__webpack_exports__);
 let SortTasksPipe = class SortTasksPipe {
     transform(tasks) {
         if (!tasks)
-            return null;
-        return tasks.sort((a, b) => a.progress < b.progress ? 1 : -1);
+            return tasks;
+        tasks.sort((a, b) => {
+            const diff = b.progress - a.progress;
+            if (diff === 0)
+                return b.lastDone.getTime() - a.lastDone.getTime();
+            return diff;
+        });
+        return tasks;
     }
 };
 SortTasksPipe = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
@@ -663,9 +681,17 @@ let TasksService = class TasksService {
             return task;
         });
     }
+    markTaskDone(task) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            task.executions.push(new Date());
+            task.computeProgress();
+            yield this.updateTask(task);
+        });
+    }
     loadTasks() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return (yield this.loadTasksFromDb()) || [...defaultTasks];
+            // return await this.loadTasksFromDb() || [...defaultTasks];
+            return [...defaultTasks];
         });
     }
     persistTasksInDb() {
@@ -695,6 +721,55 @@ TasksService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     })
 ], TasksService);
 
+
+
+/***/ }),
+
+/***/ "./src/theme/animations/test.animation.ts":
+/*!************************************************!*\
+  !*** ./src/theme/animations/test.animation.ts ***!
+  \************************************************/
+/*! exports provided: testAnimation, listAnimation, itemsAnimation */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "testAnimation", function() { return testAnimation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "listAnimation", function() { return listAnimation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "itemsAnimation", function() { return itemsAnimation; });
+/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/__ivy_ngcc__/fesm2015/animations.js");
+
+const testAnimation = Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trigger"])('testAnimation', [
+    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])('* => *', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ opacity: 1 }),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('3s ease-out', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ opacity: 0 }))
+    ]),
+    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])(':enter', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ opacity: 0 }),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('500ms ease-out', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ opacity: 1 }))
+    ]),
+    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])(':leave', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ height: '*', opacity: 1 }),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('300ms ease-in-out', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ height: 0, opacity: 0.5 }))
+    ])
+]);
+const listAnimation = Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trigger"])('list', [
+    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])(':enter', [
+        // child animation selector + stagger
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["query"])("@items", Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["stagger"])(300, Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animateChild"])()), { optional: true })
+    ]),
+]);
+const itemsAnimation = Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trigger"])('items', [
+    // cubic-bezier for a tiny bouncing feel
+    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])(':enter', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ transform: 'scale(0.5)', opacity: 0 }),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('1s cubic-bezier(.8,-0.6,0.2,1.5)', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ transform: 'scale(1)', opacity: 1 }))
+    ]),
+    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])(':leave', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ transform: 'scale(1)', opacity: 1, height: '*' }),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('1s cubic-bezier(.8,-0.6,0.2,1.5)', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ transform: 'scale(0.5)', opacity: 0, height: '0px', margin: '0px' }))
+    ]),
+]);
 
 
 /***/ }),
