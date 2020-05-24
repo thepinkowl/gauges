@@ -93,7 +93,8 @@ export class TasksService {
   private localStorageKey = 'tasks';
 
   private async loadTasks() {
-    return await this.loadTasksFromDb() || [...defaultTasks];
+    // return await this.loadTasksFromDb() || [...defaultTasks];
+    return [...defaultTasks];
   }
 
   private async persistTasksInDb() {
