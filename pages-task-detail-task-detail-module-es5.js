@@ -388,7 +388,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.when = [5];
         this.biWeekly = false;
         this.now = new Date();
-        console.log(nav);
       }
 
       _createClass(TaskDetailPage, [{
@@ -397,16 +396,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         key: "goBack",
         value: function goBack() {
-          this.nav.pop();
-        }
-      }, {
-        key: "log",
-        value: function log() {
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
+          if (window.history.length > 2) {
+            this.nav.back();
+          } else {
+            this.nav.navigateBack('/');
           }
-
-          console.log(args);
         }
       }, {
         key: "lastExecution",

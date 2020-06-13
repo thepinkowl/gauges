@@ -222,17 +222,18 @@ let TaskDetailPage = class TaskDetailPage {
         this.when = [5];
         this.biWeekly = false;
         this.now = new Date();
-        console.log(nav);
     }
     get lastExecution() {
         return new Date('2020-06-13');
     }
     ngOnInit() { }
     goBack() {
-        this.nav.pop();
-    }
-    log(...args) {
-        console.log(args);
+        if (window.history.length > 2) {
+            this.nav.back();
+        }
+        else {
+            this.nav.navigateBack('/');
+        }
     }
 };
 TaskDetailPage.ctorParameters = () => [
