@@ -8,8 +8,8 @@ const defaultTasks: TaskInterface[] = [
     title: 'Laundry',
     when: [1, 3],
     executions: [
-      new Date("2020-05-14T20:06:02.097+02:00"),
-      new Date("2020-05-13T20:06:02.097+02:00")
+      new Date('2020-05-14T20:06:02.097+02:00'),
+      new Date('2020-05-13T20:06:02.097+02:00')
     ],
     id: 0
   },
@@ -17,7 +17,7 @@ const defaultTasks: TaskInterface[] = [
     title: 'Gardening',
     when: [0, 1, 2],
     executions: [
-      new Date("2020-05-16T20:06:02.097+02:00")
+      new Date('2020-05-16T20:06:02.097+02:00')
     ],
     id: 1
   },
@@ -25,7 +25,7 @@ const defaultTasks: TaskInterface[] = [
     title: 'Hoovering',
     when: [0, 1, 3],
     executions: [
-      new Date("2020-05-17T20:06:02.097+02:00")
+      new Date('2020-05-17T20:06:02.097+02:00')
     ],
     id: 2
   }
@@ -36,11 +36,13 @@ const defaultTasks: TaskInterface[] = [
 })
 export class TasksService {
 
-  private tasks: BehaviorSubject<Task[]> = new BehaviorSubject([]);
-
   constructor(private notifs: NotificationsService) {
     this.loadTasks().then(tasks => this.tasks.next(Task.parseTasks(tasks)));
   }
+
+  private tasks: BehaviorSubject<Task[]> = new BehaviorSubject([]);
+
+  private localStorageKey = 'tasks';
 
   public getTasks(): Observable<Task[]> {
     return this.tasks;
@@ -51,12 +53,13 @@ export class TasksService {
   }
 
   public async deleteTask(task: Task) {
-    const index = this.tasks.getValue().indexOf(task);
-    if (index < 0) throw Error('Task does not exist');
-    const removedTasks = this.tasks.getValue().splice(index, 1);
-    if (removedTasks.length === 0) throw Error('Cannot delete task');
+    const tasks = this.tasks.getValue();
+    const index = tasks.indexOf(task);
+    if (index < 0) { throw Error('Task does not exist'); }
+    const removedTasks = tasks.splice(index, 1);
+    if (removedTasks.length === 0) { throw Error('Cannot delete task'); }
     const removedTask = removedTasks[0];
-    // this.tasks = [...this.tasks.filter(t => t.id !== task.id)];
+    this.tasks.next([...tasks]);
     await this.persistTasksInDb();
     this.notifs.showUndoDeletedTask(this, removedTask);
   }
@@ -90,8 +93,6 @@ export class TasksService {
     await this.updateTask(task);
   }
 
-  private localStorageKey = 'tasks';
-
   private async loadTasks() {
     // return await this.loadTasksFromDb() || [...defaultTasks];
     return [...defaultTasks];
@@ -103,7 +104,7 @@ export class TasksService {
 
   private async loadTasksFromDb() {
     const fromDB = localStorage.getItem(this.localStorageKey);
-    if (!fromDB) return undefined;
+    if (!fromDB) { return undefined; }
     const parsed = JSON.parse(fromDB) as Task[];
     parsed.forEach((task: Task) => {
       task.executions = task.executions.map(e => new Date(e))
