@@ -14,6 +14,10 @@
     &:active,
     &.selected {
       background-color: var(--ion-color-light);
+
+      &.bi-weekly {
+        background: linear-gradient(90deg, var(--ion-color-light), var(--ion-color-light) 50%, transparent 50%);
+      }
     }
   }
 }

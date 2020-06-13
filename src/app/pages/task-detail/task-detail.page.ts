@@ -7,16 +7,25 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./task-detail.page.scss'],
 })
 export class TaskDetailPage implements OnInit {
-
   when = [5];
+  biWeekly = false;
+  now = new Date();
 
-  constructor(private nav: NavController) { }
-
-  ngOnInit() {
+  get lastExecution() {
+    return new Date('2020-06-13');
   }
+
+  constructor(private nav: NavController) {
+    console.log(nav);
+  }
+
+  ngOnInit() {}
 
   goBack() {
     this.nav.pop();
   }
 
+  log(...args) {
+    console.log(args);
+  }
 }

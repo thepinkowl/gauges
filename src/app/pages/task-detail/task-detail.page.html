@@ -1,7 +1,31 @@
 <ion-content [fullscreen]="true">
   <ion-button (click)="goBack()" fill="clear">Cancel</ion-button>
-  <app-week-selector [(week)]="when" ></app-week-selector>
-  <span *ngFor="let item of when">{{item}}</span>
+
+  <ion-item>
+    <ion-label position="stacked">Let's give it a name!</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">When do you usually do this task?</ion-label>
+    <app-week-selector
+      [biWeekly]="biWeekly"
+      [(week)]="when"
+    ></app-week-selector>
+    <div class="repeater">
+      <small>repeats every two weeks </small>
+      <ion-toggle [(ngModel)]="biWeekly"></ion-toggle>
+    </div>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">When did you last do this?</ion-label>
+    <ion-datetime
+      displayFormat="DDDD MMM D, YYYY"
+      [max]="now.toISOString()"
+      [value]="lastExecution?.toISOString()"
+    >
+    </ion-datetime>
+  </ion-item>
   <!-- <AtoZCol>
       <div>
         <CancelButton onClick={goBack}>Cancel</CancelButton>

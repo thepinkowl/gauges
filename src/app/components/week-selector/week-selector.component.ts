@@ -29,6 +29,8 @@ export class WeekSelectorComponent implements OnInit {
     this.weekChange.emit(val);
   }
 
+  @Input() biWeekly: boolean;
+
   constructor() {}
 
   ngOnInit() {}

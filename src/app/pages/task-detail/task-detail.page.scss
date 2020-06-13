@@ -1,0 +1,20 @@
+:host {
+    padding-top: env(safe-area-inset-top);
+
+    app-week-selector {
+        width: 100%;
+    }
+
+    .repeater {
+        padding-top: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+
+        ion-toggle {
+            margin-left: 15px;
+        }
+    }
+}
