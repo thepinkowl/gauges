@@ -3,31 +3,33 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import Task, { TaskInterface } from '../models/Task';
 import { NotificationsService } from './notifications.service';
 
+const todayInMs = Date.now();
+const dayInMs = 1000 * 60 * 60 * 24;
 const defaultTasks: TaskInterface[] = [
   {
     title: 'Laundry',
     when: [1, 3],
     executions: [
-      new Date('2020-05-14T20:06:02.097+02:00'),
-      new Date('2020-05-13T20:06:02.097+02:00')
+      new Date(todayInMs - 1 * dayInMs),
+      new Date(todayInMs - 10 * dayInMs)
     ],
     id: 0
-  },
-  {
-    title: 'Gardening',
-    when: [0, 1, 2],
-    executions: [
-      new Date('2020-05-16T20:06:02.097+02:00')
-    ],
-    id: 1
   },
   {
     title: 'Hoovering',
     when: [0, 1, 3],
     executions: [
-      new Date('2020-05-17T20:06:02.097+02:00')
+      new Date(todayInMs - 10 * dayInMs)
     ],
     id: 2
+  },
+  {
+    title: 'Gardening',
+    when: [0, 1, 2],
+    executions: [
+      new Date(todayInMs - 4 * dayInMs)
+    ],
+    id: 1
   }
 ];
 
