@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class MoodTitleComponent implements OnInit {
 
   user: Observable<User>;
+  private alert: HTMLIonAlertElement;
 
   constructor(private alertController: AlertController, private userService: UserService) { }
 
@@ -19,7 +20,8 @@ export class MoodTitleComponent implements OnInit {
   }
 
   async setName() {
-    const alert = await this.alertController.create({
+    if(!!this.alert) this.alert.dismiss();
+    this.alert = await this.alertController.create({
       header: 'How should I call you?',
       inputs: [
         {
@@ -44,7 +46,7 @@ export class MoodTitleComponent implements OnInit {
         }
       ]
     });
-    alert.present();
+    this.alert.present();
   }
 
 }
