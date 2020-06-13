@@ -5,15 +5,13 @@
         <ion-button (click)="goBack()" fill="clear">Cancel</ion-button>
       </div>
 
-      <ion-item>
-        <ion-label position="stacked">Let's give it a name!</ion-label>
+      <div class="form-element">
+        <div class="title">Let's give it a name!</div>
         <ion-input></ion-input>
-      </ion-item>
+      </div>
 
-      <ion-item>
-        <ion-label position="stacked"
-          >When do you usually do this task?</ion-label
-        >
+      <div class="form-element">
+        <div class="title">When do you usually do this task?</div>
         <app-week-selector
           [biWeekly]="biWeekly"
           [(week)]="when"
@@ -22,16 +20,16 @@
           <small>repeats every two weeks </small>
           <ion-toggle [(ngModel)]="biWeekly"></ion-toggle>
         </div>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">When did you last do this?</ion-label>
+      </div>
+      <div class="form-element">
+        <div class="title">When did you last do this?</div>
         <ion-datetime
           displayFormat="DDDD MMM D, YYYY"
           [max]="now.toISOString()"
           [value]="lastExecution?.toISOString()"
         >
         </ion-datetime>
-      </ion-item>
+      </div>
     </div>
 
     <div class="actions">
