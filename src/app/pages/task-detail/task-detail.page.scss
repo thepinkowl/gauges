@@ -1,6 +1,13 @@
 :host {
     padding-top: env(safe-area-inset-top);
 
+    .cancel-button {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        font-weight: bold;
+    }
+
     app-week-selector {
         width: 100%;
     }
@@ -16,5 +23,11 @@
         ion-toggle {
             margin-left: 15px;
         }
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 }

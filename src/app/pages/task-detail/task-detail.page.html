@@ -1,5 +1,7 @@
 <ion-content [fullscreen]="true">
-  <ion-button (click)="goBack()" fill="clear">Cancel</ion-button>
+  <div class="cancel-button">
+    <ion-button (click)="goBack()" fill="clear">Cancel</ion-button>
+  </div>
 
   <ion-item>
     <ion-label position="stacked">Let's give it a name!</ion-label>
@@ -26,6 +28,11 @@
     >
     </ion-datetime>
   </ion-item>
+
+  <div class="actions">
+    <ion-button expand="block" color="primary">Update</ion-button>
+    <ion-button fill="clear" color="danger">Remove this task</ion-button>
+  </div>
   <!-- <AtoZCol>
       <div>
         <CancelButton onClick={goBack}>Cancel</CancelButton>
