@@ -1,38 +1,44 @@
 <ion-content [fullscreen]="true">
-  <div class="cancel-button">
-    <ion-button (click)="goBack()" fill="clear">Cancel</ion-button>
-  </div>
+  <main>
+    <div class="form">
+      <div class="cancel-button">
+        <ion-button (click)="goBack()" fill="clear">Cancel</ion-button>
+      </div>
 
-  <ion-item>
-    <ion-label position="stacked">Let's give it a name!</ion-label>
-    <ion-input></ion-input>
-  </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Let's give it a name!</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">When do you usually do this task?</ion-label>
-    <app-week-selector
-      [biWeekly]="biWeekly"
-      [(week)]="when"
-    ></app-week-selector>
-    <div class="repeater">
-      <small>repeats every two weeks </small>
-      <ion-toggle [(ngModel)]="biWeekly"></ion-toggle>
+      <ion-item>
+        <ion-label position="stacked"
+          >When do you usually do this task?</ion-label
+        >
+        <app-week-selector
+          [biWeekly]="biWeekly"
+          [(week)]="when"
+        ></app-week-selector>
+        <div class="repeater">
+          <small>repeats every two weeks </small>
+          <ion-toggle [(ngModel)]="biWeekly"></ion-toggle>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">When did you last do this?</ion-label>
+        <ion-datetime
+          displayFormat="DDDD MMM D, YYYY"
+          [max]="now.toISOString()"
+          [value]="lastExecution?.toISOString()"
+        >
+        </ion-datetime>
+      </ion-item>
     </div>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">When did you last do this?</ion-label>
-    <ion-datetime
-      displayFormat="DDDD MMM D, YYYY"
-      [max]="now.toISOString()"
-      [value]="lastExecution?.toISOString()"
-    >
-    </ion-datetime>
-  </ion-item>
 
-  <div class="actions">
-    <ion-button expand="block" color="primary">Update</ion-button>
-    <ion-button fill="clear" color="danger">Remove this task</ion-button>
-  </div>
+    <div class="actions">
+      <ion-button expand="block" color="primary">Update</ion-button>
+      <ion-button fill="clear" color="danger">Remove this task</ion-button>
+    </div>
+  </main>
   <!-- <AtoZCol>
       <div>
         <CancelButton onClick={goBack}>Cancel</CancelButton>

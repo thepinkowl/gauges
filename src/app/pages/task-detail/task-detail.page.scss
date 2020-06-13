@@ -1,18 +1,27 @@
 :host {
-    padding-top: env(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 
-    .cancel-button {
+  main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+
+    .form {
+      flex: 1;
+
+      .cancel-button {
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
         font-weight: bold;
-    }
+      }
 
-    app-week-selector {
+      app-week-selector {
         width: 100%;
-    }
+      }
 
-    .repeater {
+      .repeater {
         padding-top: 20px;
         width: 100%;
         display: flex;
@@ -21,14 +30,16 @@
         justify-content: flex-end;
 
         ion-toggle {
-            margin-left: 15px;
+          margin-left: 15px;
         }
+      }
     }
 
     .actions {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 0 40px ;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 40px;
     }
+  }
 }
