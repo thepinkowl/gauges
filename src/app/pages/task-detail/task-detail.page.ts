@@ -15,17 +15,15 @@ export class TaskDetailPage implements OnInit {
     return new Date('2020-06-13');
   }
 
-  constructor(private nav: NavController) {
-    console.log(nav);
-  }
+  constructor(private nav: NavController) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   goBack() {
-    this.nav.pop();
-  }
-
-  log(...args) {
-    console.log(args);
+    if (window.history.length > 2) {
+      this.nav.back();
+    } else {
+      this.nav.navigateBack('/');
+    }
   }
 }
