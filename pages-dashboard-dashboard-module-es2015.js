@@ -166,8 +166,9 @@ let MoodTitleComponent = class MoodTitleComponent {
     }
     setName() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            if (!!this.alert)
+            if (!!this.alert) {
                 this.alert.dismiss();
+            }
             this.alert = yield this.alertController.create({
                 header: 'How should I call you?',
                 inputs: [
@@ -787,9 +788,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const localStorageKey = 'user';
 let UserService = class UserService {
     constructor() {
         this.user = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({ name: 'You' });
+        const user = localStorage.getItem(localStorageKey) || '{"name": "You"}';
+        this.user = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](JSON.parse(user));
     }
     getUser() {
         return this.user;
@@ -797,15 +801,17 @@ let UserService = class UserService {
     getUserName() {
         return this.user.getValue().name;
     }
-    ;
     setUserName(name) {
         this.user.next(Object.assign(Object.assign({}, this.user.getValue()), { name }));
+        this.persistUserInDb();
     }
-    ;
+    persistUserInDb() {
+        localStorage.setItem(localStorageKey, JSON.stringify(this.user.getValue()));
+    }
 };
 UserService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-        providedIn: 'root'
+        providedIn: 'root',
     })
 ], UserService);
 

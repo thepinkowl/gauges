@@ -312,7 +312,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               while (1) {
                 switch (_context.prev = _context.next) {
                   case 0:
-                    if (!!this.alert) this.alert.dismiss();
+                    if (!!this.alert) {
+                      this.alert.dismiss();
+                    }
+
                     _context.next = 3;
                     return this.alertController.create({
                       header: 'How should I call you?',
@@ -1500,6 +1503,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /*! rxjs */
     "./node_modules/rxjs/_esm2015/index.js");
 
+    var localStorageKey = 'user';
+
     var UserService = /*#__PURE__*/function () {
       function UserService() {
         _classCallCheck(this, UserService);
@@ -1507,6 +1512,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.user = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]({
           name: 'You'
         });
+        var user = localStorage.getItem(localStorageKey) || '{"name": "You"}';
+        this.user = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](JSON.parse(user));
       }
 
       _createClass(UserService, [{
@@ -1525,6 +1532,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.user.next(Object.assign(Object.assign({}, this.user.getValue()), {
             name: name
           }));
+          this.persistUserInDb();
+        }
+      }, {
+        key: "persistUserInDb",
+        value: function persistUserInDb() {
+          localStorage.setItem(localStorageKey, JSON.stringify(this.user.getValue()));
         }
       }]);
 
