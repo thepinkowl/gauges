@@ -546,12 +546,14 @@ __webpack_require__.r(__webpack_exports__);
 
 let SortTasksPipe = class SortTasksPipe {
     transform(tasks) {
-        if (!tasks)
+        if (!tasks) {
             return tasks;
+        }
         tasks.sort((a, b) => {
-            const diff = b.progress - a.progress;
-            if (diff === 0)
-                return b.lastDone.getTime() - a.lastDone.getTime();
+            const diff = a.progress - b.progress;
+            if (diff === 0) {
+                return a.lastDone.getTime() - b.lastDone.getTime();
+            }
             return diff;
         });
         return tasks;

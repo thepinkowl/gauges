@@ -969,10 +969,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(SortTasksPipe, [{
         key: "transform",
         value: function transform(tasks) {
-          if (!tasks) return tasks;
+          if (!tasks) {
+            return tasks;
+          }
+
           tasks.sort(function (a, b) {
-            var diff = b.progress - a.progress;
-            if (diff === 0) return b.lastDone.getTime() - a.lastDone.getTime();
+            var diff = a.progress - b.progress;
+
+            if (diff === 0) {
+              return a.lastDone.getTime() - b.lastDone.getTime();
+            }
+
             return diff;
           });
           return tasks;
