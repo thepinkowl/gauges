@@ -7,15 +7,10 @@
 # https://github.com/microsoft/vscode-dev-containers/tree/v0.117.1/containers/typescript-node-12/.devcontainer/Dockerfile
 FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-12
 
-# ** [Optional] Uncomment this section to install additional packages. **
-#
-# ENV DEBIAN_FRONTEND=noninteractive
-# RUN apt-get update \
-#    && apt-get -y install --no-install-recommends <your-package-list-here> \
-#    #
-#    # Clean up
-#    && apt-get autoremove -y \
-#    && apt-get clean -y \
-#    && rm -rf /var/lib/apt/lists/*
-# ENV DEBIAN_FRONTEND=dialog
-
+# Enable GPG signing in container
+RUN apt-get update \
+   && apt-get -y install --no-install-recommends gnupg2 \
+   # Clean up
+   && apt-get autoremove -y \
+   && apt-get clean -y \
+   && rm -rf /var/lib/apt/lists/*
