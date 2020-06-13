@@ -20,7 +20,7 @@ export class MoodTitleComponent implements OnInit {
   }
 
   async setName() {
-    if(!!this.alert) this.alert.dismiss();
+    if (!!this.alert) { this.alert.dismiss(); }
     this.alert = await this.alertController.create({
       header: 'How should I call you?',
       inputs: [
