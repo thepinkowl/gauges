@@ -127,7 +127,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list @list style=\"display: block\">\n    <!-- style=\"display: block\" is required for animations to work -->\n    <app-task @items style=\"display: block\" *ngFor=\"let task of tasks | async | sortTasks; trackBy: task?.id\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n  <ion-button [routerLink]=\"['/task', 'new']\" id=\"create-new\" fill=\"clear\">Create a new repeating task</ion-button>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>";
+    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list @list style=\"display: block\">\n    <!-- style=\"display: block\" is required for animations to work -->\n    <app-task style=\"display: block\" *ngFor=\"let task of tasks | async | sortTasks; trackBy: task?.id\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n  <ion-button [routerLink]=\"['/task', 'new']\" id=\"create-new\" fill=\"clear\">Create a new repeating task</ion-button>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>";
     /***/
   },
 
@@ -1165,17 +1165,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var defaultTasks = [{
       title: 'Laundry',
       when: [1, 3],
-      executions: [new Date("2020-05-14T20:06:02.097+02:00"), new Date("2020-05-13T20:06:02.097+02:00")],
+      executions: [new Date('2020-05-14T20:06:02.097+02:00'), new Date('2020-05-13T20:06:02.097+02:00')],
       id: 0
     }, {
       title: 'Gardening',
       when: [0, 1, 2],
-      executions: [new Date("2020-05-16T20:06:02.097+02:00")],
+      executions: [new Date('2020-05-16T20:06:02.097+02:00')],
       id: 1
     }, {
       title: 'Hoovering',
       when: [0, 1, 3],
-      executions: [new Date("2020-05-17T20:06:02.097+02:00")],
+      executions: [new Date('2020-05-17T20:06:02.097+02:00')],
       id: 2
     }];
 
@@ -1222,40 +1222,41 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "deleteTask",
         value: function deleteTask(task) {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
-            var index, removedTasks, removedTask;
+            var tasks, index, removedTasks, removedTask;
             return regeneratorRuntime.wrap(function _callee5$(_context5) {
               while (1) {
                 switch (_context5.prev = _context5.next) {
                   case 0:
-                    index = this.tasks.getValue().indexOf(task);
+                    tasks = this.tasks.getValue();
+                    index = tasks.indexOf(task);
 
                     if (!(index < 0)) {
-                      _context5.next = 3;
+                      _context5.next = 4;
                       break;
                     }
 
                     throw Error('Task does not exist');
 
-                  case 3:
-                    removedTasks = this.tasks.getValue().splice(index, 1);
+                  case 4:
+                    removedTasks = tasks.splice(index, 1);
 
                     if (!(removedTasks.length === 0)) {
-                      _context5.next = 6;
+                      _context5.next = 7;
                       break;
                     }
 
                     throw Error('Cannot delete task');
 
-                  case 6:
-                    removedTask = removedTasks[0]; // this.tasks = [...this.tasks.filter(t => t.id !== task.id)];
-
-                    _context5.next = 9;
+                  case 7:
+                    removedTask = removedTasks[0];
+                    this.tasks.next(_toConsumableArray(tasks));
+                    _context5.next = 11;
                     return this.persistTasksInDb();
 
-                  case 9:
+                  case 11:
                     this.notifs.showUndoDeletedTask(this, removedTask);
 
-                  case 10:
+                  case 12:
                   case "end":
                     return _context5.stop();
                 }

@@ -61,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list @list style=\"display: block\">\n    <!-- style=\"display: block\" is required for animations to work -->\n    <app-task @items style=\"display: block\" *ngFor=\"let task of tasks | async | sortTasks; trackBy: task?.id\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n  <ion-button [routerLink]=\"['/task', 'new']\" id=\"create-new\" fill=\"clear\">Create a new repeating task</ion-button>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list @list style=\"display: block\">\n    <!-- style=\"display: block\" is required for animations to work -->\n    <app-task style=\"display: block\" *ngFor=\"let task of tasks | async | sortTasks; trackBy: task?.id\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n  <ion-button [routerLink]=\"['/task', 'new']\" id=\"create-new\" fill=\"clear\">Create a new repeating task</ion-button>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>");
 
 /***/ }),
 
@@ -651,8 +651,8 @@ const defaultTasks = [
         title: 'Laundry',
         when: [1, 3],
         executions: [
-            new Date("2020-05-14T20:06:02.097+02:00"),
-            new Date("2020-05-13T20:06:02.097+02:00")
+            new Date('2020-05-14T20:06:02.097+02:00'),
+            new Date('2020-05-13T20:06:02.097+02:00')
         ],
         id: 0
     },
@@ -660,7 +660,7 @@ const defaultTasks = [
         title: 'Gardening',
         when: [0, 1, 2],
         executions: [
-            new Date("2020-05-16T20:06:02.097+02:00")
+            new Date('2020-05-16T20:06:02.097+02:00')
         ],
         id: 1
     },
@@ -668,7 +668,7 @@ const defaultTasks = [
         title: 'Hoovering',
         when: [0, 1, 3],
         executions: [
-            new Date("2020-05-17T20:06:02.097+02:00")
+            new Date('2020-05-17T20:06:02.097+02:00')
         ],
         id: 2
     }
@@ -690,14 +690,17 @@ let TasksService = class TasksService {
     }
     deleteTask(task) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const index = this.tasks.getValue().indexOf(task);
-            if (index < 0)
+            const tasks = this.tasks.getValue();
+            const index = tasks.indexOf(task);
+            if (index < 0) {
                 throw Error('Task does not exist');
-            const removedTasks = this.tasks.getValue().splice(index, 1);
-            if (removedTasks.length === 0)
+            }
+            const removedTasks = tasks.splice(index, 1);
+            if (removedTasks.length === 0) {
                 throw Error('Cannot delete task');
+            }
             const removedTask = removedTasks[0];
-            // this.tasks = [...this.tasks.filter(t => t.id !== task.id)];
+            this.tasks.next([...tasks]);
             yield this.persistTasksInDb();
             this.notifs.showUndoDeletedTask(this, removedTask);
         });
@@ -749,8 +752,9 @@ let TasksService = class TasksService {
     loadTasksFromDb() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const fromDB = localStorage.getItem(this.localStorageKey);
-            if (!fromDB)
+            if (!fromDB) {
                 return undefined;
+            }
             const parsed = JSON.parse(fromDB);
             parsed.forEach((task) => {
                 task.executions = task.executions.map(e => new Date(e));
