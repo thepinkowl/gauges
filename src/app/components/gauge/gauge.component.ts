@@ -14,11 +14,11 @@ export class GaugeComponent implements OnInit {
 
   getColor() {
     if (this.percentage > 50) {
-      return '#99FF66';
+      return '#2AC940';
     } else if (this.percentage > 25) {
-      return '#FFFF00';
+      return '#FA9917';
     } else {
-      return '#FF3333';
+      return '#FF3366';
     }
   }
 
