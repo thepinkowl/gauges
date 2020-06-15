@@ -354,6 +354,270 @@ const openURL = async (url, ev, direction) => {
 
 
 
+/***/ }),
+
+/***/ "./src/app/models/Task.ts":
+/*!********************************!*\
+  !*** ./src/app/models/Task.ts ***!
+  \********************************/
+/*! exports provided: TaskInterface, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TaskInterface", function() { return TaskInterface; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Task; });
+class TaskInterface {
+}
+class Task extends TaskInterface {
+    constructor(task) {
+        super();
+        Object.assign(this, task);
+        this.computeProgress();
+    }
+    static parseTasks(tasks) {
+        return tasks.map((t) => new Task(t));
+    }
+    static createEmpty() {
+        return new Task({
+            title: '',
+            id: '',
+            when: [],
+            executions: [new Date()],
+        });
+    }
+    computeProgress() {
+        this.executions.sort((a, b) => (b.getTime() - a.getTime()));
+        this.lastDone = this.executions[0];
+        const lastDoneDuration = (Task.today - this.lastDone.getTime());
+        this.progress = this.rangePercentage(Math.floor((Task.WEEK - lastDoneDuration) / Task.WEEK * 100));
+    }
+    rangePercentage(value, min = 0, max = 100) {
+        return Math.min(Math.max(value, min), max);
+    }
+}
+Task.today = Date.now();
+Task.WEEK = 7 * 24 * 60 * 60 * 1000;
+
+
+/***/ }),
+
+/***/ "./src/app/services/notifications.service.ts":
+/*!***************************************************!*\
+  !*** ./src/app/services/notifications.service.ts ***!
+  \***************************************************/
+/*! exports provided: NotificationsService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationsService", function() { return NotificationsService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
+
+
+
+let NotificationsService = class NotificationsService {
+    constructor(toastController) {
+        this.toastController = toastController;
+    }
+    showToast(message, duration = 2000) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const toast = yield this.toastController.create({
+                message,
+                duration
+            });
+            toast.present();
+        });
+    }
+    showUndoDeletedTask(tasksService, task) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const toast = yield this.toastController.create({
+                message: `"${task.title}" has been removed.`,
+                buttons: [
+                    {
+                        side: 'end',
+                        text: 'Undo',
+                        handler: () => !!tasksService.updateTask(task)
+                    }
+                ],
+                duration: 3000
+            });
+            toast.present();
+        });
+    }
+};
+NotificationsService.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"] }
+];
+NotificationsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], NotificationsService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/tasks.service.ts":
+/*!*******************************************!*\
+  !*** ./src/app/services/tasks.service.ts ***!
+  \*******************************************/
+/*! exports provided: TasksService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TasksService", function() { return TasksService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _models_Task__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../models/Task */ "./src/app/models/Task.ts");
+/* harmony import */ var _notifications_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./notifications.service */ "./src/app/services/notifications.service.ts");
+
+
+
+
+
+const todayInMs = Date.now();
+const dayInMs = 1000 * 60 * 60 * 24;
+const defaultTasks = [
+    {
+        title: 'Laundry',
+        when: [1, 3],
+        executions: [
+            new Date(todayInMs - 1 * dayInMs),
+            new Date(todayInMs - 10 * dayInMs),
+        ],
+        id: '0',
+    },
+    {
+        title: 'Hoovering',
+        when: [0, 1, 3],
+        executions: [new Date(todayInMs - 10 * dayInMs)],
+        id: '2',
+    },
+    {
+        title: 'Gardening',
+        when: [0, 1, 2],
+        executions: [new Date(todayInMs - 4 * dayInMs)],
+        id: '1',
+    },
+];
+let TasksService = class TasksService {
+    constructor(notifs) {
+        this.notifs = notifs;
+        this.tasks = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
+        this.localStorageKey = 'tasks';
+        this.loaded = new Promise((resolve) => {
+            this.loadTasks().then((tasks) => {
+                this.tasks.next(_models_Task__WEBPACK_IMPORTED_MODULE_3__["default"].parseTasks(tasks));
+                resolve(true);
+            });
+        });
+    }
+    getTasks() {
+        return this.tasks;
+    }
+    getTaskById(id) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.loaded;
+            return this.tasks.getValue().find((t) => t.id === id);
+        });
+    }
+    deleteTask(task) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const tasks = this.tasks.getValue();
+            const index = tasks.indexOf(task);
+            if (index < 0) {
+                throw Error('Task does not exist');
+            }
+            const removedTasks = tasks.splice(index, 1);
+            if (removedTasks.length === 0) {
+                throw Error('Cannot delete task');
+            }
+            const removedTask = removedTasks[0];
+            this.tasks.next([...tasks]);
+            yield this.persistTasksInDb();
+            this.notifs.showUndoDeletedTask(this, removedTask);
+        });
+    }
+    createOrUpdateTask(task) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const doesTaskExist = !!task.id && !!this.tasks.getValue().find((t) => t.id === task.id);
+            if (!doesTaskExist) {
+                return yield this.createTask(task);
+            }
+            return yield this.updateTask(task);
+        });
+    }
+    createTask(task) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const biggestId = this.tasks
+                .getValue()
+                .reduce((acc, t) => parseInt(t.id, 16) > acc ? parseInt(t.id, 16) : acc, 0);
+            task.id = (biggestId + 1).toString(16);
+            // TODO: should we copy or just push instead?
+            this.tasks.next([...this.tasks.getValue(), task]);
+            yield this.persistTasksInDb();
+            return task;
+        });
+    }
+    updateTask(task) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.tasks.next([
+                ...this.tasks.getValue().filter((t) => t.id !== task.id),
+                task,
+            ]);
+            yield this.persistTasksInDb();
+            return task;
+        });
+    }
+    markTaskDone(task) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            task.executions.push(new Date());
+            task.computeProgress();
+            yield this.updateTask(task);
+        });
+    }
+    loadTasks() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            // return await this.loadTasksFromDb() || [...defaultTasks];
+            return [...defaultTasks];
+        });
+    }
+    persistTasksInDb() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            localStorage.setItem(this.localStorageKey, JSON.stringify(this.tasks.getValue()));
+        });
+    }
+    loadTasksFromDb() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const fromDB = localStorage.getItem(this.localStorageKey);
+            if (!fromDB) {
+                return undefined;
+            }
+            const parsed = JSON.parse(fromDB);
+            parsed.forEach((task) => {
+                task.executions = task.executions.map((e) => new Date(e));
+            });
+            return parsed;
+        });
+    }
+};
+TasksService.ctorParameters = () => [
+    { type: _notifications_service__WEBPACK_IMPORTED_MODULE_4__["NotificationsService"] }
+];
+TasksService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root',
+    })
+], TasksService);
+
+
+
 /***/ })
 
 }]);

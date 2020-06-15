@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content [fullscreen]=\"true\">\n  <main>\n    <div class=\"form\">\n      <div class=\"cancel-button\">\n        <ion-button (click)=\"goBack()\" fill=\"clear\">Cancel</ion-button>\n      </div>\n\n      <div class=\"form-element\">\n        <div class=\"title\">Let's give it a name!</div>\n        <ion-input></ion-input>\n      </div>\n\n      <div class=\"form-element\">\n        <div class=\"title\">When do you usually do this task?</div>\n        <app-week-selector\n          [biWeekly]=\"biWeekly\"\n          [(week)]=\"when\"\n        ></app-week-selector>\n        <div class=\"repeater\">\n          <small>repeats every two weeks </small>\n          <ion-toggle [(ngModel)]=\"biWeekly\"></ion-toggle>\n        </div>\n      </div>\n      <div class=\"form-element\">\n        <div class=\"title\">When did you last do this?</div>\n        <ion-datetime\n          displayFormat=\"DDDD MMM D, YYYY\"\n          [max]=\"now.toISOString()\"\n          [value]=\"lastExecution?.toISOString()\"\n        >\n        </ion-datetime>\n      </div>\n    </div>\n\n    <div class=\"actions\">\n      <ion-button expand=\"block\" color=\"primary\">Update</ion-button>\n      <ion-button fill=\"clear\" color=\"danger\">Remove this task</ion-button>\n    </div>\n  </main>\n  <!-- <AtoZCol>\n      <div>\n        <CancelButton onClick={goBack}>Cancel</CancelButton>\n        <IonItem>\n          <IonLabel position=\"stacked\">Let's give it a name</IonLabel>\n          <IonInput value={title} onIonChange={e => setTitle(e.detail.value!)} />\n        </IonItem>\n        <IonItem>\n          <IonLabel position=\"stacked\">When do you usually do this task?</IonLabel>\n          <WeekSelector when={when} onValueChange={data => setWhen(data)} />\n        </IonItem>\n        <IonItem>\n          <IonLabel position=\"stacked\">When did you last do this?</IonLabel>\n          <IonDatetime displayFormat=\"DDDD MMM D, YYYY\"\n            value={lastExecution?.toISOString()} onIonChange={e => changeLastExecution(e.detail.value!)}>\n          </IonDatetime>\n        </IonItem>\n      </div>\n      <div className=\"actions\">\n        <IonButton size=\"large\" onClick={save} expand=\"block\">{task ? 'Update' : 'Create'}</IonButton>\n        {task && (<span className='remove' onClick={() => remove(task)}>Remove this task</span>)}\n      </div>\n    </AtoZCol>\n    <IonToast\n      isOpen={!isFormValid}\n      onDidDismiss={() => setIsFormValid(true)}\n      message=\"All fields are required.\"\n      duration={1000}\n    /> -->\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content [fullscreen]=\"true\">\n  <main>\n    <div class=\"form\">\n      <div class=\"cancel-button\">\n        <ion-button (click)=\"goBack()\" fill=\"clear\">Cancel</ion-button>\n      </div>\n\n      <div class=\"form-element\">\n        <div class=\"title\">Let's give it a name!</div>\n        <ion-input [(ngModel)]=\"task.title\"></ion-input>\n      </div>\n\n      <div class=\"form-element\">\n        <div class=\"title\">When do you usually do this task?</div>\n        <app-week-selector\n          [biWeekly]=\"biWeekly\"\n          [(week)]=\"task.when\"\n        ></app-week-selector>\n        <div class=\"repeater\">\n          <small>repeats every two weeks </small>\n          <ion-toggle [(ngModel)]=\"biWeekly\"></ion-toggle>\n        </div>\n      </div>\n      <div class=\"form-element\">\n        <div class=\"title\">When did you last do this?</div>\n        <ion-datetime\n          displayFormat=\"DDDD MMM D, YYYY\"\n          [max]=\"now.toISOString()\"\n          [value]=\"task.lastDone?.toISOString()\"\n        >\n        </ion-datetime>\n      </div>\n    </div>\n\n    <div class=\"actions\">\n      <ion-button *ngIf=\"new\" expand=\"block\" color=\"primary\" (click)=\"create()\">Create</ion-button>\n      <ion-button *ngIf=\"!new\" expand=\"block\" color=\"primary\" (click)=\"update()\">Update</ion-button>\n      <ion-button *ngIf=\"!new\" fill=\"clear\" color=\"danger\" (click)=\"delete()\">Remove this task</ion-button>\n    </div>\n  </main>\n  <!-- <AtoZCol>\n      <div>\n        <CancelButton onClick={goBack}>Cancel</CancelButton>\n        <IonItem>\n          <IonLabel position=\"stacked\">Let's give it a name</IonLabel>\n          <IonInput value={title} onIonChange={e => setTitle(e.detail.value!)} />\n        </IonItem>\n        <IonItem>\n          <IonLabel position=\"stacked\">When do you usually do this task?</IonLabel>\n          <WeekSelector when={when} onValueChange={data => setWhen(data)} />\n        </IonItem>\n        <IonItem>\n          <IonLabel position=\"stacked\">When did you last do this?</IonLabel>\n          <IonDatetime displayFormat=\"DDDD MMM D, YYYY\"\n            value={lastExecution?.toISOString()} onIonChange={e => changeLastExecution(e.detail.value!)}>\n          </IonDatetime>\n        </IonItem>\n      </div>\n      <div className=\"actions\">\n        <IonButton size=\"large\" onClick={save} expand=\"block\">{task ? 'Update' : 'Create'}</IonButton>\n        {task && (<span className='remove' onClick={() => remove(task)}>Remove this task</span>)}\n      </div>\n    </AtoZCol>\n    <IonToast\n      isOpen={!isFormValid}\n      onDidDismiss={() => setIsFormValid(true)}\n      message=\"All fields are required.\"\n      duration={1000}\n    /> -->\n</ion-content>\n");
 
 /***/ }),
 
@@ -72,7 +72,6 @@ let WeekSelectorComponent = class WeekSelectorComponent {
     }
     set week(val) {
         this.value = val;
-        console.log(val);
         this.weekChange.emit(val);
     }
     ngOnInit() { }
@@ -196,7 +195,7 @@ TaskDetailPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])(
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (":host {\n  padding-top: env(safe-area-inset-top);\n  padding-bottom: env(safe-area-inset-bottom);\n}\n:host main {\n  display: flex;\n  flex-direction: column;\n  min-height: 100%;\n}\n:host main .form {\n  flex: 1;\n}\n:host main .form .cancel-button {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  font-weight: bold;\n}\n:host main .form .form-element {\n  padding: 10px 20px;\n}\n:host main .form .form-element ion-datetime,\n:host main .form .form-element ion-input {\n  border: 1px solid var(--ion-color-light);\n}\n:host main .form .form-element ion-input {\n  padding: 0 10px !important;\n}\n:host main .form .form-element .title {\n  font-weight: bold;\n  max-width: 70%;\n  padding: 20px 0 10px;\n}\n:host main .form .form-element app-week-selector {\n  width: 100%;\n}\n:host main .form .form-element .repeater {\n  padding-top: 20px;\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-end;\n}\n:host main .form .form-element .repeater ion-toggle {\n  margin-left: 15px;\n}\n:host main .actions {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  padding: 0 40px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3J1bm5lci93b3JrL2dhdWdlcy9nYXVnZXMvc3JjL2FwcC9wYWdlcy90YXNrLWRldGFpbC90YXNrLWRldGFpbC5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3Rhc2stZGV0YWlsL3Rhc2stZGV0YWlsLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLHFDQUFBO0VBQ0EsMkNBQUE7QUNDRjtBRENFO0VBQ0UsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsZ0JBQUE7QUNDSjtBRENJO0VBQ0UsT0FBQTtBQ0NOO0FEQ007RUFDRSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSx5QkFBQTtFQUNBLGlCQUFBO0FDQ1I7QURFTTtFQUNFLGtCQUFBO0FDQVI7QURFUTs7RUFFRSx3Q0FBQTtBQ0FWO0FER1E7RUFDRSwwQkFBQTtBQ0RWO0FESVE7RUFDRSxpQkFBQTtFQUNBLGNBQUE7RUFDQSxvQkFBQTtBQ0ZWO0FES1E7RUFDRSxXQUFBO0FDSFY7QURNUTtFQUNFLGlCQUFBO0VBQ0EsV0FBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtFQUNBLG1CQUFBO0VBQ0EseUJBQUE7QUNKVjtBRE1VO0VBQ0UsaUJBQUE7QUNKWjtBRFVJO0VBQ0UsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsdUJBQUE7RUFDQSxlQUFBO0FDUk4iLCJmaWxlIjoic3JjL2FwcC9wYWdlcy90YXNrLWRldGFpbC90YXNrLWRldGFpbC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XG4gIHBhZGRpbmctdG9wOiBlbnYoc2FmZS1hcmVhLWluc2V0LXRvcCk7XG4gIHBhZGRpbmctYm90dG9tOiBlbnYoc2FmZS1hcmVhLWluc2V0LWJvdHRvbSk7XG5cbiAgbWFpbiB7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICAgIG1pbi1oZWlnaHQ6IDEwMCU7XG5cbiAgICAuZm9ybSB7XG4gICAgICBmbGV4OiAxO1xuXG4gICAgICAuY2FuY2VsLWJ1dHRvbiB7XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGZsZXgtZGlyZWN0aW9uOiByb3c7XG4gICAgICAgIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XG4gICAgICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgICAgfVxuXG4gICAgICAuZm9ybS1lbGVtZW50IHtcbiAgICAgICAgcGFkZGluZzogMTBweCAyMHB4O1xuXG4gICAgICAgIGlvbi1kYXRldGltZSxcbiAgICAgICAgaW9uLWlucHV0IHtcbiAgICAgICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1pb24tY29sb3ItbGlnaHQpO1xuICAgICAgICB9XG5cbiAgICAgICAgaW9uLWlucHV0IHtcbiAgICAgICAgICBwYWRkaW5nOiAwIDEwcHggIWltcG9ydGFudDtcbiAgICAgICAgfVxuXG4gICAgICAgIC50aXRsZSB7XG4gICAgICAgICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgICAgICAgbWF4LXdpZHRoOiA3MCU7XG4gICAgICAgICAgcGFkZGluZzogMjBweCAwIDEwcHg7XG4gICAgICAgIH1cblxuICAgICAgICBhcHAtd2Vlay1zZWxlY3RvciB7XG4gICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgIH1cblxuICAgICAgICAucmVwZWF0ZXIge1xuICAgICAgICAgIHBhZGRpbmctdG9wOiAyMHB4O1xuICAgICAgICAgIHdpZHRoOiAxMDAlO1xuICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgICAgZmxleC1kaXJlY3Rpb246IHJvdztcbiAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICAgIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XG5cbiAgICAgICAgICBpb24tdG9nZ2xlIHtcbiAgICAgICAgICAgIG1hcmdpbi1sZWZ0OiAxNXB4O1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cblxuICAgIC5hY3Rpb25zIHtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICBwYWRkaW5nOiAwIDQwcHg7XG4gICAgfVxuICB9XG59XG4iLCI6aG9zdCB7XG4gIHBhZGRpbmctdG9wOiBlbnYoc2FmZS1hcmVhLWluc2V0LXRvcCk7XG4gIHBhZGRpbmctYm90dG9tOiBlbnYoc2FmZS1hcmVhLWluc2V0LWJvdHRvbSk7XG59XG46aG9zdCBtYWluIHtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgbWluLWhlaWdodDogMTAwJTtcbn1cbjpob3N0IG1haW4gLmZvcm0ge1xuICBmbGV4OiAxO1xufVxuOmhvc3QgbWFpbiAuZm9ybSAuY2FuY2VsLWJ1dHRvbiB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiByb3c7XG4gIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xufVxuOmhvc3QgbWFpbiAuZm9ybSAuZm9ybS1lbGVtZW50IHtcbiAgcGFkZGluZzogMTBweCAyMHB4O1xufVxuOmhvc3QgbWFpbiAuZm9ybSAuZm9ybS1lbGVtZW50IGlvbi1kYXRldGltZSxcbjpob3N0IG1haW4gLmZvcm0gLmZvcm0tZWxlbWVudCBpb24taW5wdXQge1xuICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1pb24tY29sb3ItbGlnaHQpO1xufVxuOmhvc3QgbWFpbiAuZm9ybSAuZm9ybS1lbGVtZW50IGlvbi1pbnB1dCB7XG4gIHBhZGRpbmc6IDAgMTBweCAhaW1wb3J0YW50O1xufVxuOmhvc3QgbWFpbiAuZm9ybSAuZm9ybS1lbGVtZW50IC50aXRsZSB7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICBtYXgtd2lkdGg6IDcwJTtcbiAgcGFkZGluZzogMjBweCAwIDEwcHg7XG59XG46aG9zdCBtYWluIC5mb3JtIC5mb3JtLWVsZW1lbnQgYXBwLXdlZWstc2VsZWN0b3Ige1xuICB3aWR0aDogMTAwJTtcbn1cbjpob3N0IG1haW4gLmZvcm0gLmZvcm0tZWxlbWVudCAucmVwZWF0ZXIge1xuICBwYWRkaW5nLXRvcDogMjBweDtcbiAgd2lkdGg6IDEwMCU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiByb3c7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XG59XG46aG9zdCBtYWluIC5mb3JtIC5mb3JtLWVsZW1lbnQgLnJlcGVhdGVyIGlvbi10b2dnbGUge1xuICBtYXJnaW4tbGVmdDogMTVweDtcbn1cbjpob3N0IG1haW4gLmFjdGlvbnMge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgcGFkZGluZzogMCA0MHB4O1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = (":host main {\n  display: flex;\n  flex-direction: column;\n  min-height: 100%;\n}\n:host main .form {\n  flex: 1;\n}\n:host main .form .cancel-button {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  font-weight: bold;\n}\n:host main .form .form-element {\n  padding: 10px 20px;\n}\n:host main .form .form-element ion-datetime,\n:host main .form .form-element ion-input {\n  border: 1px solid var(--ion-color-light);\n}\n:host main .form .form-element ion-input {\n  padding: 0 10px !important;\n}\n:host main .form .form-element .title {\n  font-weight: bold;\n  max-width: 70%;\n  padding: 20px 0 10px;\n}\n:host main .form .form-element app-week-selector {\n  width: 100%;\n}\n:host main .form .form-element .repeater {\n  padding-top: 20px;\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: flex-end;\n}\n:host main .form .form-element .repeater ion-toggle {\n  margin-left: 15px;\n}\n:host main .actions {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  padding: 0 40px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3J1bm5lci93b3JrL2dhdWdlcy9nYXVnZXMvc3JjL2FwcC9wYWdlcy90YXNrLWRldGFpbC90YXNrLWRldGFpbC5wYWdlLnNjc3MiLCJzcmMvYXBwL3BhZ2VzL3Rhc2stZGV0YWlsL3Rhc2stZGV0YWlsLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDRTtFQUNFLGFBQUE7RUFDQSxzQkFBQTtFQUNBLGdCQUFBO0FDQUo7QURFSTtFQUNFLE9BQUE7QUNBTjtBREVNO0VBQ0UsYUFBQTtFQUNBLG1CQUFBO0VBQ0EseUJBQUE7RUFDQSxpQkFBQTtBQ0FSO0FER007RUFDRSxrQkFBQTtBQ0RSO0FER1E7O0VBRUUsd0NBQUE7QUNEVjtBRElRO0VBQ0UsMEJBQUE7QUNGVjtBREtRO0VBQ0UsaUJBQUE7RUFDQSxjQUFBO0VBQ0Esb0JBQUE7QUNIVjtBRE1RO0VBQ0UsV0FBQTtBQ0pWO0FET1E7RUFDRSxpQkFBQTtFQUNBLFdBQUE7RUFDQSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSxtQkFBQTtFQUNBLHlCQUFBO0FDTFY7QURPVTtFQUNFLGlCQUFBO0FDTFo7QURXSTtFQUNFLGFBQUE7RUFDQSxzQkFBQTtFQUNBLHVCQUFBO0VBQ0EsZUFBQTtBQ1ROIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvdGFzay1kZXRhaWwvdGFzay1kZXRhaWwucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiOmhvc3Qge1xuICBtYWluIHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gICAgbWluLWhlaWdodDogMTAwJTtcblxuICAgIC5mb3JtIHtcbiAgICAgIGZsZXg6IDE7XG5cbiAgICAgIC5jYW5jZWwtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgZmxleC1kaXJlY3Rpb246IHJvdztcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBmbGV4LWVuZDtcbiAgICAgICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgICB9XG5cbiAgICAgIC5mb3JtLWVsZW1lbnQge1xuICAgICAgICBwYWRkaW5nOiAxMHB4IDIwcHg7XG5cbiAgICAgICAgaW9uLWRhdGV0aW1lLFxuICAgICAgICBpb24taW5wdXQge1xuICAgICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWlvbi1jb2xvci1saWdodCk7XG4gICAgICAgIH1cblxuICAgICAgICBpb24taW5wdXQge1xuICAgICAgICAgIHBhZGRpbmc6IDAgMTBweCAhaW1wb3J0YW50O1xuICAgICAgICB9XG5cbiAgICAgICAgLnRpdGxlIHtcbiAgICAgICAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICAgICAgICBtYXgtd2lkdGg6IDcwJTtcbiAgICAgICAgICBwYWRkaW5nOiAyMHB4IDAgMTBweDtcbiAgICAgICAgfVxuXG4gICAgICAgIGFwcC13ZWVrLXNlbGVjdG9yIHtcbiAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgfVxuXG4gICAgICAgIC5yZXBlYXRlciB7XG4gICAgICAgICAgcGFkZGluZy10b3A6IDIwcHg7XG4gICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgICBmbGV4LWRpcmVjdGlvbjogcm93O1xuICAgICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgICAgICAganVzdGlmeS1jb250ZW50OiBmbGV4LWVuZDtcblxuICAgICAgICAgIGlvbi10b2dnbGUge1xuICAgICAgICAgICAgbWFyZ2luLWxlZnQ6IDE1cHg7XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuXG4gICAgLmFjdGlvbnMge1xuICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgICAgIHBhZGRpbmc6IDAgNDBweDtcbiAgICB9XG4gIH1cbn1cbiIsIjpob3N0IG1haW4ge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBtaW4taGVpZ2h0OiAxMDAlO1xufVxuOmhvc3QgbWFpbiAuZm9ybSB7XG4gIGZsZXg6IDE7XG59XG46aG9zdCBtYWluIC5mb3JtIC5jYW5jZWwtYnV0dG9uIHtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC1kaXJlY3Rpb246IHJvdztcbiAganVzdGlmeS1jb250ZW50OiBmbGV4LWVuZDtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG59XG46aG9zdCBtYWluIC5mb3JtIC5mb3JtLWVsZW1lbnQge1xuICBwYWRkaW5nOiAxMHB4IDIwcHg7XG59XG46aG9zdCBtYWluIC5mb3JtIC5mb3JtLWVsZW1lbnQgaW9uLWRhdGV0aW1lLFxuOmhvc3QgbWFpbiAuZm9ybSAuZm9ybS1lbGVtZW50IGlvbi1pbnB1dCB7XG4gIGJvcmRlcjogMXB4IHNvbGlkIHZhcigtLWlvbi1jb2xvci1saWdodCk7XG59XG46aG9zdCBtYWluIC5mb3JtIC5mb3JtLWVsZW1lbnQgaW9uLWlucHV0IHtcbiAgcGFkZGluZzogMCAxMHB4ICFpbXBvcnRhbnQ7XG59XG46aG9zdCBtYWluIC5mb3JtIC5mb3JtLWVsZW1lbnQgLnRpdGxlIHtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gIG1heC13aWR0aDogNzAlO1xuICBwYWRkaW5nOiAyMHB4IDAgMTBweDtcbn1cbjpob3N0IG1haW4gLmZvcm0gLmZvcm0tZWxlbWVudCBhcHAtd2Vlay1zZWxlY3RvciB7XG4gIHdpZHRoOiAxMDAlO1xufVxuOmhvc3QgbWFpbiAuZm9ybSAuZm9ybS1lbGVtZW50IC5yZXBlYXRlciB7XG4gIHBhZGRpbmctdG9wOiAyMHB4O1xuICB3aWR0aDogMTAwJTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC1kaXJlY3Rpb246IHJvdztcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAganVzdGlmeS1jb250ZW50OiBmbGV4LWVuZDtcbn1cbjpob3N0IG1haW4gLmZvcm0gLmZvcm0tZWxlbWVudCAucmVwZWF0ZXIgaW9uLXRvZ2dsZSB7XG4gIG1hcmdpbi1sZWZ0OiAxNXB4O1xufVxuOmhvc3QgbWFpbiAuYWN0aW9ucyB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICBwYWRkaW5nOiAwIDQwcHg7XG59Il19 */");
 
 /***/ }),
 
@@ -213,20 +212,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
+/* harmony import */ var src_app_services_tasks_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/tasks.service */ "./src/app/services/tasks.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+/* harmony import */ var src_app_models_Task__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/models/Task */ "./src/app/models/Task.ts");
+
+
+
 
 
 
 let TaskDetailPage = class TaskDetailPage {
-    constructor(nav) {
+    constructor(nav, tasksService, activatedRoute) {
         this.nav = nav;
+        this.tasksService = tasksService;
+        this.activatedRoute = activatedRoute;
         this.when = [5];
         this.biWeekly = false;
         this.now = new Date();
+        this.task = src_app_models_Task__WEBPACK_IMPORTED_MODULE_5__["default"].createEmpty();
+        this.new = true;
     }
     get lastExecution() {
         return new Date('2020-06-13');
     }
-    ngOnInit() { }
+    ngOnInit() {
+        this.activatedRoute.params.subscribe((params) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.new = params.id === 'new';
+            if (!this.new) {
+                const task = yield this.tasksService.getTaskById(params.id);
+                this.task = task;
+            }
+        }));
+    }
     goBack() {
         if (window.history.length > 2) {
             this.nav.back();
@@ -235,9 +252,33 @@ let TaskDetailPage = class TaskDetailPage {
             this.nav.navigateBack('/');
         }
     }
+    create() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.new) {
+                yield this.tasksService.createTask(this.task);
+                this.goBack();
+            }
+        });
+    }
+    update() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (!this.new) {
+                yield this.tasksService.updateTask(this.task);
+                this.goBack();
+            }
+        });
+    }
+    delete() {
+        if (!this.new) {
+            this.tasksService.deleteTask(this.task);
+            this.goBack();
+        }
+    }
 };
 TaskDetailPage.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["NavController"] },
+    { type: src_app_services_tasks_service__WEBPACK_IMPORTED_MODULE_3__["TasksService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"] }
 ];
 TaskDetailPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
