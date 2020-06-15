@@ -25,7 +25,6 @@ export class WeekSelectorComponent implements OnInit {
   }
   set week(val) {
     this.value = val;
-    console.log(val);
     this.weekChange.emit(val);
   }
 

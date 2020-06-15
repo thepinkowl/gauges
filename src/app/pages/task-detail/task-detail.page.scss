@@ -1,7 +1,4 @@
 :host {
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-
   main {
     display: flex;
     flex-direction: column;
