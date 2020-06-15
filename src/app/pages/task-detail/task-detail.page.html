@@ -7,14 +7,14 @@
 
       <div class="form-element">
         <div class="title">Let's give it a name!</div>
-        <ion-input></ion-input>
+        <ion-input [(ngModel)]="task.title"></ion-input>
       </div>
 
       <div class="form-element">
         <div class="title">When do you usually do this task?</div>
         <app-week-selector
           [biWeekly]="biWeekly"
-          [(week)]="when"
+          [(week)]="task.when"
         ></app-week-selector>
         <div class="repeater">
           <small>repeats every two weeks </small>
@@ -26,15 +26,16 @@
         <ion-datetime
           displayFormat="DDDD MMM D, YYYY"
           [max]="now.toISOString()"
-          [value]="lastExecution?.toISOString()"
+          [value]="task.lastDone?.toISOString()"
         >
         </ion-datetime>
       </div>
     </div>
 
     <div class="actions">
-      <ion-button expand="block" color="primary">Update</ion-button>
-      <ion-button fill="clear" color="danger">Remove this task</ion-button>
+      <ion-button *ngIf="new" expand="block" color="primary" (click)="create()">Create</ion-button>
+      <ion-button *ngIf="!new" expand="block" color="primary" (click)="update()">Update</ion-button>
+      <ion-button *ngIf="!new" fill="clear" color="danger" (click)="delete()">Remove this task</ion-button>
     </div>
   </main>
   <!-- <AtoZCol>

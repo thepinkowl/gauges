@@ -1,5 +1,5 @@
 export class TaskInterface {
-    id: number;
+    id: string;
     title: string;
     when: number[];
     executions: Date[];
@@ -9,12 +9,21 @@ export default class Task extends TaskInterface {
     static today = Date.now();
     static WEEK = 7 * 24 * 60 * 60 * 1000;
 
+    lastDone: Date;
+    progress: number;
+
     static parseTasks(tasks: TaskInterface[]): Task[] {
         return tasks.map((t: TaskInterface) => new Task(t));
     }
 
-    lastDone: Date;
-    progress: number;
+    static createEmpty(): Task {
+        return new Task({
+            title: '',
+            id: '',
+            when: [],
+            executions: [new Date()],
+        });
+    }
 
     constructor(task: TaskInterface) {
         super();
