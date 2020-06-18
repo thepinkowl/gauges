@@ -29,6 +29,7 @@
     "@ionic/angular": "^5.0.0",
     "@ionic/core": "^5.1.1",
     "@types/jest": "^25.2.3",
+    "capacitor-apple-login": "git+https://github.com/rlfrahm/capacitor-apple-login.git",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
