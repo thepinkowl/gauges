@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "new-gauges",
+  "appId": "org.thepinkowk.gauges-angular",
+  "appName": "Gauges",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
@@ -10,7 +10,7 @@
     }
   },
   "server": {
-    "url": "http://192.168.1.100:8100",
-    "cleartext": true
+    "cleartext": true,
+    "url": "http://192.168.1.100:8100"
   }
 }

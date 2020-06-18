@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "new-gauges",
+  "appId": "org.thepinkowk.gauges-angular",
+  "appName": "Gauges",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
