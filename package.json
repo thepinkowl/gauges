@@ -5,6 +5,7 @@
   "homepage": "https://thepinkowl.org/",
   "scripts": {
     "ionic": "ionic serve --external --livereload",
+    "ionic-android": "ionic capacitor android ios --livereload --external",
     "ionic-ios": "ionic capacitor run ios --livereload --external",
     "ng": "ng",
     "start": "ng serve",
