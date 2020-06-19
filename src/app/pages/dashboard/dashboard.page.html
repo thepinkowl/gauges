@@ -1,7 +1,4 @@
 <ion-content [fullscreen]="true">
-  <!-- <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher> -->
   
   <app-mood-title></app-mood-title>
   <ion-list @list style="display: block">
@@ -11,11 +8,4 @@
   </ion-list>
   <ion-button [routerLink]="['/task', 'new']" id="create-new" fill="clear">Create a new repeating task</ion-button>
 
-  <!-- <IonContent fullscreen>
-    <MoodTitle status="well" />
-    <IonList>
-      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}
-    </IonList>
-    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>
-  </IonContent> -->
 </ion-content>
