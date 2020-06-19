@@ -37,9 +37,11 @@ export class TaskComponent implements OnInit {
   }
 
   async demo() {
-    if (Math.abs(await this.slider.getOpenAmount()) == 0) {
+    if (Math.abs(await this.slider.getOpenAmount()) === 0) {
       this.slider.open('start');
-      setTimeout(() => this.slider.close(), 225);
+      // setTimeout(() => this.slider.close(), 225);
+    } else {
+      this.slider.closeOpened();
     }
   }
 }
