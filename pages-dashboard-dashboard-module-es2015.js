@@ -21936,7 +21936,7 @@ let MoodTitleComponent = class MoodTitleComponent {
                 'you\'re doing well today!',
                 'nothing new here, have a break',
                 'all lights are green, bravo!',
-                'your rock!',
+                'your are the best!',
             ],
             orange: [
                 'a few things to do and you\'re done',
@@ -21948,7 +21948,7 @@ let MoodTitleComponent = class MoodTitleComponent {
                 'swipe them right!',
                 'did you forget something?',
                 'it\'s time to do them!',
-                'you can do it!',
+                'I know you can do it!',
                 'let\'s get some work done today!',
             ],
         };

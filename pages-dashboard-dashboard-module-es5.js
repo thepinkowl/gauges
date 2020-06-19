@@ -21453,9 +21453,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.userService = userService;
         this.tasksService = tasksService;
         this.messages = {
-          green: ['all lights green, have a break', 'you\'re doing well today!', 'nothing new here, have a break', 'all lights are green, bravo!', 'your rock!'],
+          green: ['all lights green, have a break', 'you\'re doing well today!', 'nothing new here, have a break', 'all lights are green, bravo!', 'your are the best!'],
           orange: ['a few things to do and you\'re done', 'some chores are due today, take it easy', 'you\'re almost done for today', 'swipe it right!'],
-          red: ['swipe them right!', 'did you forget something?', 'it\'s time to do them!', 'you can do it!', 'let\'s get some work done today!']
+          red: ['swipe them right!', 'did you forget something?', 'it\'s time to do them!', 'I know you can do it!', 'let\'s get some work done today!']
         };
         this.message = '';
       }
