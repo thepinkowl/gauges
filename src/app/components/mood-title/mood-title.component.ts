@@ -15,11 +15,12 @@ export class MoodTitleComponent implements OnInit {
 
   messages = {
     green: [
-      'all lights green, you can have a break',
+      'all lights green, have a break',
       'you\'re doing well today!',
-      'that\'s enough for today, have a break',
+      'nothing new here, have a break',
       'all lights are green, bravo!',
-      'your rock!',
+      'your are the best!',
+      // 'you rock'
     ],
     orange: [
       'a few things to do and you\'re done',
@@ -30,8 +31,8 @@ export class MoodTitleComponent implements OnInit {
     red: [
       'swipe them right!',
       'did you forget something?',
-      'it is time to do them!',
-      'you can do it!',
+      'it\'s time to do them!',
+      'I know you can do it!',
       'let\'s get some work done today!',
     ],
   };

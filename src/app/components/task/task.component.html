@@ -1,6 +1,6 @@
-<ion-item-sliding>
-  <ion-item-options side="start" (ionSwipe)="done()">
-    <ion-item-option expandable color="success" (click)="done()">
+<ion-item-sliding (click)="demo()">
+  <ion-item-options side="start" (ionSwipe)="done($event)">
+    <ion-item-option expandable color="success" (click)="done($event)">
       <ion-icon slot="start" name="checkmark-done-outline"></ion-icon>I've just done it
     </ion-item-option>
   </ion-item-options>
@@ -15,30 +15,13 @@
         Last done {{task.lastDone | amTimeAgo}}
       </ion-row>
       <ion-row>
-       <app-gauge [percentage]="task.progress"></app-gauge>
+        <app-gauge [percentage]="task.progress"></app-gauge>
       </ion-row>
     </ion-grid>
   </ion-item>
 
-  <ion-item-options side="end" (ionSwipe)="edit()">
-    <ion-item-option (click)="delete()" color="danger">Delete</ion-item-option>
-    <ion-item-option (click)="edit()" expandable>Edit</ion-item-option>
+  <ion-item-options side="end" (ionSwipe)="edit($event)">
+    <ion-item-option (click)="delete($event)" color="danger">Delete</ion-item-option>
+    <ion-item-option (click)="edit($event)" expandable>Edit</ion-item-option>
   </ion-item-options>
 </ion-item-sliding>
-
-<!-- <ion-item-sliding ref={this.doneSliderRef} onClick={this.switchSlider}>
-  <IonItemOptions side="start" onIonSwipe={this.markAsDone}>
-    <IonItemOption expandable color="success" onClick={this.markAsDone}>
-      <IonIcon slot="start" icon={checkmarkDoneOutline}></IonIcon>I've just done it
-    </IonItemOption>
-  </IonItemOptions>
-
-  <IonItemCustom>
-    <GaugeContent task={this.props.task} />
-  </IonItemCustom>
-
-  <IonItemOptions side="end" onIonSwipe={this.editGauge}>
-    <IonItemOption color="danger" onClick={this.deleteGauge}>Delete</IonItemOption>
-    <IonItemOption expandable onClick={this.editGauge}>Edit</IonItemOption>
-  </IonItemOptions>
-</ion-item-sliding> -->
