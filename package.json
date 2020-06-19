@@ -5,7 +5,8 @@
   "homepage": "https://thepinkowl.org/",
   "scripts": {
     "ionic": "ionic serve --external --livereload",
-    "ionic-ios": "ionic capacitor run ios --livereload --external",
+    "android": "ionic capacitor run android --livereload --external",
+    "ios": "ionic capacitor run ios --livereload --external",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod && npx cap copy",
