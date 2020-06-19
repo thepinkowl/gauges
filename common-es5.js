@@ -1066,14 +1066,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               while (1) {
                 switch (_context11.prev = _context11.next) {
                   case 0:
-                    return _context11.abrupt("return", [].concat(defaultTasks));
+                    _context11.next = 2;
+                    return this.loadTasksFromDb();
 
-                  case 1:
+                  case 2:
+                    _context11.t0 = _context11.sent;
+
+                    if (_context11.t0) {
+                      _context11.next = 5;
+                      break;
+                    }
+
+                    _context11.t0 = [].concat(defaultTasks);
+
+                  case 5:
+                    return _context11.abrupt("return", _context11.t0);
+
+                  case 6:
                   case "end":
                     return _context11.stop();
                 }
               }
-            }, _callee11);
+            }, _callee11, this);
           }));
         }
       }, {
