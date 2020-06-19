@@ -16,7 +16,7 @@
           [biWeekly]="biWeekly"
           [(week)]="task.when"
         ></app-week-selector>
-        <div class="repeater">
+        <div *ngIf="false" class="repeater">
           <small>repeats every two weeks </small>
           <ion-toggle [(ngModel)]="biWeekly"></ion-toggle>
         </div>
