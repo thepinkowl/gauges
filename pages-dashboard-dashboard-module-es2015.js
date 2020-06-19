@@ -21756,7 +21756,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h1>\n  Hey <span (click)=\"setName()\">{{(user|async).name}}</span>, you're doing well today!\n</h1>");
+/* harmony default export */ __webpack_exports__["default"] = ("<h1>\n  Hey <span (click)=\"setName()\">{{(user|async).name}}</span>, {{message}}\n</h1>");
 
 /***/ }),
 
@@ -21919,17 +21919,64 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/__ivy_ngcc__/fesm2015/ionic-angular.js");
 /* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var src_app_services_tasks_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/tasks.service */ "./src/app/services/tasks.service.ts");
+
 
 
 
 
 let MoodTitleComponent = class MoodTitleComponent {
-    constructor(alertController, userService) {
+    constructor(alertController, userService, tasksService) {
         this.alertController = alertController;
         this.userService = userService;
+        this.tasksService = tasksService;
+        this.messages = {
+            green: [
+                'all lights green, you can have a break',
+                'you\'re doing well today!',
+                'that\'s enough for today, have a break',
+                'all lights are green, bravo!',
+                'your rock!',
+            ],
+            orange: [
+                'a few things to do and you\'re done',
+                'some chores are due today, take it easy',
+                'you\'re almost done for today',
+                'swipe it right!',
+            ],
+            red: [
+                'swipe them right!',
+                'did you forget something?',
+                'it is time to do them!',
+                'you can do it!',
+                'let\'s get some work done today!',
+            ],
+        };
+        this.message = '';
     }
     ngOnInit() {
         this.user = this.userService.getUser();
+        this.tasksService.getTasks().subscribe(tasks => {
+            if (!tasks || !tasks.length) {
+                this.message = 'start by creating a task!';
+                return;
+            }
+            let messages;
+            const shouldBeRed = tasks.some(t => t.progress < 25);
+            if (shouldBeRed) {
+                messages = this.messages.red;
+            }
+            else {
+                const shouldBeOrange = tasks.some(t => t.progress < 50);
+                if (shouldBeOrange) {
+                    messages = this.messages.orange;
+                }
+                else {
+                    messages = this.messages.green;
+                }
+            }
+            this.message = messages[Math.floor(Math.random() * messages.length)];
+        });
     }
     setName() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -21944,22 +21991,22 @@ let MoodTitleComponent = class MoodTitleComponent {
                         type: 'text',
                         id: 'name',
                         value: this.userService.getUserName(),
-                        placeholder: 'Name'
-                    }
+                        placeholder: 'Name',
+                    },
                 ],
                 buttons: [
                     {
                         text: 'Cancel',
                         role: 'cancel',
-                        cssClass: 'secondary'
+                        cssClass: 'secondary',
                     },
                     {
                         text: 'Ok',
                         handler: ({ name }) => {
                             this.userService.setUserName(name);
-                        }
-                    }
-                ]
+                        },
+                    },
+                ],
             });
             this.alert.present();
         });
@@ -21967,7 +22014,8 @@ let MoodTitleComponent = class MoodTitleComponent {
 };
 MoodTitleComponent.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["AlertController"] },
-    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"] }
+    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"] },
+    { type: src_app_services_tasks_service__WEBPACK_IMPORTED_MODULE_4__["TasksService"] }
 ];
 MoodTitleComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

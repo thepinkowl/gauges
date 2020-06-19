@@ -21179,7 +21179,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<h1>\n  Hey <span (click)=\"setName()\">{{(user|async).name}}</span>, you're doing well today!\n</h1>";
+    __webpack_exports__["default"] = "<h1>\n  Hey <span (click)=\"setName()\">{{(user|async).name}}</span>, {{message}}\n</h1>";
     /***/
   },
 
@@ -21438,25 +21438,67 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! src/app/services/user.service */
     "./src/app/services/user.service.ts");
+    /* harmony import */
+
+
+    var src_app_services_tasks_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! src/app/services/tasks.service */
+    "./src/app/services/tasks.service.ts");
 
     var MoodTitleComponent = /*#__PURE__*/function () {
-      function MoodTitleComponent(alertController, userService) {
+      function MoodTitleComponent(alertController, userService, tasksService) {
         _classCallCheck(this, MoodTitleComponent);
 
         this.alertController = alertController;
         this.userService = userService;
+        this.tasksService = tasksService;
+        this.messages = {
+          green: ['all lights green, you can have a break', 'you\'re doing well today!', 'that\'s enough for today, have a break', 'all lights are green, bravo!', 'your rock!'],
+          orange: ['a few things to do and you\'re done', 'some chores are due today, take it easy', 'you\'re almost done for today', 'swipe it right!'],
+          red: ['swipe them right!', 'did you forget something?', 'it is time to do them!', 'you can do it!', 'let\'s get some work done today!']
+        };
+        this.message = '';
       }
 
       _createClass(MoodTitleComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
+          var _this4 = this;
+
           this.user = this.userService.getUser();
+          this.tasksService.getTasks().subscribe(function (tasks) {
+            if (!tasks || !tasks.length) {
+              _this4.message = 'start by creating a task!';
+              return;
+            }
+
+            var messages;
+            var shouldBeRed = tasks.some(function (t) {
+              return t.progress < 25;
+            });
+
+            if (shouldBeRed) {
+              messages = _this4.messages.red;
+            } else {
+              var shouldBeOrange = tasks.some(function (t) {
+                return t.progress < 50;
+              });
+
+              if (shouldBeOrange) {
+                messages = _this4.messages.orange;
+              } else {
+                messages = _this4.messages.green;
+              }
+            }
+
+            _this4.message = messages[Math.floor(Math.random() * messages.length)];
+          });
         }
       }, {
         key: "setName",
         value: function setName() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var _this4 = this;
+            var _this5 = this;
 
             return regeneratorRuntime.wrap(function _callee$(_context) {
               while (1) {
@@ -21485,7 +21527,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                         handler: function handler(_ref) {
                           var name = _ref.name;
 
-                          _this4.userService.setUserName(name);
+                          _this5.userService.setUserName(name);
                         }
                       }]
                     });
@@ -21512,6 +21554,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["AlertController"]
       }, {
         type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"]
+      }, {
+        type: src_app_services_tasks_service__WEBPACK_IMPORTED_MODULE_4__["TasksService"]
       }];
     };
 
