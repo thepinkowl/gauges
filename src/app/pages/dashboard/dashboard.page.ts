@@ -23,4 +23,6 @@ export class DashBoardPage {
     this.tasks = this.tasksService.getTasks();
   }
 
+  public trackById(task: Task) { return task.id; }
+
 }

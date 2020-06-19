@@ -5,9 +5,10 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ionic": "ionic serve --external --livereload",
+    "ionic-ios": "ionic capacitor run ios --livereload --external",
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod && npx cap copy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
