@@ -112,8 +112,8 @@ export class TasksService {
   }
 
   private async loadTasks() {
-    // return await this.loadTasksFromDb() || [...defaultTasks];
-    return [...defaultTasks];
+    return await this.loadTasksFromDb() || [...defaultTasks];
+    // return [...defaultTasks];
   }
 
   private async persistTasksInDb() {
