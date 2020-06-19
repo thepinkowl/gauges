@@ -19,7 +19,8 @@ export class MoodTitleComponent implements OnInit {
       'you\'re doing well today!',
       'nothing new here, have a break',
       'all lights are green, bravo!',
-      'your rock!',
+      'your are the best!',
+      // 'you rock'
     ],
     orange: [
       'a few things to do and you\'re done',
@@ -31,7 +32,7 @@ export class MoodTitleComponent implements OnInit {
       'swipe them right!',
       'did you forget something?',
       'it\'s time to do them!',
-      'you can do it!',
+      'I know you can do it!',
       'let\'s get some work done today!',
     ],
   };
