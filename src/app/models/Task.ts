@@ -35,7 +35,8 @@ export default class Task extends TaskInterface {
         this.executions.sort((a: Date, b: Date) => (b.getTime() - a.getTime()));
         this.lastDone = this.executions[0];
         const lastDoneDuration = (Task.today - this.lastDone.getTime());
-        this.progress = this.rangePercentage(Math.floor( (Task.WEEK - lastDoneDuration) / Task.WEEK * 100));
+        const referenceDuration = Task.WEEK / Math.max(this.when.length, 1);
+        this.progress = this.rangePercentage(Math.floor((referenceDuration - lastDoneDuration) / referenceDuration * 100));
     }
 
     private rangePercentage(value: number, min = 0, max = 100) {

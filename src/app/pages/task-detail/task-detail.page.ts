@@ -42,6 +42,7 @@ export class TaskDetailPage implements OnInit {
   }
 
   goBack() {
+    this.task.computeProgress();
     if (window.history.length > 2) {
       this.nav.back();
     } else {
