@@ -21932,9 +21932,9 @@ let MoodTitleComponent = class MoodTitleComponent {
         this.tasksService = tasksService;
         this.messages = {
             green: [
-                'all lights green, you can have a break',
+                'all lights green, have a break',
                 'you\'re doing well today!',
-                'that\'s enough for today, have a break',
+                'nothing new here, have a break',
                 'all lights are green, bravo!',
                 'your rock!',
             ],
@@ -21947,7 +21947,7 @@ let MoodTitleComponent = class MoodTitleComponent {
             red: [
                 'swipe them right!',
                 'did you forget something?',
-                'it is time to do them!',
+                'it\'s time to do them!',
                 'you can do it!',
                 'let\'s get some work done today!',
             ],
@@ -22084,9 +22084,12 @@ let TaskComponent = class TaskComponent {
     }
     demo() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            if (Math.abs(yield this.slider.getOpenAmount()) == 0) {
+            if (Math.abs(yield this.slider.getOpenAmount()) === 0) {
                 this.slider.open('start');
-                setTimeout(() => this.slider.close(), 225);
+                // setTimeout(() => this.slider.close(), 225);
+            }
+            else {
+                this.slider.closeOpened();
             }
         });
     }

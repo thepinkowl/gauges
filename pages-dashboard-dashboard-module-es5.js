@@ -21453,9 +21453,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.userService = userService;
         this.tasksService = tasksService;
         this.messages = {
-          green: ['all lights green, you can have a break', 'you\'re doing well today!', 'that\'s enough for today, have a break', 'all lights are green, bravo!', 'your rock!'],
+          green: ['all lights green, have a break', 'you\'re doing well today!', 'nothing new here, have a break', 'all lights are green, bravo!', 'your rock!'],
           orange: ['a few things to do and you\'re done', 'some chores are due today, take it easy', 'you\'re almost done for today', 'swipe it right!'],
-          red: ['swipe them right!', 'did you forget something?', 'it is time to do them!', 'you can do it!', 'let\'s get some work done today!']
+          red: ['swipe them right!', 'did you forget something?', 'it\'s time to do them!', 'you can do it!', 'let\'s get some work done today!']
         };
         this.message = '';
       }
@@ -21672,8 +21672,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "demo",
         value: function demo() {
           return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-            var _this6 = this;
-
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
               while (1) {
                 switch (_context2.prev = _context2.next) {
@@ -21686,17 +21684,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                     _context2.t1 = _context2.sent;
                     _context2.t2 = _context2.t0.abs.call(_context2.t0, _context2.t1);
 
-                    if (!(_context2.t2 == 0)) {
-                      _context2.next = 8;
+                    if (!(_context2.t2 === 0)) {
+                      _context2.next = 9;
                       break;
                     }
 
-                    this.slider.open('start');
-                    setTimeout(function () {
-                      return _this6.slider.close();
-                    }, 225);
+                    this.slider.open('start'); // setTimeout(() => this.slider.close(), 225);
 
-                  case 8:
+                    _context2.next = 10;
+                    break;
+
+                  case 9:
+                    this.slider.closeOpened();
+
+                  case 10:
                   case "end":
                     return _context2.stop();
                 }
