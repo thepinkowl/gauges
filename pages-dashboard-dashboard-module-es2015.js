@@ -21956,18 +21956,18 @@ let MoodTitleComponent = class MoodTitleComponent {
     }
     ngOnInit() {
         this.user = this.userService.getUser();
-        this.tasksService.getTasks().subscribe(tasks => {
+        this.tasksService.getTasks().subscribe((tasks) => {
             if (!tasks || !tasks.length) {
                 this.message = 'start by creating a task!';
                 return;
             }
             let messages;
-            const shouldBeRed = tasks.some(t => t.progress < 25);
+            const shouldBeRed = tasks.some((t) => t.progress < 25);
             if (shouldBeRed) {
                 messages = this.messages.red;
             }
             else {
-                const shouldBeOrange = tasks.some(t => t.progress < 50);
+                const shouldBeOrange = tasks.some((t) => t.progress < 50);
                 if (shouldBeOrange) {
                     messages = this.messages.orange;
                 }
