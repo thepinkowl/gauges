@@ -17,19 +17,29 @@ export class TaskComponent implements OnInit {
 
   ngOnInit() { }
 
-  edit() {
+  edit(e: Event) {
     this.nav.navigateForward(`/task/${this.task.id}`);
     this.slider.closeOpened();
+    e.stopPropagation();
   }
 
-  delete() {
+  delete(e: Event) {
     this.tasksService.deleteTask(this.task);
     this.slider.closeOpened();
+    e.stopPropagation();
   }
 
-  done() {
+  done(e: Event) {
     // TODO: add animation
     this.slider.closeOpened();
     this.tasksService.markTaskDone(this.task);
+    e.stopPropagation();
+  }
+
+  async demo() {
+    if (Math.abs(await this.slider.getOpenAmount()) == 0) {
+      this.slider.open('start');
+      setTimeout(() => this.slider.close(), 225);
+    }
   }
 }
