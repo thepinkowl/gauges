@@ -1,8 +1,8 @@
 {
   "name": "new-gauges",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "ThePinkOwl",
+  "homepage": "https://thepinkowl.org/",
   "scripts": {
     "ionic": "ionic serve --external --livereload",
     "ionic-ios": "ionic capacitor run ios --livereload --external",
@@ -61,5 +61,5 @@
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
   },
-  "description": "An Ionic project"
+  "description": "Gorgeous gauges to manage your life like a Sim! - A ThePinkOwl project"
 }
