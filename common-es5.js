@@ -1077,7 +1077,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       break;
                     }
 
-                    _context11.t0 = [].concat(defaultTasks);
+                    _context11.t0 = [];
 
                   case 5:
                     return _context11.abrupt("return", _context11.t0);

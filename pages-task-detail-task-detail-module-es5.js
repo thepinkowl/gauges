@@ -53,7 +53,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <main>\n    <div class=\"form\">\n      <div class=\"cancel-button\">\n        <ion-button (click)=\"goBack()\" fill=\"clear\">Cancel</ion-button>\n      </div>\n\n      <div class=\"form-element\">\n        <div class=\"title\">Let's give it a name!</div>\n        <ion-input [(ngModel)]=\"task.title\"></ion-input>\n      </div>\n\n      <div class=\"form-element\">\n        <div class=\"title\">When do you usually do this task?</div>\n        <app-week-selector\n          [biWeekly]=\"biWeekly\"\n          [(week)]=\"task.when\"\n        ></app-week-selector>\n        <div *ngIf=\"false\" class=\"repeater\">\n          <small>repeats every two weeks </small>\n          <ion-toggle [(ngModel)]=\"biWeekly\"></ion-toggle>\n        </div>\n      </div>\n      <div class=\"form-element\">\n        <div class=\"title\">When did you last do this?</div>\n        <ion-datetime\n          displayFormat=\"DDDD MMM D, YYYY\"\n          [max]=\"now.toISOString()\"\n          [value]=\"task.lastDone?.toISOString()\"\n        >\n        </ion-datetime>\n      </div>\n    </div>\n\n    <div class=\"actions\">\n      <ion-button *ngIf=\"new\" expand=\"block\" color=\"primary\" (click)=\"create()\">Create</ion-button>\n      <ion-button *ngIf=\"!new\" expand=\"block\" color=\"primary\" (click)=\"update()\">Update</ion-button>\n      <ion-button *ngIf=\"!new\" fill=\"clear\" color=\"danger\" (click)=\"delete()\">Remove this task</ion-button>\n    </div>\n  </main>\n  <!-- <AtoZCol>\n      <div>\n        <CancelButton onClick={goBack}>Cancel</CancelButton>\n        <IonItem>\n          <IonLabel position=\"stacked\">Let's give it a name</IonLabel>\n          <IonInput value={title} onIonChange={e => setTitle(e.detail.value!)} />\n        </IonItem>\n        <IonItem>\n          <IonLabel position=\"stacked\">When do you usually do this task?</IonLabel>\n          <WeekSelector when={when} onValueChange={data => setWhen(data)} />\n        </IonItem>\n        <IonItem>\n          <IonLabel position=\"stacked\">When did you last do this?</IonLabel>\n          <IonDatetime displayFormat=\"DDDD MMM D, YYYY\"\n            value={lastExecution?.toISOString()} onIonChange={e => changeLastExecution(e.detail.value!)}>\n          </IonDatetime>\n        </IonItem>\n      </div>\n      <div className=\"actions\">\n        <IonButton size=\"large\" onClick={save} expand=\"block\">{task ? 'Update' : 'Create'}</IonButton>\n        {task && (<span className='remove' onClick={() => remove(task)}>Remove this task</span>)}\n      </div>\n    </AtoZCol>\n    <IonToast\n      isOpen={!isFormValid}\n      onDidDismiss={() => setIsFormValid(true)}\n      message=\"All fields are required.\"\n      duration={1000}\n    /> -->\n</ion-content>\n";
+    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <main>\n    <div class=\"form\">\n      <div class=\"cancel-button\">\n        <ion-button (click)=\"goBack()\" fill=\"clear\">Cancel</ion-button>\n      </div>\n\n      <div class=\"form-element\">\n        <div class=\"title\">Let's give it a name!</div>\n        <ion-input [(ngModel)]=\"task.title\"></ion-input>\n      </div>\n\n      <div class=\"form-element\">\n        <div class=\"title\">When do you usually do this task?</div>\n        <app-week-selector\n          [biWeekly]=\"biWeekly\"\n          [(week)]=\"task.when\"\n        ></app-week-selector>\n        <div *ngIf=\"false\" class=\"repeater\">\n          <small>repeats every two weeks </small>\n          <ion-toggle [(ngModel)]=\"biWeekly\"></ion-toggle>\n        </div>\n      </div>\n      <div *ngIf=\"new\" class=\"form-element\">\n        <div class=\"title\">When did you last do this?</div>\n        <ion-datetime\n          displayFormat=\"DDDD MMM D, YYYY\"\n          (ionChange)=\"onChange($event)\"\n          [max]=\"now.toISOString()\"\n          [value]=\"lastExecution\"\n        >\n        </ion-datetime>\n      </div>\n    </div>\n\n    <div class=\"actions\">\n      <ion-button *ngIf=\"new\" expand=\"block\" color=\"primary\" (click)=\"create()\">Create</ion-button>\n      <ion-button *ngIf=\"!new\" expand=\"block\" color=\"primary\" (click)=\"update()\">Update</ion-button>\n      <ion-button *ngIf=\"!new\" fill=\"clear\" color=\"danger\" (click)=\"delete()\">Remove this task</ion-button>\n    </div>\n  </main>\n</ion-content>\n";
     /***/
   },
 
@@ -409,9 +409,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.now = new Date();
         this.task = src_app_models_Task__WEBPACK_IMPORTED_MODULE_5__["default"].createEmpty();
         this["new"] = true;
+        this.lastExecution = this.now.toISOString();
       }
 
       _createClass(TaskDetailPage, [{
+        key: "onChange",
+        value: function onChange(e) {
+          var newDate = new Date(e.detail.value);
+          this.task.lastDone.setTime(newDate.getTime());
+          this.task.computeProgress();
+        }
+      }, {
         key: "ngOnInit",
         value: function ngOnInit() {
           var _this = this;
@@ -426,7 +434,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                       this["new"] = params.id === 'new';
 
                       if (this["new"]) {
-                        _context.next = 6;
+                        _context.next = 7;
                         break;
                       }
 
@@ -436,8 +444,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
                     case 4:
                       task = _context.sent;
                       this.task = task;
+                      this.lastExecution = task.lastDone.toISOString();
 
-                    case 6:
+                    case 7:
+                      this.task.computeProgress();
+
+                    case 8:
                     case "end":
                       return _context.stop();
                   }
@@ -516,11 +528,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             this.tasksService.deleteTask(this.task);
             this.goBack();
           }
-        }
-      }, {
-        key: "lastExecution",
-        get: function get() {
-          return new Date('2020-06-13');
         }
       }]);
 

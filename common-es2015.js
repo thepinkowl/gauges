@@ -584,7 +584,7 @@ let TasksService = class TasksService {
     }
     loadTasks() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return (yield this.loadTasksFromDb()) || [...defaultTasks];
+            return (yield this.loadTasksFromDb()) || [];
             // return [...defaultTasks];
         });
     }
