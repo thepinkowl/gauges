@@ -41,12 +41,12 @@ export class MoodTitleComponent implements OnInit {
   constructor(
     private alertController: AlertController,
     private userService: UserService,
-    private tasksService: TasksService,
+    private tasksService: TasksService
   ) {}
 
   ngOnInit() {
     this.user = this.userService.getUser();
-    this.tasksService.getTasks().subscribe(tasks => {
+    this.tasksService.getTasks().subscribe((tasks) => {
       if (!tasks || !tasks.length) {
         this.message = 'start by creating a task!';
         return;
@@ -54,11 +54,11 @@ export class MoodTitleComponent implements OnInit {
 
       let messages;
 
-      const shouldBeRed = tasks.some(t => t.progress < 25);
+      const shouldBeRed = tasks.some((t) => t.progress < 25);
       if (shouldBeRed) {
         messages = this.messages.red;
       } else {
-        const shouldBeOrange = tasks.some(t => t.progress < 50);
+        const shouldBeOrange = tasks.some((t) => t.progress < 50);
         if (shouldBeOrange) {
           messages = this.messages.orange;
         } else {
