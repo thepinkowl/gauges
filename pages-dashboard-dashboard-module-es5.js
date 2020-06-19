@@ -21199,7 +21199,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-item-sliding>\n  <ion-item-options side=\"start\" (ionSwipe)=\"done()\">\n    <ion-item-option expandable color=\"success\" (click)=\"done()\">\n      <ion-icon slot=\"start\" name=\"checkmark-done-outline\"></ion-icon>I've just done it\n    </ion-item-option>\n  </ion-item-options>\n\n  <ion-item>\n    <ion-grid>\n      <ion-row id=\"first-row\">\n        <div id=\"title\">{{task.title}}</div>\n        <app-week-display [when]=\"task.when\"></app-week-display>\n      </ion-row>\n      <ion-row id=\"subtext\">\n        Last done {{task.lastDone | amTimeAgo}}\n      </ion-row>\n      <ion-row>\n       <app-gauge [percentage]=\"task.progress\"></app-gauge>\n      </ion-row>\n    </ion-grid>\n  </ion-item>\n\n  <ion-item-options side=\"end\" (ionSwipe)=\"edit()\">\n    <ion-item-option (click)=\"delete()\" color=\"danger\">Delete</ion-item-option>\n    <ion-item-option (click)=\"edit()\" expandable>Edit</ion-item-option>\n  </ion-item-options>\n</ion-item-sliding>\n\n<!-- <ion-item-sliding ref={this.doneSliderRef} onClick={this.switchSlider}>\n  <IonItemOptions side=\"start\" onIonSwipe={this.markAsDone}>\n    <IonItemOption expandable color=\"success\" onClick={this.markAsDone}>\n      <IonIcon slot=\"start\" icon={checkmarkDoneOutline}></IonIcon>I've just done it\n    </IonItemOption>\n  </IonItemOptions>\n\n  <IonItemCustom>\n    <GaugeContent task={this.props.task} />\n  </IonItemCustom>\n\n  <IonItemOptions side=\"end\" onIonSwipe={this.editGauge}>\n    <IonItemOption color=\"danger\" onClick={this.deleteGauge}>Delete</IonItemOption>\n    <IonItemOption expandable onClick={this.editGauge}>Edit</IonItemOption>\n  </IonItemOptions>\n</ion-item-sliding> -->";
+    __webpack_exports__["default"] = "<ion-item-sliding (click)=\"demo()\">\n  <ion-item-options side=\"start\" (ionSwipe)=\"done($event)\">\n    <ion-item-option expandable color=\"success\" (click)=\"done($event)\">\n      <ion-icon slot=\"start\" name=\"checkmark-done-outline\"></ion-icon>I've just done it\n    </ion-item-option>\n  </ion-item-options>\n\n  <ion-item>\n    <ion-grid>\n      <ion-row id=\"first-row\">\n        <div id=\"title\">{{task.title}}</div>\n        <app-week-display [when]=\"task.when\"></app-week-display>\n      </ion-row>\n      <ion-row id=\"subtext\">\n        Last done {{task.lastDone | amTimeAgo}}\n      </ion-row>\n      <ion-row>\n        <app-gauge [percentage]=\"task.progress\"></app-gauge>\n      </ion-row>\n    </ion-grid>\n  </ion-item>\n\n  <ion-item-options side=\"end\" (ionSwipe)=\"edit($event)\">\n    <ion-item-option (click)=\"delete($event)\" color=\"danger\">Delete</ion-item-option>\n    <ion-item-option (click)=\"edit($event)\" expandable>Edit</ion-item-option>\n  </ion-item-options>\n</ion-item-sliding>";
     /***/
   },
 
@@ -21239,7 +21239,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  <!-- <ion-refresher slot=\"fixed\" (ionRefresh)=\"refresh($event)\">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher> -->\n  \n  <app-mood-title></app-mood-title>\n  <ion-list @list style=\"display: block\">\n    <!-- style=\"display: block\" is required for animations to work -->\n    <app-task style=\"display: block\" *ngFor=\"let task of tasks | async | sortTasks; trackBy: task?.id\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n  <ion-button [routerLink]=\"['/task', 'new']\" id=\"create-new\" fill=\"clear\">Create a new repeating task</ion-button>\n\n  <!-- <IonContent fullscreen>\n    <MoodTitle status=\"well\" />\n    <IonList>\n      {tasks.map(t => <GaugeListItem history={history} key={t.id} task={t} />)}\n    </IonList>\n    <NewTaskButton onClick={() => history.push('/tasks/new')}>Create a new repeating task</NewTaskButton>\n  </IonContent> -->\n</ion-content>";
+    __webpack_exports__["default"] = "<ion-content [fullscreen]=\"true\">\n  \n  <app-mood-title></app-mood-title>\n  <ion-list @list style=\"display: block\">\n    <!-- style=\"display: block\" is required for animations to work -->\n    <app-task style=\"display: block\" *ngFor=\"let task of tasks | async | sortTasks; trackBy: task?.id\" [task]=\"task\">\n    </app-task>\n  </ion-list>\n  <ion-button [routerLink]=\"['/task', 'new']\" id=\"create-new\" fill=\"clear\">Create a new repeating task</ion-button>\n\n</ion-content>";
     /***/
   },
 
@@ -21648,22 +21648,61 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function ngOnInit() {}
       }, {
         key: "edit",
-        value: function edit() {
+        value: function edit(e) {
           this.nav.navigateForward("/task/".concat(this.task.id));
           this.slider.closeOpened();
+          e.stopPropagation();
         }
       }, {
         key: "delete",
-        value: function _delete() {
+        value: function _delete(e) {
           this.tasksService.deleteTask(this.task);
           this.slider.closeOpened();
+          e.stopPropagation();
         }
       }, {
         key: "done",
-        value: function done() {
+        value: function done(e) {
           // TODO: add animation
           this.slider.closeOpened();
           this.tasksService.markTaskDone(this.task);
+          e.stopPropagation();
+        }
+      }, {
+        key: "demo",
+        value: function demo() {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+            var _this6 = this;
+
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    _context2.t0 = Math;
+                    _context2.next = 3;
+                    return this.slider.getOpenAmount();
+
+                  case 3:
+                    _context2.t1 = _context2.sent;
+                    _context2.t2 = _context2.t0.abs.call(_context2.t0, _context2.t1);
+
+                    if (!(_context2.t2 == 0)) {
+                      _context2.next = 8;
+                      break;
+                    }
+
+                    this.slider.open('start');
+                    setTimeout(function () {
+                      return _this6.slider.close();
+                    }, 225);
+
+                  case 8:
+                  case "end":
+                    return _context2.stop();
+                }
+              }
+            }, _callee2, this);
+          }));
         }
       }]);
 
