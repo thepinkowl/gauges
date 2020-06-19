@@ -12,7 +12,7 @@
         <app-week-display [when]="task.when"></app-week-display>
       </ion-row>
       <ion-row id="subtext">
-        Last done two days ago
+        Last done {{task.lastDone | amTimeAgo}}
       </ion-row>
       <ion-row>
        <app-gauge [percentage]="task.progress"></app-gauge>

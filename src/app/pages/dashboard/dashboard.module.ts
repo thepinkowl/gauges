@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { MomentModule } from 'ngx-moment';
 import { GaugeComponent } from 'src/app/components/gauge/gauge.component';
 import { MoodTitleComponent } from 'src/app/components/mood-title/mood-title.component';
 import { TaskComponent } from 'src/app/components/task/task.component';
@@ -17,6 +18,7 @@ import { SortTasksPipe } from './sort-tasks/sort-tasks.pipe';
     FormsModule,
     IonicModule,
     DashBoardPageRoutingModule,
+    MomentModule,
   ],
   declarations: [
     DashBoardPage,

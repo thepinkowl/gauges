@@ -29,6 +29,8 @@
     "@ionic/angular": "^5.0.0",
     "@ionic/core": "^5.1.1",
     "@types/jest": "^25.2.3",
+    "moment": "^2.27.0",
+    "ngx-moment": "^4.0.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
