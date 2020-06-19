@@ -1,5 +1,5 @@
 {
-  "name": "new-gauges",
+  "name": "gauges",
   "integrations": {
     "capacitor": {}
   },

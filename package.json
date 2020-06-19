@@ -1,6 +1,6 @@
 {
-  "name": "new-gauges",
-  "version": "0.0.1",
+  "name": "gauges",
+  "version": "0.2.0",
   "author": "ThePinkOwl",
   "homepage": "https://thepinkowl.org/",
   "scripts": {
