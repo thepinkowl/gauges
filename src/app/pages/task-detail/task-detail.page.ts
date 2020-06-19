@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { TasksService } from 'src/app/services/tasks.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,25 +15,29 @@ export class TaskDetailPage implements OnInit {
   now = new Date();
   task: Task = Task.createEmpty();
   new = true;
-
-  get lastExecution() {
-    return new Date('2020-06-13');
-  }
+  lastExecution = this.now.toISOString();
 
   constructor(
     private nav: NavController,
     private tasksService: TasksService,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
+
+  onChange(e: InputEvent) {
+    const newDate = new Date((e.detail as any).value);
+    this.task.lastDone.setTime(newDate.getTime());
+    this.task.computeProgress();
+  }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(async (params) => {
       this.new = params.id === 'new';
-
       if (!this.new) {
         const task = await this.tasksService.getTaskById(params.id);
         this.task = task;
+        this.lastExecution = task.lastDone.toISOString();
       }
+      this.task.computeProgress();
     });
   }
 
