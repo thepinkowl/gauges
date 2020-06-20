@@ -20,7 +20,6 @@ export class WelcomePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log('init');
   }
 
   createNewTask() {
