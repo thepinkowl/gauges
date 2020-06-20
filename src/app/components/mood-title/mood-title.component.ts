@@ -19,7 +19,7 @@ export class MoodTitleComponent implements OnInit {
       'you\'re doing well today!',
       'nothing new here, have a break',
       'all lights are green, bravo!',
-      'your are the best!',
+      'you are the best!',
       // 'you rock'
     ],
     orange: [

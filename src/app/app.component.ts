@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+
 import { UserService } from './services/user.service';
 
 @Component({
@@ -18,9 +19,9 @@ export class AppComponent {
     private nav: NavController,
     private statusBar: StatusBar
   ) {
-    userService.getUser().subscribe(user => {
+    this.userService.getUser().subscribe((user) => {
       if (!user.hasCompletedTutorial) {
-        nav.navigateRoot('/welcome');
+        this.nav.navigateRoot('/welcome');
       }
     });
     this.initializeApp();

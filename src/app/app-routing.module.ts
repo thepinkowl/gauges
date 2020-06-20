@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { FirstTimeGuard } from './guards/first-time.guard';
+import { HasCompletedTutorialGuard } from './guards/has-completed-tutorial.guard';
 
 const routes: Routes = [
   {
     path: 'dashboard',
-    loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashBoardPageModule)
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashBoardPageModule),
+    canActivate: [HasCompletedTutorialGuard]
   },
   {
     path: 'task/:id',
-    loadChildren: () => import('./pages/task-detail/task-detail.module').then(m => m.TaskDetailPageModule)
+    loadChildren: () => import('./pages/task-detail/task-detail.module').then(m => m.TaskDetailPageModule),
+    canActivate: [HasCompletedTutorialGuard]
   },
   {
     path: '',
@@ -17,7 +21,8 @@ const routes: Routes = [
   },
   {
     path: 'welcome',
-    loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule)
+    loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule),
+    canActivate: [FirstTimeGuard]
   },
 ];
 
