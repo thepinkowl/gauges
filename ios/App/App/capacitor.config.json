@@ -1,5 +1,5 @@
 {
-  "appId": "org.thepinkowk.gauges-angular",
+  "appId": "org.thepinkowk.gauges",
   "appName": "Gauges",
   "bundledWebRuntime": false,
   "npmClient": "npm",
