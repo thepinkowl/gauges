@@ -12,7 +12,7 @@
     "build": "ng build --prod && npx cap copy",
     "test": "ng test",
     "lint": "ng lint",
-    "postinstall": "node patch.js",
+    "postinstall": "node patch.js \"source of script is https://gist.github.com/niespodd/1fa82da6f8c901d1c33d2fcbb762947d\"",
     "e2e": "ng e2e"
   },
   "private": true,
