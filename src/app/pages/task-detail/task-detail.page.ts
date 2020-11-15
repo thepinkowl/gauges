@@ -10,8 +10,6 @@ import Task from 'src/app/models/Task';
   styleUrls: ['./task-detail.page.scss'],
 })
 export class TaskDetailPage implements OnInit {
-  when = [5];
-  biWeekly = false;
   now = new Date();
   task: Task = Task.createEmpty();
   new = true;

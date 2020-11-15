@@ -16,6 +16,19 @@
           <ion-select-option value="N2s035RLFqgU0gDJjCx2">Nice</ion-select-option>
         </ion-select>
       </div>
+      
+      <div class="form-element">
+        <div class="title">When do you usually do this task?</div>
+        <div class="repeat-selector">
+          <span>
+            Every
+          </span>
+          <ion-input [(ngModel)]="task.repeat"></ion-input>
+          <span>
+            days
+          </span>
+        </div>
+      </div>
 
       <div *ngIf="new" class="form-element">
         <div class="title">When did you last do this?</div>

@@ -2,13 +2,15 @@ export class TaskInterface {
     id: string;
     gid: string;
     name: string;
-    when: number;
     executions: Date[];
+    repeat: number;
 }
 
 export default class Task extends TaskInterface {
     static today = Date.now();
-    static WEEK = 7 * 24 * 60 * 60 * 1000;
+    static HOUR = 60 * 60 * 1000;
+    static DAY = 24 * Task.HOUR;
+    static WEEK = 7 * Task.DAY;
 
     lastDone: Date;
     progress: number;
@@ -22,7 +24,7 @@ export default class Task extends TaskInterface {
             name: '',
             gid: '',
             id: '',
-            when: 2,
+            repeat: 7,
             executions: [new Date()],
         });
     }
@@ -37,7 +39,7 @@ export default class Task extends TaskInterface {
         this.executions.sort((a: Date, b: Date) => (b.getTime() - a.getTime()));
         this.lastDone = this.executions[0];
         const lastDoneDuration = (Task.today - this.lastDone.getTime());
-        const referenceDuration = Task.WEEK // / Math.max(this.when.length, 1);
+        const referenceDuration = Math.floor(Task.DAY * Math.max(this.repeat, 1) * 1.20);
         this.progress = this.rangePercentage(Math.floor((referenceDuration - lastDoneDuration) / referenceDuration * 100));
     }
 

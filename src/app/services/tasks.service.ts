@@ -10,7 +10,7 @@ const dayInMs = 1000 * 60 * 60 * 24;
 const defaultTasks: TaskInterface[] = [
   {
     name: 'Laundry',
-    when: 4,
+    repeat: 7,
     executions: [
       new Date(todayInMs - 1 * dayInMs),
       new Date(todayInMs - 10 * dayInMs),
@@ -20,14 +20,14 @@ const defaultTasks: TaskInterface[] = [
   },
   {
     name: 'Hoovering',
-    when: 2,
+    repeat: 1,
     executions: [new Date(todayInMs - 10 * dayInMs)],
     id: '2',
     gid: '2',
   },
   {
     name: 'Gardening',
-    when: 2,
+    repeat: 14,
     executions: [new Date(todayInMs - 4 * dayInMs)],
     id: '1',
     gid: '1',
