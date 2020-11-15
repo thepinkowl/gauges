@@ -18,20 +18,20 @@ export class TaskComponent implements OnInit {
   ngOnInit() { }
 
   edit(e: Event) {
+    this.slider.close();
     this.nav.navigateForward(`/task/${this.task.id}`);
-    this.slider.closeOpened();
     e.stopPropagation();
   }
 
   delete(e: Event) {
+    this.slider.close();
     this.tasksService.deleteTask(this.task);
-    this.slider.closeOpened();
     e.stopPropagation();
   }
 
   done(e: Event) {
     // TODO: add animation
-    this.slider.closeOpened();
+    this.slider.close();
     this.tasksService.markTaskDone(this.task);
     e.stopPropagation();
   }

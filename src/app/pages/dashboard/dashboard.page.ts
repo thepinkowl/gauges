@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { IonList } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import Task from 'src/app/models/Task';
-import { testAnimation, listAnimation, itemsAnimation } from 'src/theme/animations/test.animation';
+import { itemsAnimation, listAnimation, testAnimation } from 'src/theme/animations/test.animation';
 import { TasksService } from '../../services/tasks.service';
 
 @Component({
@@ -17,10 +18,15 @@ import { TasksService } from '../../services/tasks.service';
 export class DashBoardPage {
   constructor(private tasksService: TasksService) { }
 
+  @ViewChild(IonList) list: IonList;
   public tasks: Observable<Task[]>;
 
   ionViewWillEnter() {
     this.tasks = this.tasksService.getTasks();
+  }
+
+  ionViewDidEnter() {
+    this.list.closeSlidingItems();
   }
 
   public trackById(index: number, task: Task) {
