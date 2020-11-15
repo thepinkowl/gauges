@@ -27,10 +27,6 @@ export class TaskDetailPage implements OnInit {
     this.task.computeProgress();
   }
 
-  onRepeatValueChange(e: InputEvent) {
-    console.log("test");
-  }
-
   ngOnInit() {
     this.activatedRoute.params.subscribe(async (params) => {
       this.new = params.id === 'new';
