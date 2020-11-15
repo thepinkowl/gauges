@@ -10,7 +10,8 @@
       <ion-row id="first-row">
         <div id="title">{{task.title}}</div>
         <div id="repeat">
-          every {{task.repeat}} day{{task.repeat != 1 ? 's':''}}
+          <ion-icon slot="start" name="repeat-outline"></ion-icon>
+          {{task.repeat}} day{{task.repeat != 1 ? 's':''}}
         </div>
       </ion-row>
       <ion-row id="subtext">
