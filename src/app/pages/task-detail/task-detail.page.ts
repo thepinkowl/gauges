@@ -1,8 +1,8 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { TasksService } from 'src/app/services/tasks.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import Task from 'src/app/models/Task';
+import { TasksService } from 'src/app/services/tasks.service';
 
 @Component({
   selector: 'app-task-detail',
@@ -23,8 +23,15 @@ export class TaskDetailPage implements OnInit {
 
   onChange(e: InputEvent) {
     const newDate = new Date((e.detail as any).value);
-    this.task.lastDone.setTime(newDate.getTime());
+    this.task.executions = [newDate];
     this.task.computeProgress();
+  }
+
+  deleteTime(e: Event, index: number) {
+    this.lastExecution = undefined;
+    const executions = [...this.task.executions];
+    executions.splice(index, 1);
+    this.task.executions = executions;
   }
 
   ngOnInit() {
