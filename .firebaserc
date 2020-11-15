@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "gauges-41b5e": {
+      "hosting": {
+        "app": [
+          "gauges-41b5e"
+        ]
+      }
+    }
+  }
+}

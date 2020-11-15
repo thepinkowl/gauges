@@ -19,6 +19,7 @@
     "@angular/animations": "^9.1.9",
     "@angular/common": "~9.1.6",
     "@angular/core": "~9.1.6",
+    "@angular/fire": "^6.0.3",
     "@angular/forms": "~9.1.6",
     "@angular/platform-browser": "~9.1.6",
     "@angular/platform-browser-dynamic": "~9.1.6",
@@ -34,6 +35,7 @@
     "@types/jest": "^25.2.3",
     "cordova-plugin-splashscreen": "^5.0.4",
     "cordova-plugin-statusbar": "^2.4.3",
+    "firebase": "^7.22.0",
     "lottie-web": "^5.6.10",
     "moment": "^2.27.0",
     "ngx-lottie": "^6.1.0",
@@ -65,7 +67,13 @@
     "protractor": "^7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~3.8.3"
+    "typescript": "~3.8.3",
+    "@angular-devkit/architect": "<0.900 || ^0.900.0-0 || ^9.0.0-0",
+    "firebase-tools": "^8.11.2",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1",
+    "open": "^7.0.3"
   },
   "description": "Gorgeous gauges to manage your life like a Sim! - A ThePinkOwl project"
 }
