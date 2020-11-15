@@ -23,7 +23,7 @@ export class WelcomePage implements OnInit {
   }
 
   createNewTask() {
-    this.userService.setUserHasCompletedTutorial(true);
+    this.userService.setUserHasCompletedTutorial();
     this.nav.navigateRoot('/dashboard');
     this.nav.navigateForward('/task/new');
   }

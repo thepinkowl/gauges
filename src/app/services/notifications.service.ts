@@ -22,7 +22,7 @@ export class NotificationsService {
 
   async showUndoDeletedTask(tasksService: TasksService, task: Task) {
     const toast = await this.toastController.create({
-      message: `"${task.title}" has been removed.`,
+      message: `"${task.name}" has been removed.`,
       buttons: [
         {
           side: 'end',

@@ -7,20 +7,16 @@
 
       <div class="form-element">
         <div class="title">Let's give it a name!</div>
-        <ion-input [(ngModel)]="task.title"></ion-input>
+        <ion-input [(ngModel)]="task.name"></ion-input>
       </div>
 
-      <div class="form-element">
-        <div class="title">When do you usually do this task?</div>
-        <app-week-selector
-          [biWeekly]="biWeekly"
-          [(week)]="task.when"
-        ></app-week-selector>
-        <div *ngIf="false" class="repeater">
-          <small>repeats every two weeks </small>
-          <ion-toggle [(ngModel)]="biWeekly"></ion-toggle>
-        </div>
+      <div *ngIf="new" class="form-element">
+        <div class="title">Put it in a group</div>
+        <ion-select [(ngModel)]="task.gid" placeholder="Group">
+          <ion-select-option value="N2s035RLFqgU0gDJjCx2">Nice</ion-select-option>
+        </ion-select>
       </div>
+
       <div *ngIf="new" class="form-element">
         <div class="title">When did you last do this?</div>
         <ion-datetime

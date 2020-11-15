@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { UserService } from './services/user.service';
 
+import { AngularFireAuth } from '@angular/fire/auth';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -17,9 +19,19 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private userService: UserService,
     private nav: NavController,
-    private statusBar: StatusBar
+    private fireauth: AngularFireAuth,
+    private statusBar: StatusBar,
   ) {
+    this.fireauth.user.subscribe(user => {
+      if (!user) {
+        this.fireauth.signInAnonymously();
+      } else {
+        this.userService.startWithFirebaseUser(user);
+      }
+    });
+
     this.userService.getUser().subscribe((user) => {
+      if (!user || user.empty) return;
       if (!user.hasCompletedTutorial) {
         this.nav.navigateRoot('/welcome');
       }

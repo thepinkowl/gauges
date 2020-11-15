@@ -52,6 +52,10 @@ export class TaskDetailPage implements OnInit {
 
   async create() {
     if (this.new) {
+      if (!this.task.gid || this.task.gid === '') {
+        return;
+      }
+      console.log(this.task);
       await this.tasksService.createTask(this.task);
       this.goBack();
     }

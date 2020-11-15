@@ -25,6 +25,7 @@ export class FirstTimeGuard implements CanActivate {
     | UrlTree {
     return new Promise((resolve, reject) => {
       this.userService.getUser().subscribe((user: User) => {
+        if (!user) return reject()
         resolve(!user.hasCompletedTutorial);
         if (!user.hasCompletedTutorial) {
           resolve(true);

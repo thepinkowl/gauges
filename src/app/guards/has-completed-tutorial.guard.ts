@@ -13,7 +13,7 @@ import { NavController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class HasCompletedTutorialGuard implements CanActivate {
-  constructor(private userService: UserService, private nav: NavController) {}
+  constructor(private userService: UserService, private nav: NavController) { }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -24,7 +24,9 @@ export class HasCompletedTutorialGuard implements CanActivate {
     | UrlTree {
     return new Promise((resolve, reject) => {
       this.userService.getUser().subscribe((user: User) => {
-        if (!!user.hasCompletedTutorial) {
+        if (!user) {
+          reject();
+        } else if (!!user.hasCompletedTutorial) {
           resolve(true);
         } else {
           this.nav.navigateRoot('/welcome');
