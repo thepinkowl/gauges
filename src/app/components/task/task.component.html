@@ -9,7 +9,9 @@
     <ion-grid>
       <ion-row id="first-row">
         <div id="title">{{task.title}}</div>
-        <app-week-display [when]="task.when"></app-week-display>
+        <div id="repeat">
+          every {{task.repeat}} day{{task.repeat != 1 ? 's':''}}
+        </div>
       </ion-row>
       <ion-row id="subtext">
         Last done {{task.lastDone | amTimeAgo}}

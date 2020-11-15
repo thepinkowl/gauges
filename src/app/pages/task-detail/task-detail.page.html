@@ -12,13 +12,14 @@
 
       <div class="form-element">
         <div class="title">When do you usually do this task?</div>
-        <app-week-selector
-          [biWeekly]="biWeekly"
-          [(week)]="task.when"
-        ></app-week-selector>
-        <div *ngIf="false" class="repeater">
-          <small>repeats every two weeks </small>
-          <ion-toggle [(ngModel)]="biWeekly"></ion-toggle>
+        <div class="repeat-selector">
+          <span>
+            Every
+          </span>
+          <ion-input [(ngModel)]="task.repeat" (ionChange)="onRepeatValueChange($event)"></ion-input>
+          <span>
+            days
+          </span>
         </div>
       </div>
       <div *ngIf="new" class="form-element">

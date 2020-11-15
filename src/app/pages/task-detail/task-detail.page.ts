@@ -10,8 +10,6 @@ import Task from 'src/app/models/Task';
   styleUrls: ['./task-detail.page.scss'],
 })
 export class TaskDetailPage implements OnInit {
-  when = [5];
-  biWeekly = false;
   now = new Date();
   task: Task = Task.createEmpty();
   new = true;
@@ -27,6 +25,10 @@ export class TaskDetailPage implements OnInit {
     const newDate = new Date((e.detail as any).value);
     this.task.lastDone.setTime(newDate.getTime());
     this.task.computeProgress();
+  }
+
+  onRepeatValueChange(e: InputEvent) {
+    console.log("test");
   }
 
   ngOnInit() {
