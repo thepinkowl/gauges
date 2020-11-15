@@ -30,15 +30,24 @@
         </div>
       </div>
 
-      <div *ngIf="new" class="form-element">
+      <div *ngIf="new || task.executions.length === 0" class="form-element">
         <div class="title">When did you last do this?</div>
-        <ion-datetime
-          displayFormat="DDDD MMM D, YYYY"
-          (ionChange)="onChange($event)"
-          [max]="now.toISOString()"
-          [value]="lastExecution"
-        >
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" (ionChange)="onChange($event)" [max]="now.toISOString()"
+          [value]="lastExecution">
         </ion-datetime>
+      </div>
+      <div *ngIf="!new && task.executions.length !== 0" class="form-element">
+        <div class="title">Last executions (showing 5 most recent)</div>
+        <ion-list id="history">
+          <ion-item-sliding *ngFor="let execution of task.executions | slice:0:5; let index = index">
+            <ion-item>
+              <ion-label>{{execution.toLocaleDateString()}} {{execution.toLocaleTimeString()}}</ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option (click)="deleteTime($event, index)" color="danger">delete</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
       </div>
     </div>
 
