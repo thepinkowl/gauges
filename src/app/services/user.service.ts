@@ -2,11 +2,17 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { TasksService } from './tasks.service';
+import { GroupsService } from './groups.service';
 
 export interface User {
-  name?: string;
+  id: string;
+  name: string;
   hasCompletedTutorial?: boolean;
-  empty?: boolean;
+}
+
+export interface FirebaseUserDoc {
+  name: string;
+  hasCompletedTutorial?: boolean;
 }
 
 export interface EmptyUser {
@@ -23,14 +29,15 @@ export interface Group {
   providedIn: 'root',
 })
 export class UserService {
-  public user: BehaviorSubject<User> = new BehaviorSubject({ empty: true });
-  public userRef: AngularFirestoreDocument<User>;
+  public user: BehaviorSubject<User> = new BehaviorSubject(null);
+  public userRef: AngularFirestoreDocument<FirebaseUserDoc>;
   public groups: BehaviorSubject<Group[]> = new BehaviorSubject([]);
 
   public task$: BehaviorSubject<any[]> = new BehaviorSubject([]);
 
   constructor(
     private firestore: AngularFirestore,
+    private groupsService: GroupsService,
     private tasksService: TasksService,
   ) { }
 
@@ -39,42 +46,27 @@ export class UserService {
   }
 
   loadUser(u) {
-    this.userRef = this.firestore.doc(`users/${u.uid}`);
+    this.userRef = this.firestore.doc<FirebaseUserDoc>(`users/${u.uid}`);
     this.userRef
       .valueChanges()
-      .subscribe((user: User) => {
-        console.log("user", user);
-        const { name } = user
-        this.user.next({
-          ...user,
-          name: u.displayName || name || "You",
-        })
+      .subscribe((user) => {
+        if (!user) {
+          this.userRef.set({ name: u.displayName || "You" })
+          this.groupsService.createGroup(u, 'My tasks')
+          return;
+        }
+        this.user.next({ ...user, id: u.uid })
       });
   }
 
   loadGroupsOfUser(u) {
-    const group$ = this.firestore.collection(`users/${u.uid}/groups`).valueChanges({ idField: 'gid' });
-
-    group$.subscribe(groups => {
-
-      // TODO: move to groups Service
-      groups.forEach(group => {
-        console.log("group", group);
-        const gid = group.gid
-
-        // GET INFO
-        this.firestore.doc(`groups/${gid}`).get().subscribe(doc => {
-          const groupData: Group = { ...doc.data(), gid }
-          console.log(groupData);
-          this.groups.next([
-            ...this.groups.value.filter(g => g.gid !== gid),
-            groupData
-          ])
-        });
+    this.firestore
+      .collection(`users/${u.uid}/groups`)
+      .valueChanges({ idField: 'gid' })
+      .subscribe(groups => {
+        this.groupsService.fetchAndRegisterGroups(groups);
+        this.tasksService.fetchAndRegisterTasksFromGroups(groups);
       })
-
-      this.tasksService.fetchAndRegisterTasksFromGroups(groups);
-    })
   }
 
   public startWithFirebaseUser(u) {

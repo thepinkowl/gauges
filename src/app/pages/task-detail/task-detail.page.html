@@ -13,7 +13,7 @@
       <div *ngIf="new" class="form-element">
         <div class="title">Put it in a group</div>
         <ion-select [(ngModel)]="task.gid" placeholder="Group">
-          <ion-select-option value="N2s035RLFqgU0gDJjCx2">Nice</ion-select-option>
+          <ion-select-option *ngFor="let group of (groupsService.groups | async)" [value]="group.gid">{{group.name}}</ion-select-option>
         </ion-select>
       </div>
       

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import Task from 'src/app/models/Task';
+import { GroupsService } from 'src/app/services/groups.service';
 import { TasksService } from 'src/app/services/tasks.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class TaskDetailPage implements OnInit {
   constructor(
     private nav: NavController,
     private tasksService: TasksService,
+    private groupsService: GroupsService,
     private activatedRoute: ActivatedRoute
   ) { }
 
@@ -60,7 +62,6 @@ export class TaskDetailPage implements OnInit {
       if (!this.task.gid || this.task.gid === '') {
         return;
       }
-      console.log(this.task);
       await this.tasksService.createTask(this.task);
       this.goBack();
     }

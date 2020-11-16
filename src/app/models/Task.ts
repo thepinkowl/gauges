@@ -15,10 +15,6 @@ export default class Task extends TaskInterface {
     lastDone: Date;
     progress: number;
 
-    static parseTasks(tasks: TaskInterface[]): Task[] {
-        return tasks.map((t: TaskInterface) => new Task(t));
-    }
-
     static createEmpty(): Task {
         return new Task({
             name: '',

@@ -2,37 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { firestore } from 'firebase/app';
 import { BehaviorSubject, Observable } from 'rxjs';
-import Task, { TaskInterface } from '../models/Task';
+import Task from '../models/Task';
 import { NotificationsService } from './notifications.service';
-
-const todayInMs = Date.now();
-const dayInMs = 1000 * 60 * 60 * 24;
-const defaultTasks: TaskInterface[] = [
-  {
-    name: 'Laundry',
-    repeat: 7,
-    executions: [
-      new Date(todayInMs - 1 * dayInMs),
-      new Date(todayInMs - 10 * dayInMs),
-    ],
-    id: '0',
-    gid: '0',
-  },
-  {
-    name: 'Hoovering',
-    repeat: 1,
-    executions: [new Date(todayInMs - 10 * dayInMs)],
-    id: '2',
-    gid: '2',
-  },
-  {
-    name: 'Gardening',
-    repeat: 14,
-    executions: [new Date(todayInMs - 4 * dayInMs)],
-    id: '1',
-    gid: '1',
-  },
-];
 
 @Injectable({
   providedIn: 'root',
@@ -50,19 +21,17 @@ export class TasksService {
     return this.task$;
   }
 
-  public fetchAndRegisterTasksFromGroups(groups: {gid:string}[]) {
+  public fetchAndRegisterTasksFromGroups(groups: { gid: string }[]) {
     const groupsToTasksMapper = {}
 
     groups.forEach(group => {
-      console.log("group", group);
       const gid = group.gid;
 
       // GET AND REGISTER TASKS
       groupsToTasksMapper[gid] = new BehaviorSubject([]);
-      const gauges = this.firestore.collection(`groups/${gid}/gauges`).valueChanges({idField: 'id'});
+      const gauges = this.firestore.collection(`groups/${gid}/gauges`).valueChanges({ idField: 'id' });
       gauges.subscribe(tasks => {
-        console.log(tasks);
-        groupsToTasksMapper[gid].next(tasks.map((task: Task) => ({ ...task, gid })))
+        groupsToTasksMapper[gid].next(tasks.map((task: any) => (new Task({ ...task, gid, executions: task.executions.map((e: firestore.Timestamp) => e.toDate()) }))))
       })
 
       // If any of the groups changes, we update the task$ pool;
@@ -82,33 +51,27 @@ export class TasksService {
     this.notifs.showUndoDeletedTask(this, task);
   }
 
-  // public async createOrUpdateTask(task: Task) {
-  //   const doesTaskExist =
-  //     !!task.id && !!this.tasks.getValue().find((t: Task) => t.id === task.id);
-  //   if (!doesTaskExist) {
-  //     return await this.createTask(task);
-  //   }
-  //   return await this.updateTask(task);
-  // }
+  private static taskToFirestore(task: Task) {
+    const t = { ...task }
+    delete t.id;
+    delete t.gid;
+    delete t.lastDone;
+    delete t.progress;
+    return t;
+  }
 
   public async createTask(task: Task) {
-    this.firestore.collection(`groups/${task.gid}/gauges`).add({
-      name: task.name
-    });
+    this.firestore.collection(`groups/${task.gid}/gauges`).add(TasksService.taskToFirestore(task));
   }
 
   public async updateTask(task: Task) {
-    const gid = task.gid;
-    const id = task.id;
-    delete task.gid;
-    delete task.id;
-    this.firestore.collection(`groups/${gid}/gauges`).doc(id).update(task);
+    this.firestore.collection(`groups/${task.gid}/gauges`).doc(task.id).update(TasksService.taskToFirestore(task));
     return task;
   }
 
   public async markTaskDone(task: Task) {
     this.firestore.collection(`groups/${task.gid}/gauges`).doc(task.id).update({
-        executions: firestore.FieldValue.arrayUnion(firestore.Timestamp.fromDate(new Date()))
+      executions: firestore.FieldValue.arrayUnion(firestore.Timestamp.fromDate(new Date()))
     });
   }
 }

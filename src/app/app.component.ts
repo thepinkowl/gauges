@@ -31,7 +31,7 @@ export class AppComponent {
     });
 
     this.userService.getUser().subscribe((user) => {
-      if (!user || user.empty) return;
+      if (!user) return;
       if (!user.hasCompletedTutorial) {
         this.nav.navigateRoot('/welcome');
       } else {
