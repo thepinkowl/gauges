@@ -19,7 +19,7 @@ export class TaskDetailPage implements OnInit {
   constructor(
     private nav: NavController,
     private tasksService: TasksService,
-    private groupsService: GroupsService,
+    public groupsService: GroupsService,
     private activatedRoute: ActivatedRoute
   ) { }
 
