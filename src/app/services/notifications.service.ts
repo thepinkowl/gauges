@@ -27,7 +27,7 @@ export class NotificationsService {
         {
           side: 'end',
           text: 'Undo',
-          handler: () => !!tasksService.updateTask(task)
+          handler: () => !!tasksService.createTask(task)
         }
       ],
       duration: 3000
