@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>152970098486-0smgrg33iehfa2lu24q12mtsj3jgn0oe.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.152970098486-0smgrg33iehfa2lu24q12mtsj3jgn0oe</string>
+	<key>API_KEY</key>
+	<string>AIzaSyANfpZqhV7pTB03hj3WFB3zr3KCUFRhOus</string>
+	<key>GCM_SENDER_ID</key>
+	<string>152970098486</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.thepinkowl.gauges</string>
+	<key>PROJECT_ID</key>
+	<string>gauges-41b5e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gauges-41b5e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:152970098486:ios:f9a45809d1de6282fa2597</string>
+	<key>DATABASE_URL</key>
+	<string>https://gauges-41b5e.firebaseio.com</string>
+</dict>
+</plist>

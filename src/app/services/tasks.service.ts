@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { firestore } from 'firebase/app';
+import firebase from 'firebase/app';
 import { BehaviorSubject, Observable } from 'rxjs';
 import Task from '../models/Task';
 import { NotificationsService } from './notifications.service';
@@ -31,7 +31,7 @@ export class TasksService {
       groupsToTasksMapper[gid] = new BehaviorSubject([]);
       const gauges = this.firestore.collection(`groups/${gid}/gauges`).valueChanges({ idField: 'id' });
       gauges.subscribe(tasks => {
-        groupsToTasksMapper[gid].next(tasks.map((task: any) => (new Task({ ...task, gid, executions: task.executions.map((e: firestore.Timestamp) => e.toDate()) }))))
+        groupsToTasksMapper[gid].next(tasks.map((task: any) => (new Task({ ...task, gid, executions: task.executions.map((e: firebase.firestore.Timestamp) => e.toDate()) }))))
       })
 
       // If any of the groups changes, we update the task$ pool;
@@ -71,7 +71,7 @@ export class TasksService {
 
   public async markTaskDone(task: Task) {
     this.firestore.collection(`groups/${task.gid}/gauges`).doc(task.id).update({
-      executions: firestore.FieldValue.arrayUnion(firestore.Timestamp.fromDate(new Date()))
+      executions: firebase.firestore.FieldValue.arrayUnion(firebase.firestore.Timestamp.fromDate(new Date()))
     });
   }
 }
