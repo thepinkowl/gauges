@@ -34,6 +34,8 @@ export class AppComponent {
       if (!user || user.empty) return;
       if (!user.hasCompletedTutorial) {
         this.nav.navigateRoot('/welcome');
+      } else {
+        this.nav.navigateRoot('/');
       }
     });
     this.initializeApp();

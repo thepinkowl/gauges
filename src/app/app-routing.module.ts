@@ -21,8 +21,12 @@ const routes: Routes = [
   },
   {
     path: 'welcome',
-    loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule),
+    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule),
     canActivate: [FirstTimeGuard]
+  },
+  {
+    path: 'loading',
+    loadChildren: () => import('./pages/loading/loading.module').then(m => m.LoadingPageModule),
   },
 ];
 

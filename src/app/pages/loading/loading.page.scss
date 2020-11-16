@@ -1,0 +1,16 @@
+:host {
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        min-height: 100%;
+        font-weight: bold;
+
+        a {
+            padding-top: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+}

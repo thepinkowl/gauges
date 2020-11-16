@@ -22,10 +22,11 @@ export class HasCompletedTutorialGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.userService.getUser().subscribe((user: User) => {
         if (!user) {
-          reject();
+          this.nav.navigateRoot('/loading');
+          resolve(false);
         } else if (!!user.hasCompletedTutorial) {
           resolve(true);
         } else {
