@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import Task from 'src/app/models/Task';
 import { GroupsService } from 'src/app/services/groups.service';
 import { TasksService } from 'src/app/services/tasks.service';
+import { Group } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-task-detail',
@@ -21,7 +22,11 @@ export class TaskDetailPage implements OnInit {
     private tasksService: TasksService,
     public groupsService: GroupsService,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    this.groupsService.groups.subscribe((groups: Group[]) => {
+      if (this.new) this.task.gid = groups[0].gid
+    })
+  }
 
   onChange(e: InputEvent) {
     const newDate = new Date((e.detail as any).value);

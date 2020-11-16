@@ -9,7 +9,7 @@ import { Group } from './user.service';
 })
 export class GroupsService {
 
-  public groups: BehaviorSubject<{}[]> = new BehaviorSubject([]);
+  public groups: BehaviorSubject<Group[]> = new BehaviorSubject([]);
 
   constructor(
     private firestore: AngularFirestore,

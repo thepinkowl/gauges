@@ -37,8 +37,8 @@ export class AppComponent {
       } else {
         this.nav.navigateRoot('/');
       }
+      this.initializeApp();
     });
-    this.initializeApp();
   }
 
   initializeApp() {
