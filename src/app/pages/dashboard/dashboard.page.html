@@ -1,13 +1,27 @@
 <ion-content scrollEvents="true" appHideHeader [fullscreen]="true">
   <app-mood-title></app-mood-title>
   <div id="dashboard-search-bar" class="search-bar">
-    <ion-searchbar (ionInput)="filterTasks($event)"></ion-searchbar>
+    <ion-checkbox [(ngModel)]="showTasksRatherThanCategories"></ion-checkbox>
+    <ion-searchbar (ionInput)="filterContent($event)"></ion-searchbar>
   </div>
-  <ion-list @list style="display: block">
-    <!-- style="display: block" is required for animations to work -->
-    <app-task style="display: block" *ngFor="let task of tasks | sortTasks; trackBy: trackById" [task]="task">
-    </app-task>
+  <app-task-list *ngIf="showTasksRatherThanCategories" [tasks]="tasks"></app-task-list>
+
+  <ion-list *ngIf="!showTasksRatherThanCategories">
+    <div *ngFor="let cat of parentCategories">
+      <ion-list-header>
+        <ion-label>{{cat.title}}</ion-label>
+      </ion-list-header>
+
+      <ion-item *ngFor="let subcat of getChildCategories(cat)" [routerLink]="['/category', subcat.cid]">
+        <ion-grid>
+          <ion-row>{{subcat.title}}</ion-row>
+          <ion-row class="gauge-holder">
+            <app-gauge [percentage]="getCategoryProgress(subcat)"></app-gauge>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+    </div>
   </ion-list>
-  <ion-button [routerLink]="['/task', 'new']" id="create-new" fill="clear">Create new repeating task</ion-button>
 
 </ion-content>

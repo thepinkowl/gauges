@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { TasksService } from './tasks.service';
 import { GroupsService } from './groups.service';
+import { CategoriesService } from './categories.service';
 
 export interface User {
   id: string;
@@ -38,6 +39,7 @@ export class UserService {
   constructor(
     private firestore: AngularFirestore,
     private groupsService: GroupsService,
+    private categoriesService: CategoriesService,
     private tasksService: TasksService,
   ) { }
 
@@ -76,6 +78,7 @@ export class UserService {
 
     this.loadUser(u);
     this.loadGroupsOfUser(u);
+    this.categoriesService.loadCategories();
   }
 
   public getUserName(): string {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import Task from 'src/app/models/Task';
+import { CategoriesService } from 'src/app/services/categories.service';
 import { GroupsService } from 'src/app/services/groups.service';
 import { TasksService } from 'src/app/services/tasks.service';
 import { Group } from 'src/app/services/user.service';
@@ -21,6 +22,7 @@ export class TaskDetailPage implements OnInit {
     private nav: NavController,
     private tasksService: TasksService,
     public groupsService: GroupsService,
+    public categoriesService: CategoriesService,
     private activatedRoute: ActivatedRoute
   ) {
     this.groupsService.groups.subscribe((groups: Group[]) => {

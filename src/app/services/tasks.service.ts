@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { BehaviorSubject, Observable } from 'rxjs';
 import Task from '../models/Task';
+import { Category } from './categories.service';
 import { NotificationsService } from './notifications.service';
 
 @Injectable({
@@ -44,6 +45,11 @@ export class TasksService {
 
   public async getTaskById(id: string): Promise<Task> {
     return this.task$.getValue().find((t) => t.id === id);
+  }
+
+  public getTasksInCategory(category: Category): Task[] {
+    const searchCategory = (category.cid === "other.other") ? "" : category.cid
+    return this.task$.getValue().filter((t) => t.category === searchCategory);
   }
 
   public async deleteTask(task: Task) {

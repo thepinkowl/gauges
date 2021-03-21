@@ -4,6 +4,7 @@ export class TaskInterface {
     name: string;
     executions: Date[];
     repeat: number;
+    category: string;
 }
 
 export default class Task extends TaskInterface {
@@ -22,6 +23,7 @@ export default class Task extends TaskInterface {
             id: '',
             repeat: 7,
             executions: [new Date()],
+            category: '',
         });
     }
 

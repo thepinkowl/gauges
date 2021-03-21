@@ -13,10 +13,11 @@
       <div *ngIf="new" class="form-element">
         <div class="title">Put it in a group</div>
         <ion-select [(ngModel)]="task.gid" placeholder="Group">
-          <ion-select-option *ngFor="let group of (groupsService.groups | async)" [value]="group.gid">{{group.name}}</ion-select-option>
+          <ion-select-option *ngFor="let group of (groupsService.groups | async)" [value]="group.gid">{{group.name}}
+          </ion-select-option>
         </ion-select>
       </div>
-      
+
       <div class="form-element">
         <div class="title">When do you usually do this task?</div>
         <div class="repeat-selector">
@@ -28,6 +29,16 @@
             days
           </span>
         </div>
+      </div>
+
+      <div class="form-element">
+        <div class="title">A tag, maybe?</div>
+        <ion-select [(ngModel)]="task.category" placeholder="Tag">
+          <ion-select-option *ngFor="let task of (categoriesService.categories | async)" [value]="task.cid">
+            {{task.parentcid && "––"}}
+            {{task.title}}
+          </ion-select-option>
+        </ion-select>
       </div>
 
       <div *ngIf="new || task.executions.length === 0" class="form-element">

@@ -1,51 +1,89 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { IonList } from '@ionic/angular';
+import { Component, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import Task from 'src/app/models/Task';
-import { itemsAnimation, listAnimation, testAnimation } from 'src/theme/animations/test.animation';
+import { CategoriesService, Category, OtherCategory } from 'src/app/services/categories.service';
 import { TasksService } from '../../services/tasks.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'dashboard.page.html',
   styleUrls: ['dashboard.page.scss'],
-  animations: [
-    testAnimation,
-    listAnimation,
-    itemsAnimation
-  ]
 })
 export class DashBoardPage implements OnDestroy {
-  constructor(private tasksService: TasksService) { }
+  constructor(
+    private tasksService: TasksService,
+    public categoriesService: CategoriesService,
+  ) { }
 
-  @ViewChild(IonList) list: IonList;
+  public $categories: Observable<Category[]>;
+  public categories: Category[] = [];
+  public initialCategories: Category[];
   public $tasks: Observable<Task[]>;
   public tasks: Task[] = [];
   private initialTasks: Task[] = [];
-  subs: Subscription;
+  subs: Subscription[] = [];
+
+  showTasksRatherThanCategories = true;
 
   ngOnDestroy() {
-    this.subs.unsubscribe();
+    this.subs.forEach(s => s.unsubscribe());
   }
 
   ionViewWillEnter() {
     this.$tasks = this.tasksService.getTasks();
-    this.subs = this.$tasks.subscribe(tasks => {
+    this.$categories = this.categoriesService.getCategories();
+    const taskSubscription = this.$tasks.subscribe(tasks => {
       this.initialTasks = tasks
       this.tasks = tasks
     })
+    const categoriesSubscription = this.$categories.subscribe(categories => {
+      this.initialCategories = categories
+      this.categories = categories
+    })
+    this.subs.push(taskSubscription, categoriesSubscription)
   }
 
-  ionViewDidEnter() {
-    this.list.closeSlidingItems();
+  get parentCategories() {
+    let out = [...this.categories.filter(c => {
+      const children = this.getChildCategories(c);
+      const shouldShow = children.some(child => this.tasks.some(t => t.category === child.cid))
+      return !c.parentcid && shouldShow
+    })];
+    if (this.tasks.some(t => t.category === "")) {
+      out.push(OtherCategory)
+    }
+    return out
   }
 
-  public trackById(index: number, task: Task) {
-    return task.id;
+  getChildCategories(cat: Category) {
+    if (cat.cid === "other") {
+      return [{ title: "Others", cid: "other.other", parentcid: "other" }]
+    } else {
+      return this.categories.filter(c => {
+        const shouldShow = this.tasks.some(t => t.category === c.cid)
+        return c.parentcid === cat.cid && shouldShow
+      })
+    }
   }
 
-  filterTasks(event) {
+  getCategoryProgress(category: Category) {
+    const tasks = this.tasksService.getTasksInCategory(category);
+    
+    const progressType = "worst";
+    const progresses = tasks.map(t => t.progress);
+
+    if (progressType === "worst") {
+      return Math.min(...progresses);
+    } else if (progressType === "average") {
+      return progresses.reduce((p, c) => p + c) / tasks.length;
+    } else {
+      return 0;
+    }
+  }
+
+  filterContent(event) {
     this.tasks = this.initialTasks.filter(t => t.name.toLowerCase().includes(event.target.value.toLowerCase()))
+    this.categories = this.initialCategories.filter(t => t.title.toLowerCase().includes(event.target.value.toLowerCase()))
   }
 
 }

@@ -28,6 +28,10 @@ const routes: Routes = [
     path: 'loading',
     loadChildren: () => import('./pages/loading/loading.module').then(m => m.LoadingPageModule),
   },
+  {
+    path: 'category/:cid',
+    loadChildren: () => import('./pages/task-list-by-category/task-list-by-category.module').then( m => m.TaskListByCategoryPageModule),
+  },
 ];
 
 @NgModule({
