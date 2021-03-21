@@ -46,12 +46,14 @@ export class UserService {
   }
 
   loadUser(u) {
+    const parseUserDisplayName = (name: string) => (name || "You").split(" ")[0].replace(/\+/g, " ");
+
     this.userRef = this.firestore.doc<FirebaseUserDoc>(`users/${u.uid}`);
     this.userRef
       .valueChanges()
       .subscribe((user) => {
         if (!user) {
-          this.userRef.set({ name: u.displayName || "You" })
+          this.userRef.set({ name: parseUserDisplayName(u.displayName) })
           this.groupsService.createGroup(u, 'My tasks')
           return;
         }
