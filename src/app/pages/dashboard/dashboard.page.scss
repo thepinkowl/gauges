@@ -1,4 +1,11 @@
 :host {
+    .search-bar {
+        transition: height 700ms;
+        overflow: hidden;
+        height: 0;
+        padding-left: 14px;
+    }
+
     #create-new {
         width: 100%;
     }

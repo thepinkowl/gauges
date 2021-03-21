@@ -9,7 +9,7 @@ import { TaskComponent } from 'src/app/components/task/task.component';
 import { DashBoardPageRoutingModule } from './dashboard-routing.module';
 import { DashBoardPage } from './dashboard.page';
 import { SortTasksPipe } from './sort-tasks/sort-tasks.pipe';
-
+import { HideHeaderDirective } from '../../directives/hide-header.directive';
 
 @NgModule({
   imports: [
@@ -24,7 +24,8 @@ import { SortTasksPipe } from './sort-tasks/sort-tasks.pipe';
     TaskComponent,
     GaugeComponent,
     MoodTitleComponent,
-    SortTasksPipe
+    SortTasksPipe,
+    HideHeaderDirective,
   ]
 })
 export class DashBoardPageModule { }

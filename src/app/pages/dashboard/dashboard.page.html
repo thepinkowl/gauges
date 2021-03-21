@@ -1,11 +1,13 @@
-<ion-content [fullscreen]="true">
-  
+<ion-content scrollEvents="true" appHideHeader [fullscreen]="true">
   <app-mood-title></app-mood-title>
+  <div id="dashboard-search-bar" class="search-bar">
+    <ion-searchbar (ionInput)="filterTasks($event)"></ion-searchbar>
+  </div>
   <ion-list @list style="display: block">
     <!-- style="display: block" is required for animations to work -->
-    <app-task style="display: block" *ngFor="let task of tasks | async | sortTasks; trackBy: trackById" [task]="task">
+    <app-task style="display: block" *ngFor="let task of tasks | sortTasks; trackBy: trackById" [task]="task">
     </app-task>
   </ion-list>
-  <ion-button [routerLink]="['/task', 'new']" id="create-new" fill="clear">Create a new repeating task</ion-button>
+  <ion-button [routerLink]="['/task', 'new']" id="create-new" fill="clear">Create new repeating task</ion-button>
 
 </ion-content>
