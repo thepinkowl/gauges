@@ -41,6 +41,10 @@ export default class Task extends TaskInterface {
         this.progress = this.rangePercentage(Math.floor((referenceDuration - lastDoneDuration) / referenceDuration * 100));
     }
 
+    public hasCategory() {
+        return this.category && this.category !== "";
+    }
+
     private rangePercentage(value: number, min = 0, max = 100) {
         return Math.min(Math.max(value, min), max);
     }

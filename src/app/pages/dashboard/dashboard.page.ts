@@ -49,22 +49,22 @@ export class DashBoardPage implements OnDestroy {
       const shouldShow = children.some(child => this.tasks.some(t => t.category === child.cid))
       return !c.parentcid && shouldShow
     })];
-    if (this.tasks.some(t => t.category === "")) {
+    if (this.tasks.some(t => !t.hasCategory())) {
       out.push(OtherCategory)
     }
     return out
   }
 
+  get otherTasks() {
+    return this.tasks.filter(t => !t.hasCategory())
+  }
+
   getChildCategories(cat: Category) {
-    if (cat.cid === "other") {
-      return [{ title: "Others", cid: "other.other", parentcid: "other" }]
-    } else {
       return this.categories.filter(c => {
         const shouldShow = this.tasks.some(t => t.category === c.cid)
         return c.parentcid === cat.cid && shouldShow
       })
     }
-  }
 
   getCategoryProgress(category: Category) {
     const tasks = this.tasksService.getTasksInCategory(category);
