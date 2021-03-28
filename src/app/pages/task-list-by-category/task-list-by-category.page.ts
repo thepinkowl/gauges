@@ -31,8 +31,8 @@ export class TaskListByCategoryPage implements OnInit {
     combineLatest([routeParamsObs, tasksObs, categoriesObs])
       .subscribe(([routeParams, tasks, categories]) => {
         if (categories.length === 0) return;
-        let searchCategory = this.category.cid
         this.category = categories.find(c => c.cid === routeParams.cid)
+        let searchCategory = this.category.cid
         this.tasks = tasks.filter(t => t.category === searchCategory)
       })
   }
