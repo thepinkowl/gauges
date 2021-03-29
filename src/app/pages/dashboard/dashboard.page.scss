@@ -1,14 +1,19 @@
 :host {
-    .search-bar {
-        transition: height 700ms;
-        overflow: hidden;
-        height: 0;
-        padding-left: 21px;
-        display: flex;
-        align-items: center;
-    }
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 
-    .gauge-holder {
-        padding: 5px 0;
-    }
+  .content {
+    min-height: calc(100vh + 60px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  }
+
+  .search-bar {
+    height: 60px;
+    padding-left: 21px;
+    display: flex;
+    align-items: center;
+  }
+
+  .gauge-holder {
+    padding: 5px 0;
+  }
 }

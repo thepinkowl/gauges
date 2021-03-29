@@ -1,29 +1,37 @@
-<ion-content scrollEvents="true" appHideHeader [fullscreen]="true">
-  <app-mood-title></app-mood-title>
-  <div id="dashboard-search-bar" class="search-bar">
-    <ion-checkbox [(ngModel)]="showTasksRatherThanCategories"></ion-checkbox>
-    <ion-searchbar (ionInput)="filterContent($event)"></ion-searchbar>
-  </div>
-  <app-task-list *ngIf="showTasksRatherThanCategories" [tasks]="tasks"></app-task-list>
+<ion-content>
 
-  <ion-list *ngIf="!showTasksRatherThanCategories">
-    <div *ngFor="let cat of parentCategories">
-      <ion-list-header>
-        <ion-label>{{cat.title}}</ion-label>
-      </ion-list-header>
+  <div class="content">
 
-      <ion-item *ngFor="let subcat of getChildCategories(cat)" [routerLink]="['/category', subcat.cid]">
-        <ion-grid>
-          <ion-row>{{subcat.title}}</ion-row>
-          <ion-row class="gauge-holder">
-            <app-gauge [percentage]="getCategoryProgress(subcat)"></app-gauge>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-
+    <div id="dashboard-search-bar" class="search-bar">
+      <ion-checkbox [(ngModel)]="showTasksRatherThanCategories"></ion-checkbox>
+      <ion-searchbar (ionInput)="filterContent($event)"></ion-searchbar>
     </div>
 
+    <app-mood-title></app-mood-title>
+
+    <app-task-list *ngIf="showTasksRatherThanCategories" [tasks]="tasks"></app-task-list>
+
+    <ion-list *ngIf="!showTasksRatherThanCategories">
+      <div *ngFor="let cat of parentCategories">
+        <ion-list-header>
+          <ion-label>{{cat.title}}</ion-label>
+        </ion-list-header>
+
+        <ion-item *ngFor="let subcat of getChildCategories(cat)" [routerLink]="['/category', subcat.cid]">
+          <ion-grid>
+            <ion-row>{{subcat.title}}</ion-row>
+            <ion-row class="gauge-holder">
+              <app-gauge [percentage]="getCategoryProgress(subcat)"></app-gauge>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+
+      </div>
+
       <app-task-list [tasks]="otherTasks"></app-task-list>
-  </ion-list>
+    </ion-list>
+
+    <!-- <ion-button [routerLink]="['/profile']" id="goto-profile" fill="clear">Profile</ion-button> -->
+  </div>
 
 </ion-content>
