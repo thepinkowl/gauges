@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
+import { IonContent } from "@ionic/angular";
 import Task from "src/app/models/Task";
 import {
   CategoriesService,
@@ -16,9 +17,11 @@ import { TasksService } from "../../services/tasks.service";
 export class DashBoardPage implements OnDestroy {
   constructor(
     private tasksService: TasksService,
-    public categoriesService: CategoriesService,
-    public el: ElementRef
+    public categoriesService: CategoriesService
   ) {}
+
+  @ViewChild(IonContent) ionContent: IonContent;
+  scroll;
 
   public $categories: Observable<Category[]>;
   public categories: Category[] = [];
@@ -50,15 +53,18 @@ export class DashBoardPage implements OnDestroy {
   }
 
   ionViewDidEnter() {
-    this.scrollPage(60);
+    if (!this.scroll) {
+      this.ionContent.scrollToPoint(0, 60);
+    }
   }
 
-  scrollPage(px: number) {
-    let page = this.el.nativeElement.firstChild;
-    let scroller = [...page.shadowRoot.childNodes].find((n) =>
-      n.className.includes("inner-scroll")
-    );
-    scroller.scrollTop = px;
+  onScrollEnd() {
+    if (!this.scroll) {
+      // this.ionContent.getScrollElement().then((s) => {
+      //   this.scroll = s.scrollTop;
+      // });
+      this.scroll = true;
+    }
   }
 
   get parentCategories() {
