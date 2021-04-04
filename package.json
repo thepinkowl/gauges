@@ -7,6 +7,7 @@
     "ionic": "ionic serve --external --livereload",
     "android": "ionic capacitor run android --livereload --external",
     "ios": "ionic capacitor run ios --livereload --external",
+    "ios:light": "ionic cap run ios -l --external --source-map=false",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod && npx cap copy",
