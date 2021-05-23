@@ -33,14 +33,34 @@ export class TasksService {
       const gauges = this.firestore
         .collection(`groups/${gid}/gauges`)
         .valueChanges({ idField: "id" });
+
       gauges.subscribe((tasks) => {
+        const tasksObjects = tasks.map(
+          (task: any) =>
+            new Task({
+              ...task,
+              gid,
+              executions: task.executions.map(
+                (e: firebase.firestore.Timestamp) => e.toDate()
+              ),
+            })
+        );
+
+        groupsToTasksMapper[gid].next(tasksObjects);
+      });
 
       // If any of the groups changes, we update the task$ pool;
-      groupsToTasksMapper[gid].subscribe(test => {
-        const values = Object.keys(groupsToTasksMapper).filter(id => id !== gid).map(id => (groupsToTasksMapper[id].value));
-        this.task$.next([...values.reduce((acc, val) => acc.concat(val), []), ...test])
-      })
-    })
+      groupsToTasksMapper[gid].subscribe((tasksInGroup) => {
+        const tasksInOtherGroups = Object.keys(groupsToTasksMapper)
+          .filter((id) => id !== gid)
+          .map((id) => groupsToTasksMapper[id].value);
+
+        this.task$.next([
+          ...tasksInOtherGroups.reduce((acc, val) => acc.concat(val), []),
+          ...tasksInGroup,
+        ]);
+      });
+    });
   }
 
   public async getTaskById(id: string): Promise<Task> {
