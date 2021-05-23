@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import firebase from 'firebase/app';
-import { BehaviorSubject, Observable } from 'rxjs';
-import Task from '../models/Task';
-import { Category } from './categories.service';
-import { NotificationsService } from './notifications.service';
+import { Injectable } from "@angular/core";
+import { AngularFirestore } from "@angular/fire/firestore";
+import firebase from "firebase/app";
+import { BehaviorSubject, Observable } from "rxjs";
+import Task from "../models/Task";
+import { Category } from "./categories.service";
+import { NotificationsService } from "./notifications.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TasksService {
   constructor(
@@ -23,17 +23,17 @@ export class TasksService {
   }
 
   public fetchAndRegisterTasksFromGroups(groups: { gid: string }[]) {
-    const groupsToTasksMapper = {}
+    const groupsToTasksMapper = {};
 
-    groups.forEach(group => {
+    groups.forEach((group) => {
       const gid = group.gid;
 
       // GET AND REGISTER TASKS
       groupsToTasksMapper[gid] = new BehaviorSubject([]);
-      const gauges = this.firestore.collection(`groups/${gid}/gauges`).valueChanges({ idField: 'id' });
-      gauges.subscribe(tasks => {
-        groupsToTasksMapper[gid].next(tasks.map((task: any) => (new Task({ ...task, gid, executions: task.executions.map((e: firebase.firestore.Timestamp) => e.toDate()) }))))
-      })
+      const gauges = this.firestore
+        .collection(`groups/${gid}/gauges`)
+        .valueChanges({ idField: "id" });
+      gauges.subscribe((tasks) => {
 
       // If any of the groups changes, we update the task$ pool;
       groupsToTasksMapper[gid].subscribe(test => {
@@ -48,7 +48,7 @@ export class TasksService {
   }
 
   public getTasksInCategory(category: Category): Task[] {
-    const searchCategory = (category.cid === "other.other") ? "" : category.cid
+    const searchCategory = category.cid === "other.other" ? "" : category.cid;
     return this.task$.getValue().filter((t) => t.category === searchCategory);
   }
 
@@ -58,7 +58,7 @@ export class TasksService {
   }
 
   private static taskToFirestore(task: Task) {
-    const t = { ...task }
+    const t = { ...task };
     delete t.id;
     delete t.gid;
     delete t.lastDone;
@@ -67,17 +67,27 @@ export class TasksService {
   }
 
   public async createTask(task: Task) {
-    this.firestore.collection(`groups/${task.gid}/gauges`).add(TasksService.taskToFirestore(task));
+    this.firestore
+      .collection(`groups/${task.gid}/gauges`)
+      .add(TasksService.taskToFirestore(task));
   }
 
   public async updateTask(task: Task) {
-    this.firestore.collection(`groups/${task.gid}/gauges`).doc(task.id).update(TasksService.taskToFirestore(task));
+    this.firestore
+      .collection(`groups/${task.gid}/gauges`)
+      .doc(task.id)
+      .update(TasksService.taskToFirestore(task));
     return task;
   }
 
   public async markTaskDone(task: Task) {
-    this.firestore.collection(`groups/${task.gid}/gauges`).doc(task.id).update({
-      executions: firebase.firestore.FieldValue.arrayUnion(firebase.firestore.Timestamp.fromDate(new Date()))
-    });
+    this.firestore
+      .collection(`groups/${task.gid}/gauges`)
+      .doc(task.id)
+      .update({
+        executions: firebase.firestore.FieldValue.arrayUnion(
+          firebase.firestore.Timestamp.fromDate(new Date())
+        ),
+      });
   }
 }

@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { TasksService } from './tasks.service';
-import { GroupsService } from './groups.service';
-import { CategoriesService } from './categories.service';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from "@angular/fire/firestore";
+import { TasksService } from "./tasks.service";
+import { GroupsService } from "./groups.service";
+import { CategoriesService } from "./categories.service";
 
 export interface User {
   id: string;
@@ -27,7 +30,7 @@ export interface Group {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class UserService {
   public user: BehaviorSubject<User> = new BehaviorSubject(null);
@@ -40,8 +43,8 @@ export class UserService {
     private firestore: AngularFirestore,
     private groupsService: GroupsService,
     private categoriesService: CategoriesService,
-    private tasksService: TasksService,
-  ) { }
+    private tasksService: TasksService
+  ) {}
 
   public getUser(): Observable<User> {
     return this.user;
@@ -66,11 +69,11 @@ export class UserService {
   loadGroupsOfUser(u) {
     this.firestore
       .collection(`users/${u.uid}/groups`)
-      .valueChanges({ idField: 'gid' })
-      .subscribe(groups => {
+      .valueChanges({ idField: "gid" })
+      .subscribe((groups) => {
         this.groupsService.fetchAndRegisterGroups(groups);
         this.tasksService.fetchAndRegisterTasksFromGroups(groups);
-      })
+      });
   }
 
   public startWithFirebaseUser(u) {

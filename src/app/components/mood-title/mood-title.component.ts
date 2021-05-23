@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { UserService, User } from 'src/app/services/user.service';
-import { Observable } from 'rxjs';
-import { TasksService } from 'src/app/services/tasks.service';
+import { Component, OnInit } from "@angular/core";
+import { AlertController } from "@ionic/angular";
+import { UserService, User } from "src/app/services/user.service";
+import { Observable } from "rxjs";
+import { TasksService } from "src/app/services/tasks.service";
 
 @Component({
-  selector: 'app-mood-title',
-  templateUrl: './mood-title.component.html',
-  styleUrls: ['./mood-title.component.scss'],
+  selector: "app-mood-title",
+  templateUrl: "./mood-title.component.html",
+  styleUrls: ["./mood-title.component.scss"],
 })
 export class MoodTitleComponent implements OnInit {
   user: Observable<User>;
@@ -15,29 +15,29 @@ export class MoodTitleComponent implements OnInit {
 
   messages = {
     green: [
-      'all lights green, have a break',
-      'you\'re doing well today!',
-      'nothing new here, have a break',
-      'all lights are green, bravo!',
-      'you are the best!',
+      "all lights green, have a break",
+      "you're doing well today!",
+      "nothing new here, have a break",
+      "all lights are green, bravo!",
+      "you are the best!",
       // 'you rock'
     ],
     orange: [
-      'a few things to do and you\'re done',
-      'some chores are due today, take it easy',
-      'you\'re almost done for today',
-      'swipe it right!',
+      "a few things to do and you're done",
+      "some chores are due today, take it easy",
+      "you're almost done for today",
+      "swipe it right!",
     ],
     red: [
-      'swipe them right!',
-      'did you forget something?',
-      'it\'s time to do them!',
-      'I know you can do it!',
-      'let\'s get some work done today!',
+      "swipe them right!",
+      "did you forget something?",
+      "it's time to do them!",
+      "I know you can do it!",
+      "let's get some work done today!",
     ],
   };
 
-  message = '';
+  message = "";
 
   constructor(
     private alertController: AlertController,
@@ -49,7 +49,7 @@ export class MoodTitleComponent implements OnInit {
     this.user = this.userService.getUser();
     this.tasksService.getTasks().subscribe((tasks) => {
       if (!tasks || !tasks.length) {
-        this.message = 'start by creating a task!';
+        this.message = "start by creating a task!";
         return;
       }
 
@@ -76,24 +76,24 @@ export class MoodTitleComponent implements OnInit {
       this.alert.dismiss();
     }
     this.alert = await this.alertController.create({
-      header: 'How should I call you?',
+      header: "How should I call you?",
       inputs: [
         {
-          name: 'name',
-          type: 'text',
-          id: 'name',
+          name: "name",
+          type: "text",
+          id: "name",
           value: this.userService.getUserName(),
-          placeholder: 'Name',
+          placeholder: "Name",
         },
       ],
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
         },
         {
-          text: 'Ok',
+          text: "Ok",
           handler: ({ name }) => {
             this.userService.setUserName(name);
           },
