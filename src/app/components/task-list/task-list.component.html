@@ -1,6 +1,5 @@
-<ion-list  @list style="display: block">
-  <!-- style="display: block" is required for animations to work -->
-  <app-task style="display: block" *ngFor="let task of tasks | sortTasks; trackBy: trackById" [task]="task">
+<ion-list @list >
+  <app-task *ngFor="let task of tasks | sortTasks; trackBy: trackById" [task]="task">
   </app-task>
 </ion-list>
 

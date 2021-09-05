@@ -2,4 +2,12 @@
     #create-new {
         width: 100%;
     }
+
+    ion-list {
+        display: block;
+
+        app-task {
+            display: block; // "display: block" is required for animations to work
+        }
+    }
 }
