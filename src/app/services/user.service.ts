@@ -4,6 +4,7 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
+import firebase from 'firebase/app';
 import { TasksService } from './tasks.service';
 import { GroupsService } from './groups.service';
 import { CategoriesService } from './categories.service';
@@ -50,7 +51,7 @@ export class UserService {
     return this.user;
   }
 
-  loadUser(u) {
+  loadUser(u: firebase.User) {
     const parseUserDisplayName = (name: string) => (name || 'You').split(' ')[0].replace(/\+/g, ' ');
 
     this.userRef = this.firestore.doc<FirebaseUserDoc>(`users/${u.uid}`);
@@ -66,7 +67,7 @@ export class UserService {
       });
   }
 
-  loadGroupsOfUser(u) {
+  loadGroupsOfUser(u: firebase.User) {
     this.firestore
       .collection(`users/${u.uid}/groups`)
       .valueChanges({ idField: 'gid' })
@@ -76,7 +77,7 @@ export class UserService {
       });
   }
 
-  public startWithFirebaseUser(u) {
+  public startWithFirebaseUser(u: firebase.User) {
     if (!u || !u.uid) { return; }
 
     this.loadUser(u);
