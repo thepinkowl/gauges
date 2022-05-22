@@ -16,14 +16,16 @@ export class TasksService {
   ) {
   }
 
-  public task$: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  public task$: BehaviorSubject<Task[]> = new BehaviorSubject([]);
 
   public getTasks(): Observable<Task[]> {
     return this.task$;
   }
 
   public fetchAndRegisterTasksFromGroups(groups: { gid: string }[]) {
-    const groupsToTasksMapper = {};
+    const groupsToTasksMapper: {
+      [gid: string]: BehaviorSubject<Task[]>;
+    } = {};
 
     groups.forEach((group) => {
       const gid = group.gid;
