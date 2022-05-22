@@ -26,8 +26,10 @@ export class TaskDetailPage implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this.groupsService.groups.subscribe((groups: Group[]) => {
-      if (this.new) this.task.gid = groups[0].gid
-    })
+      if (this.new) {
+        this.task.gid = groups[0].gid;
+      }
+    });
   }
 
   onChange(e: InputEvent) {

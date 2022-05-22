@@ -26,18 +26,20 @@ export class AppComponent {
       if (!user) {
         this.fireauth.signInAnonymously();
       } else {
+        console.log('user', user.uid);
         this.userService.startWithFirebaseUser(user);
       }
     });
 
     this.userService.getUser().subscribe((user) => {
-      if (!user) return;
-      if (!user.hasCompletedTutorial) {
-        this.nav.navigateRoot('/welcome');
-      } else {
-        this.nav.navigateRoot('/');
+      if (!!user) {
+        if (!user.hasCompletedTutorial) {
+          this.nav.navigateRoot('/welcome');
+        } else {
+          this.nav.navigateRoot('/');
+        }
+        this.initializeApp();
       }
-      this.initializeApp();
     });
   }
 

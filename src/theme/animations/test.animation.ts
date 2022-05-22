@@ -1,4 +1,4 @@
-import { trigger, transition, style, animate, state, query, stagger, animateChild } from "@angular/animations";
+import { trigger, transition, style, animate, state, query, stagger, animateChild } from '@angular/animations';
 
 export const testAnimation = trigger(
     'testAnimation',
@@ -33,7 +33,7 @@ export const testAnimation = trigger(
 export const listAnimation = trigger('list', [
     transition(':enter', [
         // child animation selector + stagger
-        query("@items",
+        query('@items',
             stagger(300, animateChild()), { optional: true }
         )
     ]),
@@ -51,4 +51,4 @@ export const itemsAnimation = trigger('items', [
         animate('1s cubic-bezier(.8,-0.6,0.2,1.5)',
             style({ transform: 'scale(0.5)', opacity: 0, height: '0px', margin: '0px' }))
     ]),
-])
+]);

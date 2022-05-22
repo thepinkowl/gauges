@@ -11,7 +11,7 @@ import { IonList } from '@ionic/angular';
 })
 export class TaskListComponent implements OnInit {
   @ViewChild(IonList) list: IonList;
-  @Input("tasks") tasks: Task[];
+  @Input('tasks') tasks: Task[];
 
   constructor() { }
 

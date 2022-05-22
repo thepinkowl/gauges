@@ -42,7 +42,7 @@ export default class Task extends TaskInterface {
     }
 
     public hasCategory() {
-        return this.category && this.category !== "";
+        return this.category && this.category !== '';
     }
 
     private rangePercentage(value: number, min = 0, max = 100) {

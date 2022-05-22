@@ -1,18 +1,18 @@
-import { Component, OnDestroy, ViewChild } from "@angular/core";
-import { Observable, Subscription } from "rxjs";
-import { IonContent } from "@ionic/angular";
-import Task from "src/app/models/Task";
+import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { IonContent } from '@ionic/angular';
+import Task from 'src/app/models/Task';
 import {
   CategoriesService,
   Category,
   OtherCategory,
-} from "src/app/services/categories.service";
-import { TasksService } from "../../services/tasks.service";
+} from 'src/app/services/categories.service';
+import { TasksService } from '../../services/tasks.service';
 
 @Component({
-  selector: "app-dashboard",
-  templateUrl: "dashboard.page.html",
-  styleUrls: ["dashboard.page.scss"],
+  selector: 'app-dashboard',
+  templateUrl: 'dashboard.page.html',
+  styleUrls: ['dashboard.page.scss'],
 })
 export class DashBoardPage implements OnDestroy {
   constructor(
@@ -68,7 +68,7 @@ export class DashBoardPage implements OnDestroy {
   }
 
   get parentCategories() {
-    let out = [
+    const out = [
       ...this.categories.filter((c) => {
         const children = this.getChildCategories(c);
         const shouldShow = children.some(
@@ -103,12 +103,12 @@ export class DashBoardPage implements OnDestroy {
   getCategoryProgress(category: Category) {
     const tasks = this.tasksService.getTasksInCategory(category);
 
-    const progressType = "worst";
+    const progressType = 'worst';
     const progresses = tasks.map((t) => t.progress);
 
-    if (progressType === "worst") {
+    if (progressType === 'worst') {
       return Math.min(...progresses);
-    } else if (progressType === "average") {
+    } else if (progressType === 'average') {
       return progresses.reduce((p, c) => p + c) / tasks.length;
     } else {
       return 0;

@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
-import firebase from "firebase/app";
-import { BehaviorSubject, Observable } from "rxjs";
-import Task from "../models/Task";
-import { Category } from "./categories.service";
-import { NotificationsService } from "./notifications.service";
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import firebase from 'firebase/app';
+import { BehaviorSubject, Observable } from 'rxjs';
+import Task from '../models/Task';
+import { Category } from './categories.service';
+import { NotificationsService } from './notifications.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class TasksService {
   constructor(
@@ -32,7 +32,7 @@ export class TasksService {
       groupsToTasksMapper[gid] = new BehaviorSubject([]);
       const gauges = this.firestore
         .collection(`groups/${gid}/gauges`)
-        .valueChanges({ idField: "id" });
+        .valueChanges({ idField: 'id' });
 
       gauges.subscribe((tasks) => {
         const tasksObjects = tasks.map(
@@ -68,7 +68,7 @@ export class TasksService {
   }
 
   public getTasksInCategory(category: Category): Task[] {
-    const searchCategory = category.cid === "other.other" ? "" : category.cid;
+    const searchCategory = category.cid === 'other.other' ? '' : category.cid;
     return this.task$.getValue().filter((t) => t.category === searchCategory);
   }
 

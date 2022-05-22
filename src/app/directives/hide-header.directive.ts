@@ -17,10 +17,12 @@ export class HideHeaderDirective implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.search = document.getElementById("dashboard-search-bar")
+    this.search = document.getElementById('dashboard-search-bar');
     setTimeout(() => {
-      if (!this.used) this.scrollPage(1);
-    }, 700)
+      if (!this.used) {
+        this.scrollPage(1);
+      }
+    }, 700);
   }
 
   showSearchBar() {
@@ -35,8 +37,8 @@ export class HideHeaderDirective implements OnInit {
   }
 
   scrollPage(px: number) {
-    let page = this.el.nativeElement;
-    let scroller = [...page.shadowRoot.childNodes].find(n => n.className.includes("inner-scroll"));
+    const page = this.el.nativeElement;
+    const scroller = [...page.shadowRoot.childNodes].find(n => n.className.includes('inner-scroll'));
     scroller.scrollTop = px;
   }
 

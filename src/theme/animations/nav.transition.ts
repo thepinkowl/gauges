@@ -25,7 +25,7 @@ import { TransitionOptions } from '@ionic/core/dist/types/utils/transition';
 const DURATION = 540;
 
 const getClonedElement = (tagName: string): any => {
-  return document.querySelector(`${tagName}.ion-cloned-element`) as any ;
+  return document.querySelector(`${tagName}.ion-cloned-element`) as any;
 };
 
 export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
@@ -208,9 +208,9 @@ const animateLargeTitle = (rootAnimation: Animation, rtl: boolean, backDirection
   clonedLargeTitleAnimation
     .beforeStyles({
       'transform-origin': `${ORIGIN_X} center`,
-      'height': '46px',
-      'display': '',
-      'position': 'relative',
+      height: '46px',
+      display: '',
+      position: 'relative',
       [ORIGIN_X]: TITLE_START_OFFSET
     })
     .beforeAddWrite(() => {
@@ -238,8 +238,8 @@ export const mdIosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOpt
     const OFF_OPACITY = 0.8;
 
     const isRTL = (navEl.ownerDocument as any).dir === 'rtl';
-    const OFF_RIGHT = ((isRTL ? -1 : 1) * (SCREEN_WIDTH-OFFSET)) + 'px';
-    const OFF_LEFT = ((isRTL ? 1 : -1) * (Math.floor(SCREEN_WIDTH/3))) + 'px';
+    const OFF_RIGHT = ((isRTL ? -1 : 1) * (SCREEN_WIDTH - OFFSET)) + 'px';
+    const OFF_LEFT = ((isRTL ? 1 : -1) * (Math.floor(SCREEN_WIDTH / 3))) + 'px';
 
     const enteringEl = opts.enteringEl;
     const leavingEl = opts.leavingEl;

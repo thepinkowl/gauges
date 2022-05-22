@@ -13,7 +13,7 @@ import { NavController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class FirstTimeGuard implements CanActivate {
-  constructor(private userService: UserService, private nav: NavController) {}
+  constructor(private userService: UserService, private nav: NavController) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -27,7 +27,7 @@ export class FirstTimeGuard implements CanActivate {
       this.userService.getUser().subscribe((user: User) => {
         if (!user) {
           this.nav.navigateRoot('/loading');
-          return resolve(false)
+          return resolve(false);
         }
         resolve(!user.hasCompletedTutorial);
         if (!user.hasCompletedTutorial) {

@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
-} from "@angular/fire/firestore";
-import { TasksService } from "./tasks.service";
-import { GroupsService } from "./groups.service";
-import { CategoriesService } from "./categories.service";
+} from '@angular/fire/firestore';
+import { TasksService } from './tasks.service';
+import { GroupsService } from './groups.service';
+import { CategoriesService } from './categories.service';
 
 export interface User {
   id: string;
@@ -30,7 +30,7 @@ export interface Group {
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class UserService {
   public user: BehaviorSubject<User> = new BehaviorSubject(null);
@@ -44,32 +44,32 @@ export class UserService {
     private groupsService: GroupsService,
     private categoriesService: CategoriesService,
     private tasksService: TasksService
-  ) {}
+  ) { }
 
   public getUser(): Observable<User> {
     return this.user;
   }
 
   loadUser(u) {
-    const parseUserDisplayName = (name: string) => (name || "You").split(" ")[0].replace(/\+/g, " ");
+    const parseUserDisplayName = (name: string) => (name || 'You').split(' ')[0].replace(/\+/g, ' ');
 
     this.userRef = this.firestore.doc<FirebaseUserDoc>(`users/${u.uid}`);
     this.userRef
       .valueChanges()
       .subscribe((user) => {
         if (!user) {
-          this.userRef.set({ name: parseUserDisplayName(u.displayName) })
-          this.groupsService.createGroup(u, 'My tasks')
+          this.userRef.set({ name: parseUserDisplayName(u.displayName) });
+          this.groupsService.createGroup(u, 'My tasks');
           return;
         }
-        this.user.next({ ...user, id: u.uid })
+        this.user.next({ ...user, id: u.uid });
       });
   }
 
   loadGroupsOfUser(u) {
     this.firestore
       .collection(`users/${u.uid}/groups`)
-      .valueChanges({ idField: "gid" })
+      .valueChanges({ idField: 'gid' })
       .subscribe((groups) => {
         this.groupsService.fetchAndRegisterGroups(groups);
         this.tasksService.fetchAndRegisterTasksFromGroups(groups);
@@ -77,7 +77,7 @@ export class UserService {
   }
 
   public startWithFirebaseUser(u) {
-    if (!u || !u.uid) return;
+    if (!u || !u.uid) { return; }
 
     this.loadUser(u);
     this.loadGroupsOfUser(u);
