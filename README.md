@@ -1,5 +1,13 @@
 # Gauges
 
+## Prereqs
+
+You need a mac.
+Install xcode from the App Store.
+Install command line tools `xcode-select --install`.
+Install cocoapods `sudo gem install cocoapods`.
+Install `npm` and run `npm i`.
+Run `npm run build`.
 
 ### Development
 
@@ -21,3 +29,7 @@ Bump the project version in the `General` tab, `Build` field. Use the format `YY
 Hit `Cmd + B` or go to `Product > Build`. Run `Product > Archive`. Open `Window > Organizer`. Select the correct version and validate it with `Validate App`. Once this is done, click `Distribute App`.
 
 Head to [https://appstoreconnect.apple.com/](https://appstoreconnect.apple.com/). Click on `Apps`, then `Gauges: Manage recurring tasks`, then `Activity`. Your build will be in `Processing` status.
+
+## Troubleshooting
+
+If the command line tools give problems, try this: `sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer`
