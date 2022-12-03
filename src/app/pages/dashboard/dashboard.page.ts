@@ -32,7 +32,7 @@ export class DashBoardPage implements OnDestroy {
   private initialTasks: Task[] = [];
   subs: Subscription[] = [];
 
-  showTasksRatherThanCategories = false;
+  showTasksRatherThanCategories = true;
 
   ngOnDestroy() {
     this.subs.forEach((s) => s.unsubscribe());
