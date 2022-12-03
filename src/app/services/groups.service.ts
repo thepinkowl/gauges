@@ -19,7 +19,7 @@ export class GroupsService {
     groups.forEach(group => {
       const gid = group.gid;
 
-      this.firestore.doc(`groups/${gid}`).get().subscribe(doc => {
+      this.firestore.doc<Group>(`groups/${gid}`).get().subscribe(doc => {
         const groupData = { ...doc.data(), gid };
         this.groups.next([
           ...this.groups.value.filter((g: Group) => g.gid !== gid),
