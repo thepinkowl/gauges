@@ -1,12 +1,12 @@
 {
-  "appId": "org.thepinkowk.gauges",
-  "appName": "Gauges",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  }
+	"appId": "org.thepinkowk.gauges",
+	"appName": "Gauges",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"plugins": {
+		"SplashScreen": {
+			"launchAutoHide": false,
+			"launchShowDuration": 0
+		}
+	}
 }

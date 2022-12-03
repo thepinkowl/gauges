@@ -11,6 +11,8 @@ Run `npm run build`.
 
 ### Development
 
+Run `npm run build` before anything else.
+
 #### iOS
 
 ##### App icon
