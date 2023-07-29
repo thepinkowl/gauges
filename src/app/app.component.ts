@@ -8,12 +8,16 @@ import { UserService } from './services/user.service';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 
+type LoadStatus = 'uninit' | 'init';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  status: LoadStatus = 'uninit'
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -32,13 +36,15 @@ export class AppComponent {
     });
 
     this.userService.getUser().subscribe((user) => {
-      if (!!user) {
-        if (!user.hasCompletedTutorial) {
-          this.nav.navigateRoot('/welcome');
-        } else {
-          this.nav.navigateRoot('/');
+      if (this.status === 'uninit') {
+        if (!!user) {
+          if (!user.hasCompletedTutorial) {
+            this.nav.navigateRoot('/welcome');
+          } else {
+            this.nav.navigateRoot('/');
+          }
+          this.initializeApp();
         }
-        this.initializeApp();
       }
     });
   }
@@ -47,6 +53,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.status = 'init'
     });
   }
 }
