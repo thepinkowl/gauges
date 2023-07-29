@@ -1,0 +1,46 @@
+<ion-content [fullscreen]="true">
+  <main>
+    <div class="form">
+      <div class="back-button">
+        <ion-button (click)="goBack()" fill="clear">Back</ion-button>
+      </div>
+
+      <div class="form-element">
+        <div class="title">What should I call you?</div>
+        <div class="name-and-qr-code">
+          <ion-input
+            [debounce]="500"
+            [ngModel]="username"
+            (ngModelChange)="modelChangeFn($event)"
+          ></ion-input>
+          <ion-icon
+            (click)="showUserQR()"
+            size="large"
+            name="qr-code-outline"
+          ></ion-icon>
+        </div>
+      </div>
+
+      <div class="form-element">
+        <div class="title">
+          Groupsssss
+          <ion-button size="small" (click)="createGroup()">Create</ion-button>
+        </div>
+        <ion-list id="history">
+          <ion-item-sliding
+            *ngFor="let group of (groupsService.groups | async)"
+          >
+            <ion-item (click)="leaveGroup(group.gid)">
+              <ion-label>{{group.name}}</ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option (click)="leaveGroup(group.gid)" color="danger"
+                >leave</ion-item-option
+              >
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </div>
+    </div>
+  </main>
+</ion-content>

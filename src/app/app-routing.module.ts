@@ -13,6 +13,14 @@ const routes: Routes = [
     canActivate: [HasCompletedTutorialGuard],
   },
   {
+    path: 'profile',
+    loadChildren: () =>
+      import('./pages/profile/profile.module').then(
+        (m) => m.ProfilePageModule
+      ),
+    canActivate: [HasCompletedTutorialGuard],
+  },
+  {
     path: 'task/:id',
     loadChildren: () =>
       import('./pages/task-detail/task-detail.module').then(

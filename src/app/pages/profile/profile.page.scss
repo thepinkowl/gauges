@@ -1,0 +1,51 @@
+:host {
+  main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
+
+    .form {
+      flex: 1;
+
+      .back-button {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        font-weight: bold;
+      }
+
+      .form-element {
+        padding: 10px 20px;
+        
+        ion-input {
+          border: 1px solid var(--ion-color-light);
+          padding: 0 10px !important;
+        }
+
+        .title {
+          font-weight: bold;
+          max-width: 70%;
+          padding: 20px 0 10px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          ion-button {
+            margin-left: 10px;
+          }
+        }
+
+        .name-and-qr-code {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          ion-icon {
+            padding-left: 5px;
+          }
+        }
+      }
+    }
+  }
+}
