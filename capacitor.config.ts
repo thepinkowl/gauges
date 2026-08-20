@@ -1,10 +1,9 @@
 import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "org.thepinkowk.gauges",
+  appId: "com.unstaticlabs.gauges",
   appName: "Gauges",
   webDir: "www",
-  bundledWebRuntime: false,
   plugins: {
     SplashScreen: {
       launchAutoHide: false,

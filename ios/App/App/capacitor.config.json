@@ -1,12 +1,15 @@
 {
-	"appId": "org.thepinkowk.gauges",
+	"appId": "com.unstaticlabs.gauges",
 	"appName": "Gauges",
 	"webDir": "www",
-	"bundledWebRuntime": false,
 	"plugins": {
 		"SplashScreen": {
 			"launchAutoHide": false,
 			"launchShowDuration": 0
 		}
-	}
+	},
+	"packageClassList": [
+		"SplashScreenPlugin",
+		"StatusBarPlugin"
+	]
 }

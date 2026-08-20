@@ -32,3 +32,8 @@ npm-debug.log*
 /build
 
 .gradle
+
+# Signing keys and credentials must never be committed
+*.jks
+*.keystore
+keystore.properties
