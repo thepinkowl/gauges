@@ -34,9 +34,18 @@ export class ProfilePage implements OnInit {
     this.userService.getUser().subscribe(u => this.user = u);
   }
 
-  modelChangeFn(value) {
+  modelChangeFn(value: string) {
     this.username = value;
-    this.userService.setUserName(value);
+
+    // The box saves after a debounce of 500 ms. An empty box is a name that
+    // the user is still typing, so do not save it. The old name stays until
+    // the user types a new one.
+    const name = (value || '').trim();
+    if (!name) {
+      return;
+    }
+
+    this.userService.setUserName(name);
   }
 
   // TODO show QR in popup
