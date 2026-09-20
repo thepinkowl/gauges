@@ -1,0 +1,54 @@
+<ion-content [fullscreen]="true">
+  <main>
+    <div class="back-button">
+      <ion-button (click)="goBack()" fill="clear">Back</ion-button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">User</div>
+      <div class="row"><span>User id</span><code>{{user?.id || '-'}}</code></div>
+      <div class="row"><span>Name</span><code>{{user?.name || '-'}}</code></div>
+      <div class="row">
+        <span>Completed tutorial</span><code>{{!!user?.hasCompletedTutorial}}</code>
+      </div>
+      <div class="row"><span>Auth uid</span><code>{{authUid}}</code></div>
+      <div class="row"><span>Anonymous</span><code>{{authIsAnonymous}}</code></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Groups ({{groups.length}})</div>
+      <div class="row" *ngFor="let group of groups">
+        <span>{{group.name || '(no name)'}}</span><code>{{group.gid}}</code>
+      </div>
+      <div class="row" *ngIf="groups.length === 0"><span>No group</span></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Content</div>
+      <div class="row"><span>Tasks</span><code>{{taskCount}}</code></div>
+      <div class="row"><span>Categories</span><code>{{categoryCount}}</code></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Safe area insets</div>
+      <div class="row"><span>Top</span><code>{{insets.top}}</code></div>
+      <div class="row"><span>Right</span><code>{{insets.right}}</code></div>
+      <div class="row"><span>Bottom</span><code>{{insets.bottom}}</code></div>
+      <div class="row"><span>Left</span><code>{{insets.left}}</code></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Build</div>
+      <div class="row"><span>Version</span><code>{{version}}</code></div>
+      <div class="row"><span>Production</span><code>{{production}}</code></div>
+      <div class="row"><span>Firebase project</span><code>{{projectId}}</code></div>
+      <div class="row"><span>Platforms</span><code>{{platforms}}</code></div>
+      <div class="row user-agent"><span>User agent</span><code>{{userAgent}}</code></div>
+    </div>
+
+    <div class="actions">
+      <ion-button expand="block" fill="outline" (click)="copyReport()">Copy as JSON</ion-button>
+      <div class="copy-state">{{copyState}}</div>
+    </div>
+  </main>
+</ion-content>

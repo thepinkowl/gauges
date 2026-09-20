@@ -34,6 +34,12 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    // Hidden. The version line on the profile page opens it after 10 taps.
+    path: 'debug',
+    loadChildren: () =>
+      import('./pages/debug/debug.module').then((m) => m.DebugPageModule),
+  },
+  {
     path: 'welcome',
     loadChildren: () =>
       import('./pages/welcome/welcome.module').then((m) => m.WelcomePageModule),

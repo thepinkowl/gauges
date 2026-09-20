@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  // Keep in step with the version field in package.json.
+  version: '2.0.0',
   firebase: {
     apiKey: 'AIzaSyDGsqCW9aJgj9-l6Lo7yT9NwfjYqc5q-XY',
     authDomain: 'gauges-41b5e.firebaseapp.com',

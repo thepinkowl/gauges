@@ -48,5 +48,14 @@
         }
       }
     }
+
+    .version {
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--ion-color-medium);
+      user-select: none;
+      cursor: pointer;
+    }
   }
 }

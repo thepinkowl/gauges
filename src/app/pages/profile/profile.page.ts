@@ -3,6 +3,7 @@ import { AlertController, NavController } from '@ionic/angular';
 import firebase from 'firebase';
 import { GroupsService } from 'src/app/services/groups.service';
 import { User, UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +13,14 @@ import { User, UserService } from 'src/app/services/user.service';
 export class ProfilePage implements OnInit {
   user: User;
   username = ''
+  version = environment.version;
   private alert: HTMLIonAlertElement;
+
+  // 10 taps on the version line open the hidden debug page.
+  private static readonly TAPS_TO_OPEN_DEBUG = 10;
+  private static readonly TAP_TIMEOUT_MS = 2000;
+  private versionTaps = 0;
+  private versionTapTimer: any = null;
 
   constructor(
     private alertController: AlertController,
@@ -71,6 +79,26 @@ export class ProfilePage implements OnInit {
   leaveGroup(gid: string) {
     // this.groupsService.
     console.log(gid);
+  }
+
+  onVersionTap() {
+    if (this.versionTapTimer) {
+      clearTimeout(this.versionTapTimer);
+    }
+
+    this.versionTaps += 1;
+    if (this.versionTaps >= ProfilePage.TAPS_TO_OPEN_DEBUG) {
+      this.versionTaps = 0;
+      this.versionTapTimer = null;
+      this.nav.navigateForward('/debug');
+      return;
+    }
+
+    // A slow tap does not count, so a normal user never reaches the page.
+    this.versionTapTimer = setTimeout(() => {
+      this.versionTaps = 0;
+      this.versionTapTimer = null;
+    }, ProfilePage.TAP_TIMEOUT_MS);
   }
 
   goBack() {
