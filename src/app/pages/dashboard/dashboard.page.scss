@@ -1,9 +1,9 @@
 :host {
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-top: var(--ion-safe-area-top);
+  padding-bottom: var(--ion-safe-area-bottom);
 
   .content {
-    min-height: calc(100vh + 60px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    min-height: calc(100vh + 60px - var(--ion-safe-area-top) - var(--ion-safe-area-bottom));
   }
 
   .search-bar {
