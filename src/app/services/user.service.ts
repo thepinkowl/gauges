@@ -9,6 +9,9 @@ import { TasksService } from './tasks.service';
 import { GroupsService } from './groups.service';
 import { CategoriesService } from './categories.service';
 
+/** Shown when the user has no name, or clears it. */
+export const DEFAULT_USER_NAME = 'You';
+
 export interface User {
   id: string;
   name: string;
@@ -52,7 +55,7 @@ export class UserService {
   }
 
   loadUser(u: firebase.User) {
-    const parseUserDisplayName = (name: string) => (name || 'You').split(' ')[0].replace(/\+/g, ' ');
+    const parseUserDisplayName = (name: string) => (name || DEFAULT_USER_NAME).split(' ')[0].replace(/\+/g, ' ');
 
     this.userRef = this.firestore.doc<FirebaseUserDoc>(`users/${u.uid}`);
     this.userRef

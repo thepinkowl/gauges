@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService, User } from 'src/app/services/user.service';
+import { DEFAULT_USER_NAME, UserService, User } from 'src/app/services/user.service';
 import { Observable } from 'rxjs';
 import { TasksService } from 'src/app/services/tasks.service';
 
@@ -10,6 +10,7 @@ import { TasksService } from 'src/app/services/tasks.service';
 })
 export class MoodTitleComponent implements OnInit {
   user: Observable<User>;
+  defaultName = DEFAULT_USER_NAME;
 
   messages = {
     green: [
