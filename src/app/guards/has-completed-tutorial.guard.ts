@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserService, User } from '../services/user.service';
+import { filter, map, take } from 'rxjs/operators';
+import { User, UserService } from '../services/user.service';
 import { NavController } from '@ionic/angular';
 
 @Injectable({
@@ -14,25 +10,22 @@ import { NavController } from '@ionic/angular';
 })
 export class HasCompletedTutorialGuard implements CanActivate {
   constructor(private userService: UserService, private nav: NavController) { }
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return new Promise((resolve) => {
-      this.userService.getUser().subscribe((user: User) => {
-        if (!user) {
-          this.nav.navigateRoot('/loading');
-          resolve(false);
-        } else if (!!user.hasCompletedTutorial) {
-          resolve(true);
-        } else {
-          this.nav.navigateRoot('/welcome');
+
+  canActivate(): Observable<boolean> {
+    // getUser() is a long lived subject. Take the first real user and then
+    // complete, because a guard that stays subscribed navigates again on
+    // every later change of the user document.
+    return this.userService.getUser().pipe(
+      filter((user: User) => !!user),
+      take(1),
+      map((user: User) => {
+        if (user.hasCompletedTutorial) {
+          return true;
         }
-      });
-    });
+
+        this.nav.navigateRoot('/welcome');
+        return false;
+      })
+    );
   }
 }
