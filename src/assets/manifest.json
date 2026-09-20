@@ -2,7 +2,7 @@
   "name": "Gauges by ThePinkOwl",
   "short_name": "Gauges",
   "lang": "en-gb",
-  "start_url": "/",
+  "start_url": "../",
   "display": "standalone",
   "icons": [
     {
